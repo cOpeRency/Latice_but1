@@ -1,11 +1,15 @@
 package latice.application;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import latice.model.Color;
+import latice.model.GameBoard;
+import latice.model.Position;
 import latice.model.Rack;
 import latice.model.Shape;
 import latice.model.Stack;
@@ -16,6 +20,8 @@ public class GameMain extends Application {
 		private Stack stack;
 		private Stack stackJ1;
 		private Stack stackJ2;
+		
+		
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -45,6 +51,8 @@ public class GameMain extends Application {
 		stackJ1.showTiles();
 		
 		BorderPane root = new BorderPane();
+		GameBoard gameBoard = new GameBoard();
+		root.setCenter(gameBoard.generateGameBoard());
 		
 		// Creation de la scene
 		Scene scene = new Scene(root, 1280, 720);
