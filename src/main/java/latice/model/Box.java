@@ -11,10 +11,12 @@ public class Box {
 	private StackPane stackPane;
 	private BoxType boxType;
 	private String imgURL;
+	private Tile tile;
 	
 	public Box(BoxType boxType) {
 		this.stackPane = new StackPane();
 		this.boxType = boxType;
+		this.tile = Tile.NO;
 	}
 	
 	public StackPane InitializeStackPane() {

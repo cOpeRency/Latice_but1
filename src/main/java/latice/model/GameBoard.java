@@ -34,9 +34,7 @@ public class GameBoard {
 		    	board.add(this.gameboardTiles.get(position).InitializeStackPane(), j, i);
     		}
 		}
-
-    	
-    	
+    	board.setStyle("-fx-grid-lines-visible: true");
     	return board;
     }
 }
