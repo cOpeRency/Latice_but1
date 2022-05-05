@@ -1,5 +1,6 @@
 package latice.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javafx.scene.layout.GridPane;
 public class GameBoard {
 	
 	private Map<Position, Box> gameboardTiles;
+	private Map<Integer, Integer> sunBoxPosition;
 	
 	public GameBoard() {
 		this.gameboardTiles = new HashMap<>();
@@ -22,7 +24,13 @@ public class GameBoard {
     	for (int i = 0; i < 9; i++) {
     		for (int j = 0; j < 9; j++) {
 	    		Position position = new Position(i, j);
-		    	this.gameboardTiles.put(position, new Box(BoxType.SUN));
+	    		if ((i==0 && j==0)||(i==1 && j==1)||(i==2 && j==2)||(i==0 && j==8)||(i==1 && j==7)||(i==2 && j==6)   ||(i==8 && j==0)||(i==7 && j==1)||(i==6 && j==2)||(i==8 && j==8)||(i==7 && j==7)||(i==6 && j==6)   ||(i==0 && j==4)||(i==4 && j==0)||(i==4 && j==8)||(i==8 && j==4)) {
+	    			this.gameboardTiles.put(position, new Box(BoxType.SUN));
+	    		} else if ((i==4 && j==4)) {
+	    			this.gameboardTiles.put(position, new Box(BoxType.MOON));
+	    		} else {
+	    			this.gameboardTiles.put(position, new Box(BoxType.NORMAL));
+	    		}
 		    	board.add(this.gameboardTiles.get(position).InitializeStackPane(), j, i);
     		}
 		}

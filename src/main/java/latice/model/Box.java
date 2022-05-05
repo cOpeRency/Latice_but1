@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 public class Box {
 	private StackPane stackPane;
 	private BoxType boxType;
+	private String imgURL;
 	
 	public Box(BoxType boxType) {
 		this.stackPane = new StackPane();
@@ -17,11 +18,18 @@ public class Box {
 	}
 	
 	public StackPane InitializeStackPane() {
-		File fichier = new File("C:\\Users\\thoni\\Desktop\\Homework\\S2\\java\\SAE_ressources\\bg_sun.png");
+		if (this.boxType == BoxType.SUN) {
+			this.imgURL = "C:\\Users\\thoni\\Desktop\\Homework\\S2\\java\\SAE_ressources\\bg_sun.png";
+		} else if (this.boxType == BoxType.MOON) {
+			this.imgURL = "C:\\Users\\thoni\\Desktop\\Homework\\S2\\java\\SAE_ressources\\bg_moon.png";
+		} else {
+			this.imgURL = "C:\\Users\\thoni\\Desktop\\Homework\\S2\\java\\SAE_ressources\\bg_sea.png";
+		}
 		String urlFichier;
 		try {
+			File fichier = new File(imgURL);
 			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier, 60, 60, true, true);
+			Image img = new Image(urlFichier, 62, 62, true, true);
 			ImageView imgView = new ImageView(img);
 			this.stackPane.getChildren().add(imgView);
 			
