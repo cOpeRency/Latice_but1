@@ -15,9 +15,9 @@ public class GameBoard {
 		this.gameboardTiles = new HashMap<>();
     }
 
-    //public Map<Position, Box> discs() {
-    //    return this.gameboardTiles;
-    //}
+    public Map<Position, Box> tiles() {
+        return this.gameboardTiles;
+    }
     
     public GridPane generateGameBoard() {
     	GridPane board = new GridPane();
@@ -37,5 +37,16 @@ public class GameBoard {
     	board.setStyle("-fx-grid-lines-visible: true");
     	return board;
     }
+    
+    public Box getBox(Position position) {
+    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
+			if (entry.getKey().row()==position.row() && entry.getKey().column()==position.column()) {
+				return entry.getValue();
+			}
+		}
+    	
+    	return null;
+    }
+    
 }
 

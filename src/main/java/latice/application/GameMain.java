@@ -7,8 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import latice.model.Box;
 import latice.model.Color;
 import latice.model.GameBoard;
+import latice.model.Player;
 import latice.model.Position;
 import latice.model.Rack;
 import latice.model.Shape;
@@ -18,41 +20,34 @@ import latice.model.Tile;
 public class GameMain extends Application {
 		
 		private Stack stack;
-		private Stack stackJ1;
-		private Stack stackJ2;
+		private Player player1;
+		private Player player2;
 		
 		
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-			
-		this.stack = new Stack();
-		this.stackJ1 = new Stack();
-		this.stackJ2 = new Stack();
 		
-		for (Color color : Color.values()) {
-			for (Shape shape : Shape.values()) {
-				for (int i = 0; i < 2; i++) {
-					stack.addTile(new Tile(shape, color));
-				}
-			}
-		}	
-		stack.initialize(stackJ1, stackJ2);
-		System.out.println("----------------PiocheJ1(avant fillRack())-----------------");
-		stackJ1.showTiles();
-		System.out.println("----------------------------------");
-		stackJ2.showTiles();
-		System.out.println("--------------RackJ1--------------------");
+		gameStart();
 		
+		System.out.println("----------------A mettre dans un test case : creation de rack-------------------");
 		
-		Rack rack = new Rack(stackJ1);
-		rack.showRack();
-		System.out.println("----------------PiocheJ1(apres fillRack())-------------------");
-		stackJ1.showTiles();
+		player1.getRack().showRack();
+		player2.getRack().showRack();
+		// TODO  verifer si nombre de tuile = 5
 		
 		BorderPane root = new BorderPane();
 		GameBoard gameBoard = new GameBoard();
 		root.setCenter(gameBoard.generateGameBoard());
+		
+		
+		System.out.println("----------------A mettre dans un test case : ajout d'une tuile-------------------");
+		Position position = new Position(0, 1);
+		System.out.println("avant : "+gameBoard.getBox(position).getTile());
+		gameBoard.getBox(position).setTile(new Tile(Shape.DBZ,Color.BLUE));
+		System.out.println(gameBoard.getBox(position).getTile());
+		
+		
 		
 		// Creation de la scene
 		Scene scene = new Scene(root, 1280, 720);
@@ -68,5 +63,17 @@ public class GameMain extends Application {
 	
 	public static void main(String[] args) {
 		Application.launch(args);
+	}
+	
+	
+	
+	public void gameStart() {
+		this.stack = new Stack();
+		this.player1 = new Player("Albert");
+		this.player2 = new Player("Bernard");
+		
+		stack.initialize(player1, player2);
+		player1.createRack();
+		player2.createRack();
 	}
 }

@@ -1,6 +1,6 @@
 package latice.model;
 
-public class Position {
+public final class Position {
 	private final Integer row;
 	private final Integer column;
 

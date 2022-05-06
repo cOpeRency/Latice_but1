@@ -12,6 +12,10 @@ public class Stack {
 		this.tiles = new ArrayList();
 	}
 	
+	public Integer stackLength() {
+		return tiles.size();
+	}
+	
 	public void addTile(Tile tile) {
 		this.tiles.add(tile);
 	}
@@ -30,12 +34,21 @@ public class Stack {
 		}
 	}
 	
-	public void initialize(Stack stackJ1, Stack stackJ2) {
+	public void initialize(Player j1, Player j2) {
+		
+		for (Color color : Color.values()) {
+			for (Shape shape : Shape.values()) {
+				for (int i = 0; i < 2; i++) {
+					this.addTile(new Tile(shape, color));
+				}
+			}
+		}
+		
 		Collections.shuffle(tiles);
 		for (int j = 0; j < 36; j++) {
-			stackJ1.addTile(tiles.get(0));
+			j1.getStack().addTile(tiles.get(0));
 			this.removeTile();
-			stackJ2.addTile(tiles.get(0));
+			j2.getStack().addTile(tiles.get(0));
 			this.removeTile();
 		}
 	}

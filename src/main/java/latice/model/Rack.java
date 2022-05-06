@@ -25,4 +25,8 @@ public class Rack {
 		}
 		System.out.println("| "+allTiles);
 	}
+	
+	public Integer rackLength() {
+		return tiles.size();
+	}
 }

@@ -39,9 +39,14 @@ public class Box {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
-		
 		return this.stackPane;
+	}
+	
+	public Tile getTile() {
+		return this.tile;
+	}
+	
+	public void setTile(Tile tile) {
+		this.tile = tile;
 	}
 }
