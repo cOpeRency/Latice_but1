@@ -30,18 +30,15 @@ public class GameMain extends Application {
 		
 		gameStart();
 		
-		System.out.println("----------------A mettre dans un test case : creation de rack-------------------");
-		
 		player1.getRack().showRack();
 		player2.getRack().showRack();
-		// TODO  verifer si nombre de tuile = 5
 		
 		BorderPane root = new BorderPane();
 		GameBoard gameBoard = new GameBoard();
 		root.setCenter(gameBoard.generateGameBoard());
 		
 		
-		System.out.println("----------------A mettre dans un test case : ajout d'une tuile-------------------");
+		System.out.println("----------------A mettre dans un test case fx : ajout d'une tuile-------------------");
 		Position position = new Position(0, 1);
 		System.out.println("avant : "+gameBoard.getBox(position).getTile());
 		gameBoard.getBox(position).setTile(new Tile(Shape.DBZ,Color.BLUE));
@@ -59,7 +56,6 @@ public class GameMain extends Application {
 
 	}
 	
-	//public GridPane createT
 	
 	public static void main(String[] args) {
 		Application.launch(args);
