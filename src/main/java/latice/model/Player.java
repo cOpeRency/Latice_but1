@@ -11,6 +11,10 @@ public class Player {
 		this.stack = new Stack();
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public Stack getStack() {
 		return stack;
 	}

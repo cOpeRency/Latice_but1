@@ -21,11 +21,11 @@ public class Box {
 	
 	public StackPane InitializeStackPane() {
 		if (this.boxType == BoxType.SUN) {
-			this.imgURL = "C:\\Users\\thoni\\Desktop\\Homework\\S2\\java\\SAE_ressources\\bg_sun.png";
+			this.imgURL = "src/main/resources/themes/classic/bg_sun.png";
 		} else if (this.boxType == BoxType.MOON) {
-			this.imgURL = "C:\\Users\\thoni\\Desktop\\Homework\\S2\\java\\SAE_ressources\\bg_moon.png";
+			this.imgURL = "src/main/resources/themes/classic/bg_moon.png";
 		} else {
-			this.imgURL = "C:\\Users\\thoni\\Desktop\\Homework\\S2\\java\\SAE_ressources\\bg_sea.png";
+			this.imgURL = "src/main/resources/themes/classic/bg_sea.png";
 		}
 		String urlFichier;
 		try {

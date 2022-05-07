@@ -11,6 +11,10 @@ public class Rack {
 		this.fillRack(stack);
 	}
 	
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+	
 	public void fillRack(Stack stack) {
 		while (tiles.size() < 5) {
 			tiles.add(stack.getTile());
