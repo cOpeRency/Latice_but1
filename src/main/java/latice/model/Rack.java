@@ -3,8 +3,11 @@ package latice.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.layout.VBox;
+
 public class Rack {
 	private List<Tile> tiles;
+	private VBox vbox;
 	
 	public Rack(Stack stack) {
 		this.tiles = new ArrayList();
@@ -18,8 +21,14 @@ public class Rack {
 	public void fillRack(Stack stack) {
 		while (tiles.size() < 5) {
 			tiles.add(stack.getTile());
+			tiles.get(tiles.size()-1).setParentRack(this);;
 			stack.removeTile();
 		}
+	}
+	
+	public void removeTile(Tile tile) {
+		this.tiles.remove(tile);
+		this.vbox.getChildren().remove(tile);
 	}
 	
 	public void showRack() {
@@ -32,5 +41,9 @@ public class Rack {
 	
 	public Integer rackLength() {
 		return tiles.size();
+	}
+	
+	public void setVbox(VBox vbox) {
+		this.vbox = vbox;
 	}
 }

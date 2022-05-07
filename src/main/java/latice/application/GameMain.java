@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Random;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -58,7 +60,7 @@ public class GameMain extends Application {
 		root.setRight(rackP2vbox);
 
 		
-		System.out.println("----------------A mettre dans un test case fx : ajout d'une tuile-------------------");
+		//----------------A mettre dans un test case fx : ajout d'une tuile-------------------
 		Position position = new Position(0, 1);
 		//System.out.println("avant : "+gameBoard.getBox(position).getTile());
 		gameBoard.getBox(position).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
@@ -96,6 +98,9 @@ public class GameMain extends Application {
 	public void startGameplay(Player firstPlayer, Player secondPlayer) {
 		System.out.println(firstPlayer.getName()+" commence ! Que la partie débute !");
 		this.rackP1vbox = new VBox();
+		this.rackP1vbox.setPadding(new Insets(10,10,10,10));
+		this.rackP1vbox.setSpacing(20);
+		player1.getRack().setVbox(rackP1vbox);
 		this.rackP1vbox.getChildren().addAll(player1.getRack().getTiles());
 		this.rackP2vbox = new VBox();
 		this.rackP2vbox.getChildren().addAll(player2.getRack().getTiles());

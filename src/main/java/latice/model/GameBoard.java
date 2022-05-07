@@ -31,7 +31,7 @@ public class GameBoard {
 	    		} else {
 	    			this.gameboardTiles.put(position, new Box(BoxType.NORMAL));
 	    		}
-		    	board.add(this.gameboardTiles.get(position).InitializeStackPane(), j, i);
+		    	board.add(this.gameboardTiles.get(position), j, i);
     		}
 		}
     	board.setStyle("-fx-grid-lines-visible: true");
