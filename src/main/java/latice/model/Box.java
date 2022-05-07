@@ -2,6 +2,7 @@ package latice.model;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.Map;
 
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -18,13 +19,17 @@ public class Box extends StackPane {
 	private BoxType boxType;
 	private String imgURL;
 	private Tile tile;
+	private Position position;
+	private GameBoard gameboard;
 	public static String HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,0,0.8), 15, 0.8, 0, 0);";
 	public static String NO_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0);";
 	
-	public Box(BoxType boxType) {
+	public Box(BoxType boxType, GameBoard gameboard,Position position) {
 		this.stackPane = new StackPane();
 		this.boxType = boxType;
 		this.tile = Tile.NO;
+		this.gameboard = gameboard;
+		this.position = position;
 		
 		initBoxImage();
 		initDragSystem();
@@ -72,13 +77,18 @@ public class Box extends StackPane {
 		        event.consume();
 		    }
 		});
-		/*setOnDragOver(new EventHandler<DragEvent>() {
+		
+		
+		setOnDragOver(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
-		    	if (dragboard.hasImage()) {
-		    		event.acceptTransferModes(TransferMode.MOVE);
+		    	if (gameboard.getBox(new Position(4, 4)).tile!=null ||(position.column()==4 && position.row()==4)) {
+		    		if (dragboard.hasImage()) {
+		    			event.acceptTransferModes(TransferMode.MOVE);
+		    		}
 		    	}
+		    	
 		    	
 		        event.consume();
 		    }
@@ -99,7 +109,7 @@ public class Box extends StackPane {
 		    	event.setDropCompleted(success);
 		        event.consume();
 		    }
-		});*/
+		});
 	}
 	
 	public StackPane InitializeStackPane() {
