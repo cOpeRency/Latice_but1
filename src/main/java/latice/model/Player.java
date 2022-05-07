@@ -9,6 +9,7 @@ public class Player {
 	public Player(String name) {
 		this.name = name;
 		this.stack = new Stack();
+		this.points = 0;
 	}
 	
 	public String getName() {

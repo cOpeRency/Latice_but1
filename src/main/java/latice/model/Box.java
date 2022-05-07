@@ -26,8 +26,13 @@ public class Box extends StackPane {
 		this.boxType = boxType;
 		this.tile = Tile.NO;
 		
+		initBoxImage();
+		initDragSystem();
 		
+		
+	}
 
+	private void initBoxImage() {
 		if (this.boxType == BoxType.SUN) {
 			this.imgURL = "src/main/resources/themes/classic/bg_sun.png";
 		} else if (this.boxType == BoxType.MOON) {
@@ -47,8 +52,9 @@ public class Box extends StackPane {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+	}
+
+	private void initDragSystem() {
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
@@ -66,12 +72,12 @@ public class Box extends StackPane {
 		        event.consume();
 		    }
 		});
-		setOnDragOver(new EventHandler<DragEvent>() {
+		/*setOnDragOver(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
 		    	if (dragboard.hasImage()) {
-		    		event.acceptTransferModes(TransferMode.ANY);
+		    		event.acceptTransferModes(TransferMode.MOVE);
 		    	}
 		    	
 		        event.consume();
@@ -93,9 +99,7 @@ public class Box extends StackPane {
 		    	event.setDropCompleted(success);
 		        event.consume();
 		    }
-		});
-		
-		
+		});*/
 	}
 	
 	public StackPane InitializeStackPane() {

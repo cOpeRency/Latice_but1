@@ -33,7 +33,7 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	Dragboard dragboard = startDragAndDrop(TransferMode.ANY);
+		    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 		        setStyle(SHADOW_EFFECT);
 		        
 		        ClipboardContent content = new ClipboardContent();
@@ -47,8 +47,8 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 		setOnDragDone(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	System.out.println("YES");
-		    	exitRack();
+		    	if (event.getTransferMode() == TransferMode.MOVE)
+			    	exitRack();
 		        event.consume();
 		    }
 		});
