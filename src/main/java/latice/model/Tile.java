@@ -33,14 +33,16 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
-		        setStyle(SHADOW_EFFECT);
-		        
-		        ClipboardContent content = new ClipboardContent();
-		        content.putImage(getImage());
-		        content.putString(shape.toString()+"_"+color.toString());
-		        dragboard.setContent(content);
-		        event.consume();
+		    	if (parentRack != null) {
+			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
+			        setStyle(SHADOW_EFFECT);
+			        
+			        ClipboardContent content = new ClipboardContent();
+			        content.putImage(getImage());
+			        content.putString(shape.toString()+"_"+color.toString());
+			        dragboard.setContent(content);
+			        event.consume();	
+		    	}
 		    }
 		});
 		
@@ -63,7 +65,9 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent t) {
-		        setStyle(HOVER_EFFECT);
+		    	if (parentRack != null) {
+			        setStyle(HOVER_EFFECT);
+		    	}
 		    }
 		});
 		this.setOnMouseExited(new EventHandler<MouseEvent>() {

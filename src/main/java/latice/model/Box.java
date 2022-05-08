@@ -83,7 +83,7 @@ public class Box extends StackPane {
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
-		    	if (gameboard.getBox(new Position(4, 4)).tile!=null ||(position.column()==4 && position.row()==4)) {
+		    	if ((gameboard.getBox(new Position(4, 4)).tile!=null ||(position.column()==4 && position.row()==4))&&tile==null) {
 		    		if (dragboard.hasImage()) {
 		    			event.acceptTransferModes(TransferMode.MOVE);
 		    		}
