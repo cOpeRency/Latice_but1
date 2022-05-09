@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 
 public class GameBoard {
@@ -33,7 +34,9 @@ public class GameBoard {
 		    	board.add(this.gameboardTiles.get(position), j, i);
     		}
 		}
-    	board.setStyle("-fx-grid-lines-visible: true");
+    	//board.setStyle("-fx-grid-lines-visible: true");
+    	board.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(255,255,153,0.8), 15, 0.7, 0, 0);");
+    	board.setPadding(new Insets(20,68,0,68));
     	return board;
     }
     

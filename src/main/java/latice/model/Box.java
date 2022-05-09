@@ -21,7 +21,8 @@ public class Box extends StackPane {
 	private Tile tile;
 	private Position position;
 	private GameBoard gameboard;
-	public static String HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,0,0.8), 15, 0.8, 0, 0);";
+	public static String VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,0,0.8), 15, 0.8, 0, 0);";
+	public static String NOT_VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(150,0,0,0.8), 15, 0.8, 0, 0);";
 	public static String NO_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0);";
 	
 	public Box(BoxType boxType, GameBoard gameboard,Position position) {
@@ -39,11 +40,11 @@ public class Box extends StackPane {
 
 	private void initBoxImage() {
 		if (this.boxType == BoxType.SUN) {
-			this.imgURL = "src/main/resources/themes/classic/bg_sun.png";
+			this.imgURL = "src/main/resources/themes/pokemon/bg_sun.png";
 		} else if (this.boxType == BoxType.MOON) {
-			this.imgURL = "src/main/resources/themes/classic/bg_moon.png";
+			this.imgURL = "src/main/resources/themes/pokemon/bg_moon.png";
 		} else {
-			this.imgURL = "src/main/resources/themes/classic/bg_sea.png";
+			this.imgURL = "src/main/resources/themes/pokemon/bg_sea.png";
 		}
 		String urlFichier;
 		try {
@@ -63,8 +64,13 @@ public class Box extends StackPane {
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	if (event.getDragboard().hasImage()) {
-			        setStyle(HOVER_EFFECT);
+		    	if ((gameboard.getBox(new Position(4, 4)).tile!=null ||(position.column()==4 && position.row()==4))&&tile==null) {
+			    	if (event.getDragboard().hasImage()) {
+				        setStyle(VALID_HOVER_EFFECT);
+				        toFront();
+			    	}
+		    	} else {
+			        setStyle(NOT_VALID_HOVER_EFFECT);
 			        toFront();
 		    	}
 		        event.consume();
