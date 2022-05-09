@@ -56,6 +56,14 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 		});
 	}
 
+	public Shape getShape() {
+		return shape;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
 	public void exitRack() {
     	parentRack.removeTile(this);
 	}

@@ -2,6 +2,8 @@ package latice.model;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javafx.event.EventHandler;
@@ -89,13 +91,12 @@ public class Box extends StackPane {
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
-		    	if ((gameboard.getBox(new Position(4, 4)).tile!=null ||(position.column()==4 && position.row()==4))&&tile==null) {
+		    	String[] tileData = dragboard.getString().split("_");
+		    	if (checkValidity(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]))) {
 		    		if (dragboard.hasImage()) {
 		    			event.acceptTransferModes(TransferMode.MOVE);
 		    		}
 		    	}
-		    	
-		    	
 		        event.consume();
 		    }
 		});
@@ -112,6 +113,7 @@ public class Box extends StackPane {
 		    		tile = new Tile(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]));
 					getChildren().add(tile);
 		    	}
+		    	
 		    	event.setDropCompleted(success);
 		        event.consume();
 		    }
@@ -147,5 +149,55 @@ public class Box extends StackPane {
 	
 	public void setTile(Tile tile) {
 		this.tile = tile;
+	}
+	
+	public List<Box> getAdjacentBoxes(){
+		List<Box> listBoxes = new ArrayList<>();
+		
+		if (position.row()>0) {
+			listBoxes.add(this.gameboard.getBox(new Position(position.row()-1,position.column())));
+		}
+		if (position.row()<8) {
+			listBoxes.add(this.gameboard.getBox(new Position(position.row()+1,position.column())));
+		}
+		
+		if (position.column()>0) {
+			listBoxes.add(this.gameboard.getBox(new Position(position.row(),position.column()-1)));
+		}
+		
+		if (position.column()<8) {
+			listBoxes.add(this.gameboard.getBox(new Position(position.row(),position.column()+1)));
+		}
+		
+		return listBoxes;
+	}
+	
+	public boolean checkValidity(Shape shape, Color color) {
+		if ((position.column()==4 && position.row()==4)&&tile==null) {
+			return true;
+		}
+		
+		if (gameboard.getBox(new Position(4, 4)).tile==null) {
+			return false;
+		}
+
+		Integer numberOfNullTiles = 0;
+		List<Box> listBoxes = getAdjacentBoxes();
+		for (Box box : listBoxes) {
+			//System.out.println(box.getTile().toString());
+			//System.out.println(box.getTile().getShape()+shape.toString());
+			if (box.getTile()!=null) {
+				if (box.getTile().getShape()!=shape && box.getTile().getColor()!=color) {				
+					return false;
+				}
+			} else {
+				numberOfNullTiles = numberOfNullTiles + 1;
+			}
+		}
+		
+		if (numberOfNullTiles==4) {
+			return false;
+		}
+		return true;
 	}
 }
