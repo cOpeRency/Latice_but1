@@ -43,6 +43,8 @@ public class GameMain extends Application {
 		
 		private VBox player1Infos;
 		
+		private Button p1ValidButton;
+		
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -71,8 +73,8 @@ public class GameMain extends Application {
 		//root.setRight(rackP2vbox);
 
 		
-		//----------------A mettre dans un test case fx : ajout d'une tuile-------------------
-		Position position = new Position(0, 1);
+		//----------------A mettre dans un test case fx : ajout d'une tuile manuellemet-------------------
+		Position position = new Position(0, 4);
 		//System.out.println("avant : "+gameBoard.getBox(position).getTile());
 		gameBoard.getBox(position).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
 		//System.out.println(gameBoard.getBox(position).getTile());
@@ -107,7 +109,6 @@ public class GameMain extends Application {
 	}
 	
 	
-	
 	public void gameStart() {
 		this.stack = new Stack();
 		this.player1 = new Player("Albert");
@@ -140,8 +141,10 @@ public class GameMain extends Application {
 		this.playersRacks.setSpacing(150);
 		this.playersRacks.setPadding(new Insets(0,0,23,0));
 		
+		this.p1ValidButton = new Button("Valider");
+		this.p1ValidButton.setDisable(true);
 		this.player1Infos = new VBox();
 		this.player1Infos.setPrefWidth(300);
-		this.player1Infos.getChildren().addAll(new Label("P1"));
+		this.player1Infos.getChildren().addAll(new Label("P1"),this.p1ValidButton);
 	}
 }

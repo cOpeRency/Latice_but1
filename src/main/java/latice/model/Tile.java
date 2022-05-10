@@ -18,6 +18,8 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 	private final Color color;
 	public static Tile NO = null;
 	private Rack parentRack;
+	private Box parentBox;
+	private static boolean isLocked = false;
 	private static String HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,200,0,0.8), 15, 0.6, 0, 0);";
 	private static String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.4, 0, 0);";
 	private String imagePath = "src/main/resources/themes/classic/";
@@ -33,7 +35,7 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (parentRack != null) {
+		    	if (!isLocked) {
 			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			        setStyle(SHADOW_EFFECT);
 			        
@@ -41,7 +43,12 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 			        content.putImage(getImage());
 			        content.putString(shape.toString()+"_"+color.toString());
 			        dragboard.setContent(content);
-			        event.consume();	
+			        event.consume();
+			        
+			        
+			        if (parentBox!=null) {
+			    		exitBox();
+			    	}
 		    	}
 		    }
 		});
@@ -49,8 +56,13 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 		setOnDragDone(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	if (event.getTransferMode() == TransferMode.MOVE)
-			    	exitRack();
+		    	if (event.getTransferMode() == TransferMode.MOVE) {
+			    	if (parentRack!=null) {
+			    		exitRack();
+			    	}
+		    	} else  if (parentBox!=null) {
+		    		resetPosition();
+		    	}
 		        event.consume();
 		    }
 		});
@@ -64,8 +76,16 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 		return color;
 	}
 
+	public void resetPosition() {
+		parentBox.setTile(this);
+	}
+	
 	public void exitRack() {
     	parentRack.removeTile(this);
+	}
+	
+	public void exitBox() {
+    	parentBox.removeTile(this);
 	}
 	
 	private void setTileEffects() {
@@ -103,6 +123,10 @@ public class Tile extends ImageView implements EventHandler<MouseEvent>{
 	
 	public void setParentRack(Rack parent) {
 		this.parentRack = parent;
+	}
+	
+	public void setParentBox(Box parent) {
+		this.parentBox = parent;
 	}
 	
 	public String toString() {

@@ -66,8 +66,9 @@ public class Box extends StackPane {
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	if ((gameboard.getBox(new Position(4, 4)).tile!=null ||(position.column()==4 && position.row()==4))&&tile==null) {
-			    	if (event.getDragboard().hasImage()) {
+		    	String[] tileData = event.getDragboard().getString().split("_");
+		    	if (checkValidity(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]))) {
+		    		if (event.getDragboard().hasImage()) {
 				        setStyle(VALID_HOVER_EFFECT);
 				        toFront();
 			    	}
@@ -109,9 +110,9 @@ public class Box extends StackPane {
 		    		success = true;
 		    	}
 		    	if (dragboard.hasString()) {
-		    		String[] tileData = dragboard.getString().split("_");
-		    		tile = new Tile(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]));
-					getChildren().add(tile);
+					String[] tileData = dragboard.getString().split("_");
+					tile = new Tile(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]));
+					setTile(tile);
 		    	}
 		    	
 		    	event.setDropCompleted(success);
@@ -148,7 +149,14 @@ public class Box extends StackPane {
 	}
 	
 	public void setTile(Tile tile) {
+		tile.setParentBox(this);
 		this.tile = tile;
+		getChildren().add(tile);
+	}
+	
+	public void removeTile(Tile tile) {
+		this.tile = null;
+		getChildren().remove(tile);
 	}
 	
 	public List<Box> getAdjacentBoxes(){
@@ -195,7 +203,7 @@ public class Box extends StackPane {
 			}
 		}
 		
-		if (numberOfNullTiles==4) {
+		if (numberOfNullTiles==listBoxes.size()) {
 			return false;
 		}
 		return true;
