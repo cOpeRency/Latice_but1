@@ -5,10 +5,11 @@ import java.util.List;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import latice.vue.RackFX;
 
 public class Rack {
 	private List<Tile> tiles;
-	private HBox hbox;
+	private RackFX rackFX;
 	
 	public Rack(Stack stack) {
 		this.tiles = new ArrayList();
@@ -29,7 +30,7 @@ public class Rack {
 	
 	public void removeTile(Tile tile) {
 		this.tiles.remove(tile);
-		this.hbox.getChildren().remove(tile);
+		this.rackFX.getChildren().remove(tile.getTileFX());
 	}
 	
 	public void showRack() {
@@ -40,11 +41,16 @@ public class Rack {
 		System.out.println("| "+allTiles);
 	}
 	
+	public void createRackFX() {
+		this.rackFX = new RackFX();
+	}
+	
+	public RackFX getRackFX() {
+		return this.rackFX;
+	}
+	
 	public Integer rackLength() {
 		return tiles.size();
 	}
 	
-	public void setHbox(HBox hbox) {
-		this.hbox = hbox;
-	}
 }

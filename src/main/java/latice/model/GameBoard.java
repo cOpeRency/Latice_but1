@@ -19,8 +19,7 @@ public class GameBoard {
         return this.gameboardTiles;
     }
     
-    public GridPane generateGameBoard() {
-    	GridPane board = new GridPane();
+    public void generateBox() {
     	for (int i = 0; i < 9; i++) {
     		for (int j = 0; j < 9; j++) {
 	    		Position position = new Position(i, j);
@@ -31,10 +30,21 @@ public class GameBoard {
 	    		} else {
 	    			this.gameboardTiles.put(position, new Box(BoxType.NORMAL,this,position));
 	    		}
-		    	board.add(this.gameboardTiles.get(position), j, i);
     		}
+    	}
+    }
+    
+    
+    //JAVAFX
+    public GridPane generateGameBoard() {
+    	GridPane board = new GridPane();
+
+    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
+    		entry.getValue().setBoxImage();
+    		board.add(entry.getValue().getBoxFX(), entry.getKey().column(), entry.getKey().row());
 		}
-    	//board.setStyle("-fx-grid-lines-visible: true");
+		    	
+    	
     	board.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(255,255,153,0.8), 15, 0.7, 0, 0);");
     	board.setPadding(new Insets(20,68,0,68));
     	return board;
@@ -48,6 +58,15 @@ public class GameBoard {
 		}
     	
     	return null;
+    }
+    
+    public void playTurn() {
+    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
+    		if (entry.getValue().getTile().isLocked()==false) {
+    			entry.getValue().getTile().setLocked(true);
+    		}
+		}
+    	
     }
     
 }

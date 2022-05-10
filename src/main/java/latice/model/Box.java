@@ -15,134 +15,35 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
+import latice.vue.BoxFX;
 
-public class Box extends StackPane {
-	private StackPane stackPane;
+public class Box{
+	private BoxFX boxFX;
 	private BoxType boxType;
-	private String imgURL;
 	private Tile tile;
 	private Position position;
 	private GameBoard gameboard;
-	public static String VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,0,0.8), 15, 0.8, 0, 0);";
-	public static String NOT_VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(150,0,0,0.8), 15, 0.8, 0, 0);";
-	public static String NO_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0);";
 	
 	public Box(BoxType boxType, GameBoard gameboard,Position position) {
-		this.stackPane = new StackPane();
 		this.boxType = boxType;
 		this.tile = Tile.NO;
 		this.gameboard = gameboard;
 		this.position = position;
 		
-		initBoxImage();
-		initDragSystem();
-		
-		
 	}
 
-	private void initBoxImage() {
-		if (this.boxType == BoxType.SUN) {
-			this.imgURL = "src/main/resources/themes/pokemon/bg_sun.png";
-		} else if (this.boxType == BoxType.MOON) {
-			this.imgURL = "src/main/resources/themes/pokemon/bg_moon.png";
-		} else {
-			this.imgURL = "src/main/resources/themes/pokemon/bg_sea.png";
-		}
-		String urlFichier;
-		try {
-			File fichier = new File(imgURL);
-			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier, 62, 62, true, true);
-			ImageView imgView = new ImageView(img);
-			this.getChildren().add(imgView);
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void initDragSystem() {
-		setOnDragEntered(new EventHandler<DragEvent>() {
-		    @Override
-		    public void handle(DragEvent event) {
-		    	String[] tileData = event.getDragboard().getString().split("_");
-		    	if (checkValidity(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]))) {
-		    		if (event.getDragboard().hasImage()) {
-				        setStyle(VALID_HOVER_EFFECT);
-				        toFront();
-			    	}
-		    	} else {
-			        setStyle(NOT_VALID_HOVER_EFFECT);
-			        toFront();
-		    	}
-		        event.consume();
-		    }
-		});
-		setOnDragExited(new EventHandler<DragEvent>() {
-		    @Override
-		    public void handle(DragEvent event) {
-		        setStyle(NO_EFFECT);
-		        event.consume();
-		    }
-		});
-		
-		
-		setOnDragOver(new EventHandler<DragEvent>() {
-		    @Override
-		    public void handle(DragEvent event) {
-		    	Dragboard dragboard = event.getDragboard();
-		    	String[] tileData = dragboard.getString().split("_");
-		    	if (checkValidity(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]))) {
-		    		if (dragboard.hasImage()) {
-		    			event.acceptTransferModes(TransferMode.MOVE);
-		    		}
-		    	}
-		        event.consume();
-		    }
-		});
-		setOnDragDropped(new EventHandler<DragEvent>() {
-		    @Override
-		    public void handle(DragEvent event) {
-		    	Dragboard dragboard = event.getDragboard();
-		    	boolean success = false;
-		    	if (dragboard.hasImage()) {
-		    		success = true;
-		    	}
-		    	if (dragboard.hasString()) {
-					String[] tileData = dragboard.getString().split("_");
-					tile = new Tile(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]));
-					setTile(tile);
-		    	}
-		    	
-		    	event.setDropCompleted(success);
-		        event.consume();
-		    }
-		});
+	public void setBoxImage() {
+		this.boxFX = new BoxFX(this);
 	}
 	
-	public StackPane InitializeStackPane() {
-		if (this.boxType == BoxType.SUN) {
-			this.imgURL = "src/main/resources/themes/classic/bg_sun.png";
-		} else if (this.boxType == BoxType.MOON) {
-			this.imgURL = "src/main/resources/themes/classic/bg_moon.png";
-		} else {
-			this.imgURL = "src/main/resources/themes/classic/bg_sea.png";
-		}
-		String urlFichier;
-		try {
-			File fichier = new File(imgURL);
-			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier, 62, 62, true, true);
-			ImageView imgView = new ImageView(img);
-			this.stackPane.getChildren().add(imgView);
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return this.stackPane;
+	public BoxType getBoxType() {
+		return boxType;
 	}
+
+	public BoxFX getBoxFX() {
+		return boxFX;
+	}
+	
 	
 	public Tile getTile() {
 		return this.tile;
@@ -151,12 +52,14 @@ public class Box extends StackPane {
 	public void setTile(Tile tile) {
 		tile.setParentBox(this);
 		this.tile = tile;
-		getChildren().add(tile);
 	}
 	
 	public void removeTile(Tile tile) {
 		this.tile = null;
-		getChildren().remove(tile);
+	}
+	
+	public void removeTileFX(Tile tile) {
+		this.boxFX.getChildren().remove(tile.getTileFX());
 	}
 	
 	public List<Box> getAdjacentBoxes(){
