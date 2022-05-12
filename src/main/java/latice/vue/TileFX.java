@@ -43,6 +43,11 @@ public class TileFX extends ImageView implements Serializable {
 
 	public void setLastTilePlayed(boolean isLastTilePlayed) {
 		this.isLastTilePlayed = isLastTilePlayed;
+		if (isLastTilePlayed) {
+			setStyle(LAST_TILE_PLAYED_EFFECT);		    			
+		} else {
+			setStyle(NOT_FIXED_EFFECT);
+		}
 	}
 
 	public void setTileImage() {
@@ -74,10 +79,10 @@ public class TileFX extends ImageView implements Serializable {
 			        content.putImage(getImage());
 			        content.putString(tileSource.getShape().toString()+"_"+tileSource.getColor().toString());
 			        
-			        content.put(GameMain.TILE_DATA, tileSource);
-			        /*ObjectOutputStream objectOutputStream = null;
+			        //content.put(GameMain.TILE_DATA, tileSource);
+			        ObjectOutputStream objectOutputStream = null;
 			        try {
-						final FileOutputStream fichier = new FileOutputStream("C:/Windows/Temp/tilefx.ser");
+						final FileOutputStream fichier = new FileOutputStream("C:/Windows/Temp/tile.ser");
 						objectOutputStream = new ObjectOutputStream(fichier);
 						objectOutputStream.writeObject(tileSource);
 						objectOutputStream.flush();
@@ -92,7 +97,7 @@ public class TileFX extends ImageView implements Serializable {
 								ex.printStackTrace();
 							}
 						}
-					}*/
+					}
 			        
 			        
 			        dragboard.setContent(content);

@@ -56,6 +56,7 @@ public class Box implements Serializable{
 	
 	public void setTile(Tile tile) {
 		tile.setParentBox(this);
+		tile.setParentRack(null);
 		this.tile = tile;
 	}
 	

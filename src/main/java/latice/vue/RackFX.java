@@ -11,12 +11,10 @@ import latice.model.Tile;
 public class RackFX extends HBox implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<Tile> tiles;
-	private List<Tile> playingTiles;
 	
 	
 	public RackFX() {
 		this.tiles = new ArrayList<Tile>();
-		this.playingTiles = new ArrayList<Tile>();
 		setPadding(new Insets(10,10,10,10));
 		setSpacing(20);
 		setPrefWidth(410);
@@ -29,11 +27,5 @@ public class RackFX extends HBox implements Serializable{
 		}
 	}
 	
-	public void addPlayingTile(Tile newTile) {
-		for (Tile tile : playingTiles) {
-			tile.getTileFX().setLastTilePlayed(false);
-			System.out.println(tile.getTileFX().isLastTilePlayed());
-		}
-		this.playingTiles.add(newTile);
-	}
+
 }

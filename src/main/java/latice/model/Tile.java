@@ -74,7 +74,6 @@ public class Tile implements Serializable{
 	}
 	
 	public void exitRackFX() {
-		parentRack.getRackFX().addPlayingTile(this);;
     	parentRack.removeTileFX(this);
 	}
 	

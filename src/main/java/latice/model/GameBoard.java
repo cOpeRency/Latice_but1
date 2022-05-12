@@ -3,6 +3,7 @@ package latice.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javafx.geometry.Insets;
@@ -11,9 +12,11 @@ import javafx.scene.layout.GridPane;
 public class GameBoard implements Serializable{
 	
 	private Map<Position, Box> gameboardTiles;
+	private List<Tile> playingTiles;
 	
 	public GameBoard() {
 		this.gameboardTiles = new HashMap<>();
+		this.playingTiles = new ArrayList<Tile>();
     }
 
     public Map<Position, Box> tiles() {
@@ -61,6 +64,12 @@ public class GameBoard implements Serializable{
     	return null;
     }
     
+	public void addPlayingTile(Tile newTile) {
+		for (Tile tile : playingTiles) {
+			tile.getTileFX().setLastTilePlayed(false);
+		}
+		this.playingTiles.add(newTile);
+	}
     
     public void playTurn() {
     	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
