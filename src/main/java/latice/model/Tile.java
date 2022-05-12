@@ -69,9 +69,15 @@ public class Tile implements EventHandler<MouseEvent>{
 	
 	public void exitBox() {
     	parentBox.removeTile(this);
-    	parentBox.removeTileFX(this);
 	}
 	
+	public void exitRackFX() {
+    	parentRack.removeTileFX(this);
+	}
+	
+	public void exitBoxFX() {
+    	parentBox.removeTileFX(this);
+	}
 	
 	
 	public void setParentRack(Rack parent) {

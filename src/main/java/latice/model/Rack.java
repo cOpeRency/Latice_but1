@@ -30,6 +30,9 @@ public class Rack {
 	
 	public void removeTile(Tile tile) {
 		this.tiles.remove(tile);
+	}
+	
+	public void removeTileFX(Tile tile) {
 		this.rackFX.getChildren().remove(tile.getTileFX());
 	}
 	

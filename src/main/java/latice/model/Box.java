@@ -92,6 +92,11 @@ public class Box{
 			return false;
 		}
 
+		if (this.tile!=Tile.NO) {
+
+			return false;
+		}
+		
 		Integer numberOfNullTiles = 0;
 		List<Box> listBoxes = getAdjacentBoxes();
 		for (Box box : listBoxes) {

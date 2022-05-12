@@ -56,6 +56,7 @@ public class TileFX extends ImageView {
 			        
 			        if (tileSource.getParentBox()!=null) {
 			        	tileSource.exitBox();
+			    		tileSource.exitBoxFX();
 			    	}
 		    	}
 		    }
@@ -67,6 +68,7 @@ public class TileFX extends ImageView {
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
 			    	if (tileSource.getParentRack()!=null) {
 			    		tileSource.exitRack();
+			    		tileSource.exitRackFX();
 			    	}
 		    	} else  if (tileSource.getParentBox()!=null) {
 		    		tileSource.resetPosition();
