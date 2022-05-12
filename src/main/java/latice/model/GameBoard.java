@@ -1,5 +1,6 @@
 package latice.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 
-public class GameBoard {
+public class GameBoard implements Serializable{
 	
 	private Map<Position, Box> gameboardTiles;
 	
@@ -59,6 +60,7 @@ public class GameBoard {
     	
     	return null;
     }
+    
     
     public void playTurn() {
     	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {

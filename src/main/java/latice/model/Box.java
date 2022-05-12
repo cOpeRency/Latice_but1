@@ -1,6 +1,7 @@
 package latice.model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import latice.vue.BoxFX;
 
-public class Box{
+public class Box implements Serializable{
 	private BoxFX boxFX;
 	private BoxType boxType;
 	private Tile tile;
@@ -32,6 +33,10 @@ public class Box{
 		
 	}
 
+	public GameBoard getGameboard() {
+		return gameboard;
+	}
+	
 	public void setBoxImage() {
 		this.boxFX = new BoxFX(this);
 	}

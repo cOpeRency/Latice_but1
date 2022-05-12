@@ -1,6 +1,7 @@
 package latice.model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 
 import javafx.event.EventHandler;
@@ -14,7 +15,8 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import latice.vue.TileFX;
 
-public class Tile implements EventHandler<MouseEvent>{
+public class Tile implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private final Shape shape;
 	private final Color color;
 	public static Tile NO = null;
@@ -72,6 +74,7 @@ public class Tile implements EventHandler<MouseEvent>{
 	}
 	
 	public void exitRackFX() {
+		parentRack.getRackFX().addPlayingTile(this);;
     	parentRack.removeTileFX(this);
 	}
 	
@@ -104,11 +107,5 @@ public class Tile implements EventHandler<MouseEvent>{
 
 	public String getImagePath() {
 		return imagePath;
-	}
-	
-	@Override
-	public void handle(MouseEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
 }

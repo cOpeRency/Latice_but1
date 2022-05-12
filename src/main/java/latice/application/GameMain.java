@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -38,7 +39,7 @@ import latice.model.Tile;
 import latice.vue.RackFX;
 
 public class GameMain extends Application {
-		
+		public static DataFormat TILE_DATA = new DataFormat("Tile");
 		private GameBoard gameBoard;
 	
 		private Stack stack;

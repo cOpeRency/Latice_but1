@@ -1,5 +1,6 @@
 package latice.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import latice.vue.RackFX;
 
-public class Rack {
+public class Rack implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private List<Tile> tiles;
 	private RackFX rackFX;
 	
