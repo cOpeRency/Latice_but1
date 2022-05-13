@@ -16,10 +16,14 @@ public class GameBoard implements Serializable{
 	
 	public GameBoard() {
 		this.gameboardTiles = new HashMap<>();
-		this.playingTiles = new ArrayList<Tile>();
+		this.playingTiles = new ArrayList();
     }
 
-    public Map<Position, Box> tiles() {
+    public List<Tile> getPlayingTiles() {
+		return playingTiles;
+	}
+
+	public Map<Position, Box> tiles() {
         return this.gameboardTiles;
     }
     
@@ -65,10 +69,18 @@ public class GameBoard implements Serializable{
     }
     
 	public void addPlayingTile(Tile newTile) {
+
 		for (Tile tile : playingTiles) {
 			tile.getTileFX().setLastTilePlayed(false);
 		}
 		this.playingTiles.add(newTile);
+	}
+	
+	public void removePlayingTile() {
+		this.playingTiles.remove(this.playingTiles.size()-1);
+		if (this.playingTiles.size()>=1) {
+			this.playingTiles.get(this.playingTiles.size()-1).getTileFX().setLastTilePlayed(true);
+		}
 	}
     
     public void playTurn() {

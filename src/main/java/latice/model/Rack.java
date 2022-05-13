@@ -22,6 +22,10 @@ public class Rack implements Serializable{
 		return tiles;
 	}
 	
+	public void addTile(Tile tile) {
+		tiles.add(tile);
+	}
+	
 	public void fillRack(Stack stack) {
 		while (tiles.size() < 5) {
 			tiles.add(stack.getTile());
@@ -47,7 +51,7 @@ public class Rack implements Serializable{
 	}
 	
 	public void createRackFX() {
-		this.rackFX = new RackFX();
+		this.rackFX = new RackFX(this);
 	}
 	
 	public RackFX getRackFX() {

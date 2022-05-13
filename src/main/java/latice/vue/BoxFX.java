@@ -64,8 +64,8 @@ public class BoxFX extends StackPane implements Serializable{
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	String[] tileData = event.getDragboard().getString().split("_");
-		    	if (checkValidity(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]))) {
+		    	//String[] tileData = event.getDragboard().getString().split("_");
+		    	if (checkValidity((Tile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
 		    		if (event.getDragboard().hasImage()) {
 				        setStyle(VALID_HOVER_EFFECT);
 				        toFront();
@@ -90,8 +90,8 @@ public class BoxFX extends StackPane implements Serializable{
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
-		    	String[] tileData = dragboard.getString().split("_");
-		    	if (checkValidity(Shape.valueOf(tileData[0]),Color.valueOf(tileData[1]))) {
+		    	//String[] tileData = dragboard.getString().split("_");
+		    	if (checkValidity((Tile)dragboard.getContent(GameMain.TILE_DATA))) {
 		    		if (dragboard.hasImage()) {
 		    			event.acceptTransferModes(TransferMode.MOVE);
 		    		}
@@ -108,8 +108,8 @@ public class BoxFX extends StackPane implements Serializable{
 		    		success = true;
 		    	}
 		    	if (dragboard.hasString()) {
-		    		//setTile((Tile)dragboard.getContent(GameMain.TILE_DATA));
-		    		try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("C:/Windows/Temp/tile.ser"))) {
+		    		setTile((Tile)dragboard.getContent(GameMain.TILE_DATA));
+		    		/*try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("C:/Windows/Temp/tile.ser"))) {
 		    			
 		    			setTile((Tile) objectInputStream.readObject());
 		    		} catch (FileNotFoundException e) {
@@ -121,7 +121,7 @@ public class BoxFX extends StackPane implements Serializable{
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}*/
 					//setTile(dragboard);
 		    	}
 		    	
@@ -145,8 +145,8 @@ public class BoxFX extends StackPane implements Serializable{
 		this.box.getGameboard().addPlayingTile(tile);
 	}
 	
-	public boolean checkValidity(Shape shape, Color color) {
-		return this.box.checkValidity(shape,color);
+	public boolean checkValidity(Tile tile) {
+		return this.box.checkValidity(tile.getShape(),tile.getColor());
 	}
 	
 }

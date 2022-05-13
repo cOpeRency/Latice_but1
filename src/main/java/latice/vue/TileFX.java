@@ -79,8 +79,12 @@ public class TileFX extends ImageView implements Serializable {
 			        content.putImage(getImage());
 			        content.putString(tileSource.getShape().toString()+"_"+tileSource.getColor().toString());
 			        
-			        //content.put(GameMain.TILE_DATA, tileSource);
-			        ObjectOutputStream objectOutputStream = null;
+			        if (tileSource.getParentBox()!=null) {
+			        	content.putString("BoxToRack");
+			        }
+			        
+			        content.put(GameMain.TILE_DATA, tileSource);
+			        /*ObjectOutputStream objectOutputStream = null;
 			        try {
 						final FileOutputStream fichier = new FileOutputStream("C:/Windows/Temp/tile.ser");
 						objectOutputStream = new ObjectOutputStream(fichier);
@@ -97,7 +101,7 @@ public class TileFX extends ImageView implements Serializable {
 								ex.printStackTrace();
 							}
 						}
-					}
+					}*/
 			        
 			        
 			        dragboard.setContent(content);
@@ -107,6 +111,7 @@ public class TileFX extends ImageView implements Serializable {
 			        if (tileSource.getParentBox()!=null) {
 			        	tileSource.exitBox();
 			    		tileSource.exitBoxFX();
+			    		tileSource.getParentBox().getGameboard().removePlayingTile();
 			    	}
 		    	}
 		    }
@@ -124,6 +129,7 @@ public class TileFX extends ImageView implements Serializable {
 		    	} else  if (tileSource.getParentBox()!=null) {
 		    		tileSource.resetPosition();
 		    		tileSource.resetPositionFX();
+		    		tileSource.getParentBox().getGameboard().addPlayingTile(tileSource);
 		    	}
 		        event.consume();
 		    }
@@ -144,7 +150,7 @@ public class TileFX extends ImageView implements Serializable {
 		this.setOnMouseExited(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent t) {
-		    	if (tileSource.isLocked() || tileSource.getParentRack()!=null) {
+		    	if (tileSource.isLocked()) {
 		    		setStyle(SHADOW_EFFECT);
 		    	} else {
 		    		if (isLastTilePlayed) {
