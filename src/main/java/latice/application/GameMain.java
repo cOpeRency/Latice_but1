@@ -132,23 +132,8 @@ public class GameMain extends Application {
 	public void startGameplay(Player firstPlayer, Player secondPlayer) {
 		System.out.println(firstPlayer.getName()+" commence ! Que la partie débute !");
 		
-		player1.getRack().createRackFX();
-		this.rackP1vbox = player1.getRack().getRackFX();
-		//player1.getRack().setHbox(rackP1vbox);
-		this.rackP1vbox.setRack(player1.getRack().getTiles());
-		//this.rackP1vbox.getChildren().addAll(player1.getRack().getTiles());
-		
-		player2.getRack().createRackFX();
-		this.rackP2vbox = player2.getRack().getRackFX();
-		this.rackP2vbox.setRack(player2.getRack().getTiles());
-		//this.rackP2vbox.getChildren().addAll(player2.getRack().getTiles());
-		//player2.getRack().setHbox(rackP2vbox);
-
-		this.playersRacks = new HBox();
-		this.playersRacks.getChildren().addAll(this.rackP1vbox,this.rackP2vbox);
-		this.playersRacks.setAlignment(Pos.CENTER);
-		this.playersRacks.setSpacing(150);
-		this.playersRacks.setPadding(new Insets(0,0,23,0));
+		initializePlayersRack(firstPlayer,secondPlayer);
+		startTurn(firstPlayer,secondPlayer);
 		
 		this.p1ValidButton = new Button("Valider");
 		this.p1ValidButton.setDisable(false);
@@ -157,10 +142,38 @@ public class GameMain extends Application {
 		    public void handle(MouseEvent event) {
 		    	gameBoard.resetPlayingTileEffect();
 		    	gameBoard.lockPlayingTiles();
+		    	firstPlayer.getRack().fillRack(firstPlayer.getStack());
+				rackP1vbox.setRack(firstPlayer.getRack().getTiles());
+		    	startTurn(secondPlayer,firstPlayer);
 		    }
 		});
 		this.player1Infos = new VBox();
 		this.player1Infos.setPrefWidth(300);
 		this.player1Infos.getChildren().addAll(new Label("P1"),this.p1ValidButton);
+	}
+
+	private void startTurn(Player activePlayer, Player inactivePlayer) {
+		activePlayer.setMyTurn(true);
+		inactivePlayer.setMyTurn(false);
+	}
+	
+	private void initializePlayersRack(Player firstPlayer, Player secondPlayer) {
+		firstPlayer.getRack().createRackFX();
+		this.rackP1vbox = firstPlayer.getRack().getRackFX();
+		//player1.getRack().setHbox(rackP1vbox);
+		this.rackP1vbox.setRack(firstPlayer.getRack().getTiles());
+		//this.rackP1vbox.getChildren().addAll(player1.getRack().getTiles());
+		
+		secondPlayer.getRack().createRackFX();
+		this.rackP2vbox = secondPlayer.getRack().getRackFX();
+		this.rackP2vbox.setRack(secondPlayer.getRack().getTiles());
+		//this.rackP2vbox.getChildren().addAll(player2.getRack().getTiles());
+		//player2.getRack().setHbox(rackP2vbox);
+
+		this.playersRacks = new HBox();
+		this.playersRacks.getChildren().addAll(this.rackP1vbox,this.rackP2vbox);
+		this.playersRacks.setAlignment(Pos.CENTER);
+		this.playersRacks.setSpacing(150);
+		this.playersRacks.setPadding(new Insets(0,0,23,0));
 	}
 }

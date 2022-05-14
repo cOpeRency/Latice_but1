@@ -12,12 +12,22 @@ public class Rack implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<Tile> tiles;
 	private RackFX rackFX;
+	private boolean locked;
 	
 	public Rack(Stack stack) {
 		this.tiles = new ArrayList();
 		this.fillRack(stack);
+		this.locked = false;
 	}
 	
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
 	public List<Tile> getTiles() {
 		return tiles;
 	}

@@ -36,6 +36,7 @@ public class RackFX extends HBox implements Serializable{
 	}
 	
 	public void setRack(List<Tile> tiles) {
+		this.getChildren().clear();
 		for (Tile tile : tiles) {
 			tile.setTileImage();
 			this.getChildren().add(tile.getTileFX());
@@ -48,7 +49,7 @@ public class RackFX extends HBox implements Serializable{
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
-		    	if (dragboard.hasString()) {
+		    	if (dragboard.hasString() && !rackSource.isLocked()) {
 		    		if (dragboard.getString()=="BoxToRack") {
 		    			event.acceptTransferModes(TransferMode.MOVE);
 		    		}
@@ -71,7 +72,6 @@ public class RackFX extends HBox implements Serializable{
 		    		tile.exitBoxFX();
 		    		tile.setParentBox(null);
 					rackSource.addTile(tile);
-					tiles.add(tile);
 					tile.setTileImage();
 					getChildren().add(tile.getTileFX());
 		    	}
