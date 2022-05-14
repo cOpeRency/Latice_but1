@@ -83,11 +83,17 @@ public class GameBoard implements Serializable{
 		}
 	}
     
-    public void playTurn() {
-    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
-    		if (entry.getValue().getTile().isLocked()==false) {
-    			entry.getValue().getTile().setLocked(true);
-    		}
+    public void lockPlayingTiles() {
+    	for (Tile tile : playingTiles) {
+			tile.setLocked(true);
+		}
+    	this.playingTiles.clear();
+    	
+    }
+    
+    public void resetPlayingTileEffect() {
+    	for (Tile tile : playingTiles) {
+			tile.getTileFX().setStyle(tile.getTileFX().SHADOW_EFFECT);
 		}
     	
     }

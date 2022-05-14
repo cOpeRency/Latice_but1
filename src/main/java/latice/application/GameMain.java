@@ -155,7 +155,8 @@ public class GameMain extends Application {
 		this.p1ValidButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	gameBoard.playTurn();
+		    	gameBoard.resetPlayingTileEffect();
+		    	gameBoard.lockPlayingTiles();
 		    }
 		});
 		this.player1Infos = new VBox();

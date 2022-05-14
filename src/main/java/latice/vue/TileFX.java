@@ -26,7 +26,7 @@ public class TileFX extends ImageView implements Serializable {
 	private static String HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,200,0,0.8), 15, 0.6, 0, 0);";
 	private static String NOT_FIXED_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,0,200,0.8), 15, 0.6, 0, 0);";
 	private static String LAST_TILE_PLAYED_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,250,200,0.8), 15, 0.6, 0, 0);";
-	private static String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.4, 0, 0);";
+	public static String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.4, 0, 0);";
 	
 	
 	public TileFX(Tile tile) {
@@ -36,6 +36,7 @@ public class TileFX extends ImageView implements Serializable {
 		setTileEffects();
 		setTileImage();
 	}
+
 	
 	public boolean isLastTilePlayed() {
 		return isLastTilePlayed;
