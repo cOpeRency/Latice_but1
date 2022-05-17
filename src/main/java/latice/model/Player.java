@@ -1,6 +1,8 @@
 package latice.model;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable{
 	private boolean myTurn;
 	private Rack rack;
 	private String name;
@@ -12,6 +14,12 @@ public class Player {
 		this.stack = new Stack();
 		this.points = 0;
 		this.myTurn = false;
+	}
+	
+	public void addPoints(Integer points) {
+		this.points = this.points + points;
+		System.out.println(this.hashCode());
+		System.out.println(this.points);
 	}
 	
 	public String getName() {
@@ -36,7 +44,7 @@ public class Player {
 	}
 	
 	public void createRack() {
-		this.rack = new Rack(stack);
+		this.rack = new Rack(stack,this);
 	}
 	
 	public Rack getRack() {

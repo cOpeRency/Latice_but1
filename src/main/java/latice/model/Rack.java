@@ -14,11 +14,17 @@ public class Rack implements Serializable{
 	private List<Tile> tiles;
 	private RackFX rackFX;
 	private boolean locked;
+	private Player owner;
 	
-	public Rack(Stack stack) {
+	public Rack(Stack stack, Player owner) {
 		this.tiles = new ArrayList();
 		this.fillRack(stack);
 		this.locked = false;
+		this.owner = owner;
+	}
+	
+	public Player getOwner() {
+		return this.owner;
 	}
 	
 	public boolean isLocked() {

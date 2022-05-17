@@ -93,9 +93,9 @@ public class GameMain extends Application {
 
 		
 		//----------------A mettre dans un test case fx : ajout d'une tuile manuellemet-------------------
-		Position position = new Position(0, 4);
+		//Position position = new Position(0, 4);
 		//System.out.println("avant : "+gameBoard.getBox(position).getTile());
-		gameBoard.getBox(position).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
+		//gameBoard.getBox(position).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
 		//System.out.println(gameBoard.getBox(position).getTile());
 		
 		StackPane root = new StackPane();

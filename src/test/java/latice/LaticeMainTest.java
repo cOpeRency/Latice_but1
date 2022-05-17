@@ -240,4 +240,22 @@ class LaticeMainTest {
 		
 		assertFalse(gameBoard.getBox(new Position(4, 3)).checkValidity(Shape.SHAPE1, Color.COLOR1));
 	}
+	
+	@Test
+	void testChangeGameTurn() {
+		Stack stack = new Stack();
+		Player player1 = new Player("Albert");
+		Player player2 = new Player("Bernard");
+		
+		stack.initialize(player1, player2);
+		player1.createRack();
+		player2.createRack();
+		player1.setMyTurn(true);
+		player2.setMyTurn(false);
+		
+		assertTrue(player1.isMyTurn());
+		assertFalse(player1.getRack().isLocked());
+		assertFalse(player2.isMyTurn());
+		assertTrue(player2.getRack().isLocked());
+	}
 }

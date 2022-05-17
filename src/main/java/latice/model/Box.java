@@ -50,17 +50,38 @@ public class Box implements Serializable{
 	}
 	
 	
-	public Tile getTile() {
-		return this.tile;
-	}
-	
 	public void setTile(Tile tile) {
 		tile.setParentBox(this);
 		this.tile = tile;
+		System.out.println(getTileMatchType(getAdjacentBoxes())+" for player "+tile.getParentRack().getOwner().getName());
+		tile.getParentRack().getOwner().addPoints(getTileMatchType(getAdjacentBoxes()).value());
 	}
 	
+	public Tile getTile() {
+		return this.tile;
+	}
+
 	public void removeTile(Tile tile) {
 		this.tile = null;
+	}
+	
+	public MatchType getTileMatchType(List<Box> boxAdjacent) {
+		Integer numberOfTile = 0;
+		for (Box box : boxAdjacent) {
+			if (box.getTile()!=Tile.NO) {
+					numberOfTile += 1;
+			}
+		}
+		
+		switch (numberOfTile){
+		case 2:
+			return MatchType.DOUBLE;
+		case 3:
+			return MatchType.TREFOIL;
+		case 4:
+			return MatchType.LATICE;
+		}
+		return MatchType.SIMPLE;
 	}
 	
 	public List<Box> getAdjacentBoxes(){
