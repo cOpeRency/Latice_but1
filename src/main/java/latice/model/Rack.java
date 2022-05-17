@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import latice.vue.RackFX;
+import latice.vue.TileFX;
 
 public class Rack implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -46,10 +47,6 @@ public class Rack implements Serializable{
 	
 	public void removeTile(Tile tile) {
 		this.tiles.remove(tile);
-	}
-	
-	public void removeTileFX(Tile tile) {
-		this.rackFX.getChildren().remove(tile.getTileFX());
 	}
 	
 	public void showRack() {

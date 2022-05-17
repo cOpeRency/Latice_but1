@@ -69,7 +69,7 @@ public class RackFX extends HBox implements Serializable{
 		    		Tile tile = ((Tile)dragboard.getContent(GameMain.TILE_DATA));
 		    		tile.setParentRack(rackSource);
 		    		tile.exitBox();
-		    		tile.exitBoxFX();
+		    		tile.getParentBox().getBoxFX().getChildren().remove(tile.getTileFX());
 		    		tile.setParentBox(null);
 					rackSource.addTile(tile);
 					tile.setTileImage();

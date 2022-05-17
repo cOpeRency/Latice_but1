@@ -63,10 +63,6 @@ public class Box implements Serializable{
 		this.tile = null;
 	}
 	
-	public void removeTileFX(Tile tile) {
-		this.boxFX.getChildren().remove(tile.getTileFX());
-	}
-	
 	public List<Box> getAdjacentBoxes(){
 		List<Box> listBoxes = new ArrayList<>();
 		

@@ -8,6 +8,8 @@ import java.util.Random;
 
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,6 +28,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import latice.model.Box;
 import latice.model.Color;
@@ -51,8 +55,12 @@ public class GameMain extends Application {
 		private RackFX rackP2vbox;
 		
 		private VBox player1Infos;
+		private VBox player2Infos;
+		
+		private IntegerProperty p1Points;
 		
 		private Button p1ValidButton;
+		private Button p2ValidButton;
 		
 
 	@Override
@@ -80,6 +88,7 @@ public class GameMain extends Application {
 		borderPane.setCenter(gameBoard.generateGameBoard());
 		borderPane.setBottom(playersRacks);
 		borderPane.setLeft(player1Infos);
+		borderPane.setRight(player2Infos);
 		//root.setRight(rackP2vbox);
 
 		
@@ -134,9 +143,17 @@ public class GameMain extends Application {
 		
 		initializePlayersRack(firstPlayer,secondPlayer);
 		startTurn(firstPlayer,secondPlayer);
-		
+
+		//this.p1Points = new SimpleIntegerProperty();
+		Label p1StackSize = new Label();
+		//p1Pts.textProperty().bind(p1Points.asString());
+		p1StackSize.setTextFill(javafx.scene.paint.Color.WHITE);
+		p1StackSize.setFont(Font.font(null, FontWeight.NORMAL, 35));
+		p1StackSize.setMinHeight(50);
+		p1StackSize.setText("Tiles left : "+firstPlayer.getStackSize().toString());
 		this.p1ValidButton = new Button("Valider");
-		this.p1ValidButton.setDisable(false);
+		this.p1ValidButton.setPrefSize(170, 70);
+		this.p1ValidButton.setFont(Font.font(null, FontWeight.NORMAL, 35));
 		this.p1ValidButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
@@ -144,12 +161,64 @@ public class GameMain extends Application {
 		    	gameBoard.lockPlayingTiles();
 		    	firstPlayer.getRack().fillRack(firstPlayer.getStack());
 				rackP1vbox.setRack(firstPlayer.getRack().getTiles());
+				p1StackSize.setText("Tiles left : "+firstPlayer.getStackSize().toString());
 		    	startTurn(secondPlayer,firstPlayer);
+		    	p2ValidButton.setDisable(false);
+		    	p1ValidButton.setDisable(true);
 		    }
 		});
 		this.player1Infos = new VBox();
 		this.player1Infos.setPrefWidth(300);
-		this.player1Infos.getChildren().addAll(new Label("P1"),this.p1ValidButton);
+		Label p1name = new Label(firstPlayer.getName());
+		p1name.setTextFill(javafx.scene.paint.Color.WHITE);
+		p1name.setFont(Font.font(null, FontWeight.NORMAL, 35));
+		p1name.setMinHeight(50);
+		
+		ImageView p1Picture = new ImageView();
+		try {
+			File fichier = new File("src/main/resources/profilePictures/face.png");
+			p1Picture.setImage(new Image(fichier.toURI().toURL().toString(), 150, 150, true, true));
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		this.player1Infos.getChildren().addAll(p1name,p1Picture,p1StackSize,this.p1ValidButton);
+		this.player1Infos.setAlignment(Pos.CENTER);
+		
+		
+		this.p2ValidButton = new Button("Valider");
+    	p2ValidButton.setDisable(true);
+		this.p2ValidButton.setPrefSize(170, 70);
+		this.p2ValidButton.setFont(Font.font(null, FontWeight.NORMAL, 35));
+		this.p2ValidButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		    	gameBoard.resetPlayingTileEffect();
+		    	gameBoard.lockPlayingTiles();
+		    	secondPlayer.getRack().fillRack(secondPlayer.getStack());
+				rackP2vbox.setRack(secondPlayer.getRack().getTiles());
+		    	startTurn(firstPlayer,secondPlayer);
+		    	p1ValidButton.setDisable(false);
+		    	p2ValidButton.setDisable(true);
+		    }
+		});
+		this.player2Infos = new VBox();
+		this.player2Infos.setPrefWidth(300);
+		Label p2name = new Label(secondPlayer.getName());
+		p2name.setTextFill(javafx.scene.paint.Color.WHITE);
+		p2name.setFont(Font.font(null, FontWeight.NORMAL, 35));
+		p2name.setMinHeight(50);
+		
+		ImageView p2Picture = new ImageView();
+		try {
+			File fichier = new File("src/main/resources/profilePictures/face.png");
+			p2Picture.setImage(new Image(fichier.toURI().toURL().toString(), 150, 150, true, true));
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		this.player2Infos.getChildren().addAll(p2name,p2Picture,this.p2ValidButton);
+		this.player2Infos.setAlignment(Pos.CENTER);
 	}
 
 	private void startTurn(Player activePlayer, Player inactivePlayer) {

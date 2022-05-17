@@ -61,24 +61,12 @@ public class Tile implements Serializable{
 		parentBox.setTile(this);
 	}
 	
-	public void resetPositionFX() {
-		parentBox.getBoxFX().getChildren().add(tileFX);
-	}
-	
 	public void exitRack() {
     	parentRack.removeTile(this);
 	}
 	
 	public void exitBox() {
     	parentBox.removeTile(this);
-	}
-	
-	public void exitRackFX() {
-    	parentRack.removeTileFX(this);
-	}
-	
-	public void exitBoxFX() {
-    	parentBox.removeTileFX(this);
 	}
 	
 	

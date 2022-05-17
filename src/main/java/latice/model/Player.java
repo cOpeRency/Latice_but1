@@ -31,6 +31,10 @@ public class Player {
 		return stack;
 	}
 	
+	public Integer getStackSize() {
+		return stack.stackLength();
+	}
+	
 	public void createRack() {
 		this.rack = new Rack(stack);
 	}

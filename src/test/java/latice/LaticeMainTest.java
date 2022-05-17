@@ -189,7 +189,55 @@ class LaticeMainTest {
 		
 		assertEquals(player1.getRack().rackLength(),3);
 		
+	}
+	
+	@Test
+	void testTileIsLockedWhenPutIt() {
+		Stack stack = new Stack();
+		Player player1 = new Player("Albert");
+		Player player2 = new Player("Bernard");
+		GameBoard gameBoard = new GameBoard();
+		Position position = new Position(0, 4);
 		
 		
+		stack.initialize(player1, player2);
+		player1.createRack();
+		player2.createRack();
+		
+		Tile tile = player1.getRack().getTiles().get(0);
+		
+		gameBoard.generateBox();
+		gameBoard.getBox(position).setTile(tile);
+		tile.exitRack();
+		tile.setLocked(true);
+		
+		assertTrue(tile.isLocked());
+	}
+	
+	@Test
+	void testPutTileConditions() {
+		GameBoard gameBoard = new GameBoard();
+		
+		gameBoard.generateBox();
+		
+		assertFalse(gameBoard.getBox(new Position(0, 4)).checkValidity(Shape.SHAPE1, Color.COLOR1));
+		assertTrue(gameBoard.getBox(new Position(4, 4)).checkValidity(Shape.SHAPE1, Color.COLOR1));
+		
+		gameBoard.getBox(new Position(4, 4)).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
+		
+		assertFalse(gameBoard.getBox(new Position(0, 4)).checkValidity(Shape.SHAPE1, Color.COLOR1));
+		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE1, Color.COLOR1));
+	}
+	
+	@Test
+	void testCannotPutTileOnAnAnotherOne() {
+		GameBoard gameBoard = new GameBoard();
+		
+		gameBoard.generateBox();
+		gameBoard.getBox(new Position(4, 4)).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 3)).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 3)).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
+		
+		assertFalse(gameBoard.getBox(new Position(4, 3)).checkValidity(Shape.SHAPE1, Color.COLOR1));
 	}
 }

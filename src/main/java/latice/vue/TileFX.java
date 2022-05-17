@@ -111,7 +111,7 @@ public class TileFX extends ImageView implements Serializable {
 			        
 			        if (tileSource.getParentBox()!=null) {
 			        	tileSource.exitBox();
-			    		tileSource.exitBoxFX();
+			    		tileSource.getParentBox().getBoxFX().getChildren().remove(tileSource.getTileFX());
 			    		tileSource.getParentBox().getGameboard().removePlayingTile();
 			    	}
 		    	}
@@ -124,12 +124,13 @@ public class TileFX extends ImageView implements Serializable {
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
 			    	if (tileSource.getParentRack()!=null) {
 			    		tileSource.exitRack();
-			    		tileSource.exitRackFX();
+			    		tileSource.getParentRack().getRackFX().getChildren().remove(tileSource.getTileFX());
 				        setStyle(NOT_FIXED_EFFECT);
 			    	}
 		    	} else  if (tileSource.getParentBox()!=null) {
 		    		tileSource.resetPosition();
-		    		tileSource.resetPositionFX();
+		    		tileSource.getParentBox().getBoxFX().getChildren().add(tileSource.getTileFX());
+		    		
 		    		tileSource.getParentBox().getGameboard().addPlayingTile(tileSource);
 		    	}
 		        event.consume();
