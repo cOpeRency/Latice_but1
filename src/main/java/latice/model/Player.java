@@ -3,6 +3,8 @@ package latice.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import latice.vue.PlayerFX;
+
 public class Player implements Serializable{
 	private boolean myTurn;
 	private Rack rack;
@@ -10,6 +12,7 @@ public class Player implements Serializable{
 	private Integer points;
 	private Stack stack;
 	private boolean ableToPutATile;
+	private PlayerFX playerFX;
 	
 	public Player(String name) {
 		this.name = name;
@@ -18,6 +21,14 @@ public class Player implements Serializable{
 		this.myTurn = false;
 		this.ableToPutATile = false;
 
+	}
+	
+	public PlayerFX getPlayerFX() {
+		return this.playerFX;
+	}
+	
+	public void initPlayerFX() {
+		this.playerFX = new PlayerFX(this);
 	}
 	
 	public boolean isAbleToPutATile() {
@@ -30,6 +41,7 @@ public class Player implements Serializable{
 	}
 	
 	public void addPoints(Integer points) {
+		System.out.println("Pts = "+points+"   ||   current pts = "+this.points);
 		this.points = this.points + points;
 	}
 	

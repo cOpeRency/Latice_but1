@@ -10,6 +10,8 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -57,7 +59,7 @@ public class GameMain extends Application {
 		private VBox player1Infos;
 		private VBox player2Infos;
 		
-		private IntegerProperty p1Points;
+		private Label p1Points;
 		
 		private Button p1ValidButton;
 		private Button p2ValidButton;
@@ -134,6 +136,8 @@ public class GameMain extends Application {
 		this.player1 = new Player("Albert");
 		this.player2 = new Player("Bernard");
 		
+		this.player1.initPlayerFX();
+		this.player2.initPlayerFX();
 		stack.initialize(player1, player2);
 		player1.createRack();
 		player2.createRack();
@@ -152,6 +156,22 @@ public class GameMain extends Application {
 		p1StackSize.setFont(Font.font(null, FontWeight.NORMAL, 35));
 		p1StackSize.setMinHeight(50);
 		p1StackSize.setText("Tiles left : "+firstPlayer.getStackSize().toString());
+		
+		
+		SimpleIntegerProperty p1PointsProperty = new SimpleIntegerProperty();
+		p1PointsProperty.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observable, Number oldPoints, Number newPoints) {
+						System.out.println("Point changed");
+					}
+		});
+		this.p1Points = new Label();
+		this.p1Points.textProperty().bind(firstPlayer.getPlayerFX().getSimpleIntegerProperty().asString());
+		this.p1Points.setTextFill(javafx.scene.paint.Color.WHITE);
+		this.p1Points.setFont(Font.font(null, FontWeight.NORMAL, 35));
+		this.p1Points.setMinHeight(50);
+		
 		this.p1ValidButton = new Button("Valider");
 		this.p1ValidButton.setPrefSize(170, 70);
 		this.p1ValidButton.setFont(Font.font(null, FontWeight.NORMAL, 35));
@@ -166,6 +186,7 @@ public class GameMain extends Application {
 		    	startTurn(secondPlayer,firstPlayer);
 		    	p2ValidButton.setDisable(false);
 		    	p1ValidButton.setDisable(true);
+				p1PointsProperty.set(firstPlayer.getPoints());
 		    }
 		});
 		this.player1Infos = new VBox();
@@ -183,7 +204,7 @@ public class GameMain extends Application {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		this.player1Infos.getChildren().addAll(p1name,p1Picture,p1StackSize,this.p1ValidButton);
+		this.player1Infos.getChildren().addAll(p1name,p1Picture,p1Points,p1StackSize,this.p1ValidButton);
 		this.player1Infos.setAlignment(Pos.CENTER);
 		
 		
