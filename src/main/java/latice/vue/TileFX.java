@@ -145,7 +145,7 @@ public class TileFX extends ImageView implements Serializable {
 	
 
 	private void deletePlayerPointsOnExit() {
-		Integer points = tileSource.getParentBox().getTileMatchType(tileSource.getParentBox().getAdjacentBoxes()).value();
+		Integer points = tileSource.getParentBox().getTileMatchType(tileSource.getParentBox().getAdjacentBoxes()).value()   +   tileSource.getParentBox().gainPointBySunBox();
 		tileSource.getParentBox().getGameboard().getActivePlayer().addPoints(-points);
 		tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
 	}

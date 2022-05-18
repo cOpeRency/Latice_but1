@@ -60,6 +60,10 @@ public class GameMain extends Application {
 		private VBox player2Infos;
 		
 		private Label p1Points;
+		private Label p2Points;
+		
+		private Label p1StackSize;
+		private Label p2StackSize;
 		
 		private Button p1ValidButton;
 		private Button p2ValidButton;
@@ -149,23 +153,14 @@ public class GameMain extends Application {
 		initializePlayersRack(firstPlayer,secondPlayer);
 		startTurn(firstPlayer,secondPlayer);
 
-		//this.p1Points = new SimpleIntegerProperty();
-		Label p1StackSize = new Label();
-		//p1Pts.textProperty().bind(p1Points.asString());
-		p1StackSize.setTextFill(javafx.scene.paint.Color.WHITE);
-		p1StackSize.setFont(Font.font(null, FontWeight.NORMAL, 35));
-		p1StackSize.setMinHeight(50);
-		p1StackSize.setText("Tiles left : "+firstPlayer.getStackSize().toString());
+		this.p1StackSize = new Label();
+		this.p1StackSize.setTextFill(javafx.scene.paint.Color.WHITE);
+		this.p1StackSize.setFont(Font.font(null, FontWeight.NORMAL, 35));
+		this.p1StackSize.setMinHeight(50);
+		this.p1StackSize.setText("Tiles left : "+firstPlayer.getStackSize().toString());
 		
 		
-		SimpleIntegerProperty p1PointsProperty = new SimpleIntegerProperty();
-		p1PointsProperty.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(
-					ObservableValue<? extends Number> observable, Number oldPoints, Number newPoints) {
-						System.out.println("Point changed");
-					}
-		});
+		
 		this.p1Points = new Label();
 		this.p1Points.textProperty().bind(firstPlayer.getPlayerFX().getSimpleIntegerProperty().asString());
 		this.p1Points.setTextFill(javafx.scene.paint.Color.WHITE);
@@ -186,7 +181,6 @@ public class GameMain extends Application {
 		    	startTurn(secondPlayer,firstPlayer);
 		    	p2ValidButton.setDisable(false);
 		    	p1ValidButton.setDisable(true);
-				p1PointsProperty.set(firstPlayer.getPoints());
 		    }
 		});
 		this.player1Infos = new VBox();
@@ -207,6 +201,16 @@ public class GameMain extends Application {
 		this.player1Infos.getChildren().addAll(p1name,p1Picture,p1Points,p1StackSize,this.p1ValidButton);
 		this.player1Infos.setAlignment(Pos.CENTER);
 		
+		
+		
+		
+		
+		
+		this.p2Points = new Label();
+		this.p2Points.textProperty().bind(secondPlayer.getPlayerFX().getSimpleIntegerProperty().asString());
+		this.p2Points.setTextFill(javafx.scene.paint.Color.WHITE);
+		this.p2Points.setFont(Font.font(null, FontWeight.NORMAL, 35));
+		this.p2Points.setMinHeight(50);
 		
 		this.p2ValidButton = new Button("Valider");
     	p2ValidButton.setDisable(true);
@@ -239,7 +243,14 @@ public class GameMain extends Application {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		this.player2Infos.getChildren().addAll(p2name,p2Picture,this.p2ValidButton);
+		
+		this.p2StackSize = new Label();
+		this.p2StackSize.setTextFill(javafx.scene.paint.Color.WHITE);
+		this.p2StackSize.setFont(Font.font(null, FontWeight.NORMAL, 35));
+		this.p2StackSize.setMinHeight(50);
+		this.p2StackSize.setText("Tiles left : "+secondPlayer.getStackSize().toString());
+		
+		this.player2Infos.getChildren().addAll(p2name,p2Picture,this.p2Points,this.p2StackSize,this.p2ValidButton);
 		this.player2Infos.setAlignment(Pos.CENTER);
 	}
 

@@ -54,7 +54,7 @@ public class Box implements Serializable{
 		tile.setParentBox(this);
 		this.tile = tile;
 		System.out.println(getTileMatchType(getAdjacentBoxes())+" for player "+gameboard.getActivePlayer().getName());
-		gameboard.getActivePlayer().addPoints(getTileMatchType(getAdjacentBoxes()).value());
+		gameboard.getActivePlayer().addPoints(getTileMatchType( getAdjacentBoxes()).value()+gainPointBySunBox() );
 	}
 	
 	public Tile getTile() {
@@ -63,6 +63,13 @@ public class Box implements Serializable{
 
 	public void removeTile(Tile tile) {
 		this.tile = null;
+	}
+	
+	public Integer gainPointBySunBox() {
+		if (this.boxType==BoxType.SUN) {
+			return 2;
+		}
+		return 0;
 	}
 	
 	public MatchType getTileMatchType(List<Box> boxAdjacent) {
