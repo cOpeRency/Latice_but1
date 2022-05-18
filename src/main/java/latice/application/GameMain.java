@@ -64,6 +64,7 @@ public class GameMain extends Application {
 		
 		private Label p1StackSize;
 		private Label p2StackSize;
+
 		
 		private Button p1ValidButton;
 		private Button p2ValidButton;
@@ -174,12 +175,17 @@ public class GameMain extends Application {
 		this.p1Points.setFont(Font.font(null, FontWeight.NORMAL, 35));
 		this.p1Points.setMinHeight(50);
 		
+		
 		this.p1ValidButton = new Button("Valider");
 		this.p1ValidButton.setPrefSize(170, 70);
 		this.p1ValidButton.setFont(Font.font(null, FontWeight.NORMAL, 35));
 		this.p1ValidButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
+		    	if (firstPlayer.isAbleToPutATile()) {
+		    		firstPlayer.addPoints(2);
+		    		firstPlayer.getPlayerFX().setPointProperty();
+		    	}
 		    	gameBoard.resetPlayingTileEffect();
 		    	gameBoard.lockPlayingTiles();
 		    	firstPlayer.getRack().fillRack(firstPlayer.getStack());
@@ -188,6 +194,8 @@ public class GameMain extends Application {
 		    	startTurn(secondPlayer,firstPlayer);
 		    	p2ValidButton.setDisable(false);
 		    	p1ValidButton.setDisable(true);
+		    	
+
 		    }
 		});
 		this.player1Infos = new VBox();
@@ -205,7 +213,7 @@ public class GameMain extends Application {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		this.player1Infos.getChildren().addAll(p1name,p1Picture,p1Points,p1StackSize,this.p1ValidButton);
+		this.player1Infos.getChildren().addAll(p1name,p1Picture,p1Points,p1StackSize,firstPlayer.getPlayerFX().getExtraMoveButton(),this.p1ValidButton);
 		this.player1Infos.setAlignment(Pos.CENTER);
 		
 		
@@ -226,6 +234,10 @@ public class GameMain extends Application {
 		this.p2ValidButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
+		    	if (secondPlayer.isAbleToPutATile()) {
+		    		secondPlayer.addPoints(2);
+		    		secondPlayer.getPlayerFX().setPointProperty();
+		    	}
 		    	gameBoard.resetPlayingTileEffect();
 		    	gameBoard.lockPlayingTiles();
 		    	secondPlayer.getRack().fillRack(secondPlayer.getStack());
@@ -234,6 +246,7 @@ public class GameMain extends Application {
 		    	startTurn(firstPlayer,secondPlayer);
 		    	p1ValidButton.setDisable(false);
 		    	p2ValidButton.setDisable(true);
+		    	
 		    	determineGameEnd(primaryStage);
 		    }
 		});
@@ -259,7 +272,7 @@ public class GameMain extends Application {
 		this.p2StackSize.setMinHeight(50);
 		this.p2StackSize.setText("Tiles left : "+secondPlayer.getStackSize().toString());
 		
-		this.player2Infos.getChildren().addAll(p2name,p2Picture,this.p2Points,this.p2StackSize,this.p2ValidButton);
+		this.player2Infos.getChildren().addAll(p2name,p2Picture,this.p2Points,this.p2StackSize,secondPlayer.getPlayerFX().getExtraMoveButton(),this.p2ValidButton);
 		this.player2Infos.setAlignment(Pos.CENTER);
 	}
 

@@ -17,7 +17,7 @@ public class Player implements Serializable{
 	public Player(String name) {
 		this.name = name;
 		this.stack = new Stack();
-		this.points = 0;
+		this.points = 2;
 		this.myTurn = false;
 		this.ableToPutATile = false;
 

@@ -55,6 +55,8 @@ public class Box implements Serializable{
 		this.tile = tile;
 		System.out.println(getTileMatchType(getAdjacentBoxes())+" for player "+gameboard.getActivePlayer().getName());
 		gameboard.getActivePlayer().addPoints(getTileMatchType( getAdjacentBoxes()).value()+gainPointBySunBox() );
+		
+
 	}
 	
 	public Tile getTile() {

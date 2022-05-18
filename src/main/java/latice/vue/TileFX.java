@@ -72,6 +72,7 @@ public class TileFX extends ImageView implements Serializable {
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
+		    	System.out.println(tileSource.getParentRack().getOwner().isAbleToPutATile());
 		    	if (!tileSource.isLocked() && isLastTilePlayed && !tileSource.getParentRack().isLocked() && tileSource.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			        setStyle(SHADOW_EFFECT);
@@ -85,24 +86,6 @@ public class TileFX extends ImageView implements Serializable {
 			        }
 			        
 			        content.put(GameMain.TILE_DATA, tileSource);
-			        /*ObjectOutputStream objectOutputStream = null;
-			        try {
-						final FileOutputStream fichier = new FileOutputStream("C:/Windows/Temp/tile.ser");
-						objectOutputStream = new ObjectOutputStream(fichier);
-						objectOutputStream.writeObject(tileSource);
-						objectOutputStream.flush();
-						
-					} catch (IOException e) {
-						e.printStackTrace();						
-					} finally {
-						if (objectOutputStream != null) {
-							try {
-								objectOutputStream.close();
-							} catch (IOException ex) {
-								ex.printStackTrace();
-							}
-						}
-					}*/
 			        
 			        
 			        
@@ -110,9 +93,22 @@ public class TileFX extends ImageView implements Serializable {
 			        if (tileSource.getParentBox()!=null) {
 			        	deletePlayerPointsOnExit();
 			    		
+			        	//When we bought an extra move and then we move a tile from the gameboard before using it, we reset the extra move
+			        	// Or when we take an extra tile which is already played, we reset the extra move too
+			        	if (tileSource.getParentBox().getGameboard().getActivePlayer().isAbleToPutATile() || tileSource.getParentBox().getGameboard().getPlayingTiles().size()>1) {
+			        		tileSource.getParentBox().getGameboard().getActivePlayer().addPoints(2);
+			        		tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
+			        	}
+			        	
 			        	tileSource.exitBox();
 			    		tileSource.getParentBox().getBoxFX().getChildren().remove(tileSource.getTileFX());
 			    		tileSource.getParentBox().getGameboard().removePlayingTile();
+			    		
+			    		if (tileSource.getParentBox().getGameboard().getPlayingTiles().size()==0) {
+			    			tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+			    		}
+			    		
+			    		tileSource.getParentBox().getGameboard().getActivePlayer().setAblilityToPutATile(true);
 			    	}
 			        dragboard.setContent(content);
 			        event.consume();
@@ -133,10 +129,21 @@ public class TileFX extends ImageView implements Serializable {
 			    	}
 		    	} else  if (tileSource.getParentBox()!=null) {
 		    		tileSource.resetPosition();
+		    		tileSource.getParentBox().getGameboard().getActivePlayer().setAblilityToPutATile(false);
+		    		if (tileSource.getParentBox().getGameboard().getActivePlayer().getPoints()>=2) {
+		    			tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+		    		}
 		    		tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
 		    		tileSource.getParentBox().getBoxFX().getChildren().add(tileSource.getTileFX());
 		    		
 		    		tileSource.getParentBox().getGameboard().addPlayingTile(tileSource);
+		    		
+		    		// If there is more than 1 playing tile on the gamebord, it mean that the extra move is reused, so we lose 2 points
+		    		if (tileSource.getParentBox().getGameboard().getPlayingTiles().size()>1) {
+		    			tileSource.getParentBox().getGameboard().getActivePlayer().addPoints(-2);
+		    			tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
+		    			tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+		    		}
 		    	}
 		        event.consume();
 		    }

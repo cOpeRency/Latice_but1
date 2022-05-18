@@ -68,8 +68,20 @@ public class RackFX extends HBox implements Serializable{
 		    	if (dragboard.hasString()) {
 		    		Tile tile = ((Tile)dragboard.getContent(GameMain.TILE_DATA));
 		    		tile.setParentRack(rackSource);
+		    		
+		    		// If gameboard has at least one not locked tile, we delete the ability to play until he buy an extra move.
+		    		if (tile.getParentBox().getGameboard().getPlayingTiles().size() >= 1) {
+		    			tile.getParentRack().getOwner().setAblilityToPutATile(false);
+		    		}
+		    		
+		    		
+		    		if (tile.getParentBox().getGameboard().getActivePlayer().getPoints()>=2 && tile.getParentBox().getGameboard().getPlayingTiles().size()>0) {
+		    			rackSource.getOwner().getPlayerFX().setExtraMoveButtonDisability(false);
+		    			//tile.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+		    		}
 		    		tile.exitBox();
 		    		tile.getParentBox().getBoxFX().getChildren().remove(tile.getTileFX());
+	    			System.out.println(tile.getParentBox().getGameboard().getActivePlayer().isAbleToPutATile());
 		    		tile.setParentBox(null);
 					rackSource.addTile(tile);
 					tile.setTileImage();

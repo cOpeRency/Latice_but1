@@ -110,7 +110,10 @@ public class BoxFX extends StackPane implements Serializable{
 		    	if (dragboard.hasString()) {
 		    		setTile((Tile)dragboard.getContent(GameMain.TILE_DATA));
 		    		box.getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
-		    		//box.getGameboard().getActivePlayer().setAblilityToPutATile(false);
+		    		box.getGameboard().getActivePlayer().setAblilityToPutATile(false);
+		    		if (!box.getGameboard().getActivePlayer().isAbleToPutATile() && box.getGameboard().getActivePlayer().getPoints()>=2) {
+		    			box.getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+		    		}
 		    		/*try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("C:/Windows/Temp/tile.ser"))) {
 		    			
 		    			setTile((Tile) objectInputStream.readObject());
@@ -134,6 +137,12 @@ public class BoxFX extends StackPane implements Serializable{
 	}
 	
 	public void setTile(Tile tile) {
+		//If there is at least one tile on gameboard and tile is from a box, we reuse the extra move 
+		if (this.box.getGameboard().getPlayingTiles().size()>0 && tile.getParentBox()!=null) {
+			this.box.getGameboard().getActivePlayer().addPoints(-2);
+			this.box.getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
+			this.box.getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+		}
 		this.box.setTile(tile);
 		this.box.getTile().setTileImage();
 		this.getChildren().add(this.box.getTile().getTileFX());
