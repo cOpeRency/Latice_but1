@@ -68,10 +68,16 @@ public class GameMain extends Application {
 		private Button p1ValidButton;
 		private Button p2ValidButton;
 		
+		
+		
+		private static Integer nbCycleMax = 10;
+		private Integer currentNbOfCycles;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		
+		this.currentNbOfCycles = 1;
 		gameStart();
 		this.gameBoard = new GameBoard();
 		
@@ -81,9 +87,9 @@ public class GameMain extends Application {
 		
 		Random quiCommence = new Random();
 		if ((quiCommence.nextInt(3-1) + 1)==1) {
-			startGameplay(player1,player2);
+			startGameplay(player1,player2,primaryStage);
 		} else {
-			startGameplay(player2,player1);
+			startGameplay(player2,player1,primaryStage);
 		}
 
 		//rackP1vbox.getChildren().addAll(null);
@@ -147,8 +153,9 @@ public class GameMain extends Application {
 		player2.createRack();
 	}
 	
-	public void startGameplay(Player firstPlayer, Player secondPlayer) {
+	public void startGameplay(Player firstPlayer, Player secondPlayer,Stage primaryStage) {
 		System.out.println(firstPlayer.getName()+" commence ! Que la partie débute !");
+    	System.out.println("Cycle n°"+currentNbOfCycles);
 		
 		initializePlayersRack(firstPlayer,secondPlayer);
 		startTurn(firstPlayer,secondPlayer);
@@ -223,9 +230,11 @@ public class GameMain extends Application {
 		    	gameBoard.lockPlayingTiles();
 		    	secondPlayer.getRack().fillRack(secondPlayer.getStack());
 				rackP2vbox.setRack(secondPlayer.getRack().getTiles());
+				p2StackSize.setText("Tiles left : "+secondPlayer.getStackSize().toString());
 		    	startTurn(firstPlayer,secondPlayer);
 		    	p1ValidButton.setDisable(false);
 		    	p2ValidButton.setDisable(true);
+		    	determineGameEnd(primaryStage);
 		    }
 		});
 		this.player2Infos = new VBox();
@@ -278,5 +287,30 @@ public class GameMain extends Application {
 		this.playersRacks.setAlignment(Pos.CENTER);
 		this.playersRacks.setSpacing(150);
 		this.playersRacks.setPadding(new Insets(0,0,23,0));
+	}
+	
+	
+	private void determineGameEnd(Stage primaryStage) {
+		if (this.currentNbOfCycles == this.nbCycleMax) {
+			gameEnd(primaryStage);
+		} else {
+	    	this.currentNbOfCycles += 1;
+	    	System.out.println("Cycle n°"+this.currentNbOfCycles);
+		}
+	}
+	
+	private void gameEnd(Stage primaryStage) {
+		this.player1.setMyTurn(false);
+		this.player2.setMyTurn(false);
+		
+		if (this.player1.getStack().stackLength()<this.player2.getStack().stackLength()) {
+			System.out.println(this.player1.getName()+" a gagné !");
+		} else if (this.player2.getStack().stackLength()<this.player1.getStack().stackLength()) {
+			System.out.println(this.player2.getName()+" a gagné !");
+		} else {
+			System.out.println("Egalité !");
+		}
+		
+		primaryStage.close();
 	}
 }
