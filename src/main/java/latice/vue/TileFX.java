@@ -108,9 +108,8 @@ public class TileFX extends ImageView implements Serializable {
 			        
 			        
 			        if (tileSource.getParentBox()!=null) {
-			    		updatePlayerPointsOnExit(-1);
+			        	deletePlayerPointsOnExit();
 			    		
-			    		System.out.println("remove");
 			        	tileSource.exitBox();
 			    		tileSource.getParentBox().getBoxFX().getChildren().remove(tileSource.getTileFX());
 			    		tileSource.getParentBox().getGameboard().removePlayingTile();
@@ -133,9 +132,8 @@ public class TileFX extends ImageView implements Serializable {
 				        setStyle(NOT_FIXED_EFFECT);
 			    	}
 		    	} else  if (tileSource.getParentBox()!=null) {
-		    		updatePlayerPointsOnExit(1);
-		    		System.out.println("reset");
 		    		tileSource.resetPosition();
+		    		tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
 		    		tileSource.getParentBox().getBoxFX().getChildren().add(tileSource.getTileFX());
 		    		
 		    		tileSource.getParentBox().getGameboard().addPlayingTile(tileSource);
@@ -146,12 +144,9 @@ public class TileFX extends ImageView implements Serializable {
 	}
 	
 
-	private void updatePlayerPointsOnExit(Integer multiplier) {
-		Integer points = tileSource.getParentBox().getTileMatchType(tileSource.getParentBox().getAdjacentBoxes()).value() * multiplier;
-		//System.out.println(tileSource.getParentBox());
-		//System.out.println(tileSource.getParentBox().getGameboard());
-		//System.out.println(tileSource.getParentBox().getGameboard().getActivePlayer());
-		tileSource.getParentBox().getGameboard().getActivePlayer().addPoints(points);
+	private void deletePlayerPointsOnExit() {
+		Integer points = tileSource.getParentBox().getTileMatchType(tileSource.getParentBox().getAdjacentBoxes()).value();
+		tileSource.getParentBox().getGameboard().getActivePlayer().addPoints(-points);
 		tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
 	}
 	

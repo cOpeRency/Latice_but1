@@ -41,7 +41,6 @@ public class Player implements Serializable{
 	}
 	
 	public void addPoints(Integer points) {
-		System.out.println("Pts = "+points+"   ||   current pts = "+this.points);
 		this.points = this.points + points;
 	}
 	
