@@ -3,6 +3,7 @@ package latice.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -74,5 +75,9 @@ public class Rack implements Serializable{
 	public Integer rackLength() {
 		return tiles.size();
 	}
+
+
+
+	
 	
 }

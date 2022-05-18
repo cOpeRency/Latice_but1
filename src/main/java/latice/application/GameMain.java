@@ -67,6 +67,7 @@ public class GameMain extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		
 		gameStart();
+		this.gameBoard = new GameBoard();
 		
 		player1.getRack().showRack();
 		player2.getRack().showRack();
@@ -83,7 +84,7 @@ public class GameMain extends Application {
 
 		
 		BorderPane borderPane = new BorderPane();
-		this.gameBoard = new GameBoard();
+		
 		this.gameBoard.generateBox();
 		borderPane.setCenter(gameBoard.generateGameBoard());
 		borderPane.setBottom(playersRacks);
@@ -223,6 +224,7 @@ public class GameMain extends Application {
 
 	private void startTurn(Player activePlayer, Player inactivePlayer) {
 		activePlayer.setMyTurn(true);
+		this.gameBoard.setActivePlayer(activePlayer);
 		inactivePlayer.setMyTurn(false);
 	}
 	

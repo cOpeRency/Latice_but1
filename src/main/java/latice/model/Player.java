@@ -1,6 +1,7 @@
 package latice.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Player implements Serializable{
 	private boolean myTurn;
@@ -8,18 +9,32 @@ public class Player implements Serializable{
 	private String name;
 	private Integer points;
 	private Stack stack;
+	private boolean ableToPutATile;
 	
 	public Player(String name) {
 		this.name = name;
 		this.stack = new Stack();
 		this.points = 0;
 		this.myTurn = false;
+		this.ableToPutATile = false;
+
+	}
+	
+	public boolean isAbleToPutATile() {
+		return this.ableToPutATile;
+	}
+	
+	
+	public void setAblilityToPutATile(boolean ability) {
+		this.ableToPutATile = ability;
 	}
 	
 	public void addPoints(Integer points) {
 		this.points = this.points + points;
-		System.out.println(this.hashCode());
-		System.out.println(this.points);
+	}
+	
+	public Integer getPoints() {
+		return this.points;
 	}
 	
 	public String getName() {
@@ -32,6 +47,7 @@ public class Player implements Serializable{
 	
 	public void setMyTurn(boolean myTurn) {
 		this.myTurn = myTurn;
+		this.ableToPutATile = myTurn;
 		this.rack.setLocked(!myTurn);
 	}
 	
@@ -50,4 +66,30 @@ public class Player implements Serializable{
 	public Rack getRack() {
 		return rack;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Player other = (Player) obj;
+		return Objects.equals(name, other.name);
+	}
+
+
+	
+	
+	
+
+
+	
+	
 }

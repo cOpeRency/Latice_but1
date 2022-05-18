@@ -72,7 +72,7 @@ public class TileFX extends ImageView implements Serializable {
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (!tileSource.isLocked() && isLastTilePlayed && !tileSource.getParentRack().isLocked()) {
+		    	if (!tileSource.isLocked() && isLastTilePlayed && !tileSource.getParentRack().isLocked() && tileSource.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			        setStyle(SHADOW_EFFECT);
 			        

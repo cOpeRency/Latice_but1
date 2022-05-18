@@ -109,6 +109,7 @@ public class BoxFX extends StackPane implements Serializable{
 		    	}
 		    	if (dragboard.hasString()) {
 		    		setTile((Tile)dragboard.getContent(GameMain.TILE_DATA));
+		    		//box.getGameboard().getActivePlayer().setAblilityToPutATile(false);
 		    		/*try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("C:/Windows/Temp/tile.ser"))) {
 		    			
 		    			setTile((Tile) objectInputStream.readObject());

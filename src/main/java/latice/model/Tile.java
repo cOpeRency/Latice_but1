@@ -31,6 +31,7 @@ public class Tile implements Serializable{
 		this.shape = shape;
 		this.color = color;
 		this.imagePath = this.imagePath+this.shape.code()+"_"+this.color.code()+".png";
+
 	}
 	
 	public TileFX getTileFX() {
