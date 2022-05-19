@@ -1,7 +1,7 @@
 package latice.model;
 
 public enum Shape {
-	SHAPE1("bird"),SHAPE2("dolphin"),SHAPE3("feather"),SHAPE4("flower"),SHAPE5("gecko"),SHAPE6("turtle");
+	SHAPE1("shp1"),SHAPE2("shp2"),SHAPE3("shp3"),SHAPE4("shp4"),SHAPE5("shp5"),SHAPE6("shp6");
 	
 
 	

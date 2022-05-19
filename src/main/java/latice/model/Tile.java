@@ -24,7 +24,7 @@ public class Tile implements Serializable{
 	private Box parentBox;
 	private boolean locked = false;
 	private TileFX tileFX;
-	private String imagePath = "src/main/resources/themes/classic/";
+	private String imagePath = "src/main/resources/themes/pokemon/";
 	
 	public Tile(Shape shape, Color color) {
 		super();
