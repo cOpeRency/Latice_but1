@@ -20,7 +20,17 @@ public class GameBoard implements Serializable{
 		this.playingTiles = new ArrayList();
     }
 
-    public List<Tile> getPlayingTiles() {
+    public Box getBox(Position position) {
+		for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
+			if (entry.getKey().row()==position.row() && entry.getKey().column()==position.column()) {
+				return entry.getValue();
+			}
+		}
+		
+		return null;
+	}
+
+	public List<Tile> getPlayingTiles() {
 		return playingTiles;
 	}
 
@@ -68,17 +78,7 @@ public class GameBoard implements Serializable{
     	return board;
     }
     
-    public Box getBox(Position position) {
-    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
-			if (entry.getKey().row()==position.row() && entry.getKey().column()==position.column()) {
-				return entry.getValue();
-			}
-		}
-    	
-    	return null;
-    }
-    
-	public void addPlayingTile(Tile newTile) {
+    public void addPlayingTile(Tile newTile) {
 
 		for (Tile tile : playingTiles) {
 			tile.getTileFX().setLastTilePlayed(false);

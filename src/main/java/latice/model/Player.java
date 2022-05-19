@@ -17,7 +17,7 @@ public class Player implements Serializable{
 	public Player(String name) {
 		this.name = name;
 		this.stack = new Stack();
-		this.points = 2;
+		this.points = 0;
 		this.myTurn = false;
 		this.ableToPutATile = false;
 
@@ -34,8 +34,7 @@ public class Player implements Serializable{
 	public boolean isAbleToPutATile() {
 		return this.ableToPutATile;
 	}
-	
-	
+		
 	public void setAblilityToPutATile(boolean ability) {
 		this.ableToPutATile = ability;
 	}
