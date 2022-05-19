@@ -279,6 +279,7 @@ public class GameMain extends Application {
 	private void startTurn(Player activePlayer, Player inactivePlayer) {
 		activePlayer.setMyTurn(true);
 		this.gameBoard.setActivePlayer(activePlayer);
+		activePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
 		inactivePlayer.setMyTurn(false);
 	}
 	
