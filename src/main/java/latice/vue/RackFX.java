@@ -43,6 +43,18 @@ public class RackFX extends HBox implements Serializable{
 		}
 	}
 	
+	public void hideTiles(List<Tile> tiles) {
+		for (Tile tile : tiles) {
+			tile.getTileFX().hideTile();
+		}
+	}
+	
+	public void showTiles(List<Tile> tiles) {
+		for (Tile tile : tiles) {
+			tile.getTileFX().setTileImage();
+		}
+	}
+	
 	public void initDragSystem() {
 		
 		setOnDragOver(new EventHandler<DragEvent>() {

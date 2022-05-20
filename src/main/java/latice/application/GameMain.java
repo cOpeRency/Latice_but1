@@ -160,6 +160,7 @@ public class GameMain extends Application {
 		
 		initializePlayersRack(firstPlayer,secondPlayer);
 		startTurn(firstPlayer,secondPlayer);
+		rackP2vbox.hideTiles(secondPlayer.getRack().getTiles());
 
 		this.p1StackSize = new Label();
 		this.p1StackSize.setTextFill(javafx.scene.paint.Color.WHITE);
@@ -182,7 +183,7 @@ public class GameMain extends Application {
 		this.p1ValidButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (firstPlayer.isAbleToPutATile()) {
+		    	if (firstPlayer.isAbleToPutATile() && gameBoard.getPlayingTiles().size()>0) {
 		    		firstPlayer.addPoints(2);
 		    		firstPlayer.getPlayerFX().setPointProperty();
 		    	}
@@ -190,6 +191,8 @@ public class GameMain extends Application {
 		    	gameBoard.lockPlayingTiles();
 		    	firstPlayer.getRack().fillRack(firstPlayer.getStack());
 				rackP1vbox.setRack(firstPlayer.getRack().getTiles());
+				rackP1vbox.hideTiles(firstPlayer.getRack().getTiles());
+				rackP2vbox.showTiles(secondPlayer.getRack().getTiles());
 				p1StackSize.setText("Tiles left : "+firstPlayer.getStackSize().toString());
 		    	startTurn(secondPlayer,firstPlayer);
 		    	p2ValidButton.setDisable(false);
@@ -242,6 +245,8 @@ public class GameMain extends Application {
 		    	gameBoard.lockPlayingTiles();
 		    	secondPlayer.getRack().fillRack(secondPlayer.getStack());
 				rackP2vbox.setRack(secondPlayer.getRack().getTiles());
+				rackP2vbox.hideTiles(secondPlayer.getRack().getTiles());
+				rackP1vbox.showTiles(firstPlayer.getRack().getTiles());
 				p2StackSize.setText("Tiles left : "+secondPlayer.getStackSize().toString());
 		    	startTurn(firstPlayer,secondPlayer);
 		    	p1ValidButton.setDisable(false);

@@ -51,6 +51,19 @@ public class TileFX extends ImageView implements Serializable {
 		}
 	}
 
+	public void hideTile() {
+		String urlFichier;
+		try {
+			File fichier = new File("src/main/resources/themes/pokemon/back.png");
+			urlFichier = fichier.toURI().toURL().toString();
+			Image img = new Image(urlFichier, 62, 62, true, true);
+			setImage(img);
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}	
+	
 	public void setTileImage() {
 		String urlFichier;
 		try {
