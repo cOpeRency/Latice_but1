@@ -36,6 +36,7 @@ import javafx.stage.Stage;
 import latice.model.Box;
 import latice.model.Color;
 import latice.model.GameBoard;
+import latice.model.GameManager;
 import latice.model.Player;
 import latice.model.Position;
 import latice.model.Rack;
@@ -69,6 +70,7 @@ public class GameMain extends Application {
 		private Button p1ValidButton;
 		private Button p2ValidButton;
 		
+		private static Player activePlayer;
 		
 		
 		private static Integer nbCycleMax = 10;
@@ -283,7 +285,7 @@ public class GameMain extends Application {
 
 	private void startTurn(Player activePlayer, Player inactivePlayer) {
 		activePlayer.setMyTurn(true);
-		this.gameBoard.setActivePlayer(activePlayer);
+		GameManager.setActivePlayer(activePlayer);
 		activePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
 		inactivePlayer.setMyTurn(false);
 	}
@@ -332,4 +334,5 @@ public class GameMain extends Application {
 		
 		primaryStage.close();
 	}
+	
 }

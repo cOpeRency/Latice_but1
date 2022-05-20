@@ -22,6 +22,7 @@ import latice.application.GameMain;
 import latice.model.Box;
 import latice.model.BoxType;
 import latice.model.Color;
+import latice.model.GameManager;
 import latice.model.Shape;
 import latice.model.Tile;
 
@@ -109,25 +110,11 @@ public class BoxFX extends StackPane implements Serializable{
 		    	}
 		    	if (dragboard.hasString()) {
 		    		setTile((Tile)dragboard.getContent(GameMain.TILE_DATA));
-		    		box.getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
-		    		box.getGameboard().getActivePlayer().setAblilityToPutATile(false);
-		    		if (!box.getGameboard().getActivePlayer().isAbleToPutATile() && box.getGameboard().getActivePlayer().getPoints()>=2) {
-		    			box.getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+		    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+		    		GameManager.getActivePlayer().setAblilityToPutATile(false);
+		    		if (!GameManager.getActivePlayer().isAbleToPutATile() && GameManager.getActivePlayer().getPoints()>=2) {
+		    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
 		    		}
-		    		/*try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("C:/Windows/Temp/tile.ser"))) {
-		    			
-		    			setTile((Tile) objectInputStream.readObject());
-		    		} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-					//setTile(dragboard);
 		    	}
 		    	
 		    	event.setDropCompleted(success);
@@ -139,9 +126,9 @@ public class BoxFX extends StackPane implements Serializable{
 	public void setTile(Tile tile) {
 		//If there is at least one tile on gameboard and tile is from a box, we reuse the extra move 
 		if (this.box.getGameboard().getPlayingTiles().size()>0 && tile.getParentBox()!=null) {
-			this.box.getGameboard().getActivePlayer().addPoints(-2);
-			this.box.getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
-			this.box.getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+			GameManager.getActivePlayer().addPoints(-2);
+			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
 		}
 		this.box.setTile(tile);
 		this.box.getTile().setTileImage();

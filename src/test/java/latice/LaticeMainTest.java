@@ -15,6 +15,7 @@ import latice.model.Box;
 import latice.model.BoxType;
 import latice.model.Color;
 import latice.model.GameBoard;
+import latice.model.GameManager;
 import latice.model.MatchType;
 import latice.model.Player;
 import latice.model.Position;
@@ -48,7 +49,7 @@ class LaticeMainTest {
 		
 		this.gameBoard.generateBox();
 
-		this.gameBoard.setActivePlayer(player1);
+		GameManager.setActivePlayer(player1);
 	}
 
 	
@@ -92,7 +93,7 @@ class LaticeMainTest {
 	@Test
 	void testTileImagePath() {
 		
-		assertEquals(new Tile(Shape.SHAPE1,Color.COLOR1).getImagePath(),"src/main/resources/themes/classic/"+Shape.SHAPE1.code()+"_"+Color.COLOR1.code()+".png");
+		assertEquals(new Tile(Shape.SHAPE1,Color.COLOR1).getImagePath(),"src/main/resources/themes/pokemon/"+Shape.SHAPE1.code()+"_"+Color.COLOR1.code()+".png");
 		
 	}
 	
@@ -303,7 +304,7 @@ class LaticeMainTest {
 		gameBoard.getBox(new Position(1, 1)).setTile(new Tile(Shape.SHAPE1,Color.COLOR1));
 		
 		assertEquals(gameBoard.getBox(new Position(1, 1)).getBoxType(),BoxType.SUN);
-		assertEquals(gameBoard.getActivePlayer().getPoints(),sunPoint);
+		assertEquals(GameManager.getActivePlayer().getPoints(),sunPoint);
 		
 	}
 	
@@ -320,7 +321,7 @@ class LaticeMainTest {
 		
 		
 		assertEquals(matchType,MatchType.DOUBLE);
-		assertEquals(gameBoard.getActivePlayer().getPoints(),doublePoint);
+		assertEquals(GameManager.getActivePlayer().getPoints(),doublePoint);
 		
 	}
 	
@@ -336,7 +337,7 @@ class LaticeMainTest {
 		
 		assertEquals(matchType,MatchType.DOUBLE);
 		assertEquals(gameBoard.getBox(new Position(0, 0)).getBoxType(),BoxType.SUN);
-		assertEquals(gameBoard.getActivePlayer().getPoints(),sunPoint+doublePoint);
+		assertEquals(GameManager.getActivePlayer().getPoints(),sunPoint+doublePoint);
 		
 	}
 	
@@ -355,7 +356,7 @@ class LaticeMainTest {
 		
 		
 		assertEquals(matchType,MatchType.TREFOIL);
-		assertEquals(gameBoard.getActivePlayer().getPoints(),trefoilPoint);
+		assertEquals(GameManager.getActivePlayer().getPoints(),trefoilPoint);
 		
 	}
 	
@@ -377,7 +378,7 @@ class LaticeMainTest {
 		
 		
 		assertEquals(matchType,MatchType.LATICE);
-		assertEquals(gameBoard.getActivePlayer().getPoints(),laticePoint);
+		assertEquals(GameManager.getActivePlayer().getPoints(),laticePoint);
 		
 	}
 }

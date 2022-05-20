@@ -17,6 +17,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import latice.application.GameMain;
+import latice.model.GameManager;
 import latice.model.Tile;
 
 public class TileFX extends ImageView implements Serializable {
@@ -107,9 +108,9 @@ public class TileFX extends ImageView implements Serializable {
 			    		
 			        	//When we bought an extra move and then we move a tile from the gameboard before using it, we reset the extra move
 			        	// Or when we take an extra tile which is already played, we reset the extra move too
-			        	if (tileSource.getParentBox().getGameboard().getActivePlayer().isAbleToPutATile() || tileSource.getParentBox().getGameboard().getPlayingTiles().size()>1) {
-			        		tileSource.getParentBox().getGameboard().getActivePlayer().addPoints(2);
-			        		tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
+			        	if (GameManager.getActivePlayer().isAbleToPutATile() || tileSource.getParentBox().getGameboard().getPlayingTiles().size()>1) {
+			        		GameManager.getActivePlayer().addPoints(2);
+			        		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 			        	}
 			        	
 			        	tileSource.exitBox();
@@ -117,10 +118,10 @@ public class TileFX extends ImageView implements Serializable {
 			    		tileSource.getParentBox().getGameboard().removePlayingTile();
 			    		
 			    		if (tileSource.getParentBox().getGameboard().getPlayingTiles().size()==0) {
-			    			tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+			    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
 			    		}
 			    		
-			    		tileSource.getParentBox().getGameboard().getActivePlayer().setAblilityToPutATile(true);
+			    		GameManager.getActivePlayer().setAblilityToPutATile(true);
 			    	}
 			        dragboard.setContent(content);
 			        event.consume();
@@ -133,6 +134,7 @@ public class TileFX extends ImageView implements Serializable {
 		setOnDragDone(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
+		    	System.out.println(GameManager.getActivePlayer());
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
 			    	if (tileSource.getParentRack()!=null) {
 			    		tileSource.exitRack();
@@ -141,20 +143,20 @@ public class TileFX extends ImageView implements Serializable {
 			    	}
 		    	} else  if (tileSource.getParentBox()!=null) {
 		    		tileSource.resetPosition();
-		    		tileSource.getParentBox().getGameboard().getActivePlayer().setAblilityToPutATile(false);
-		    		if (tileSource.getParentBox().getGameboard().getActivePlayer().getPoints()>=2) {
-		    			tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+		    		GameManager.getActivePlayer().setAblilityToPutATile(false);
+		    		if (GameManager.getActivePlayer().getPoints()>=2) {
+		    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
 		    		}
-		    		tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
+		    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 		    		tileSource.getParentBox().getBoxFX().getChildren().add(tileSource.getTileFX());
 		    		
 		    		tileSource.getParentBox().getGameboard().addPlayingTile(tileSource);
 		    		
 		    		// If there is more than 1 playing tile on the gamebord, it mean that the extra move is reused, so we lose 2 points
 		    		if (tileSource.getParentBox().getGameboard().getPlayingTiles().size()>1) {
-		    			tileSource.getParentBox().getGameboard().getActivePlayer().addPoints(-2);
-		    			tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
-		    			tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+		    			GameManager.getActivePlayer().addPoints(-2);
+		    			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+		    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
 		    		}
 		    	}
 		        event.consume();
@@ -165,8 +167,8 @@ public class TileFX extends ImageView implements Serializable {
 
 	private void deletePlayerPointsOnExit() {
 		Integer points = tileSource.getParentBox().getTileMatchType(tileSource.getParentBox().getAdjacentBoxes()).value()   +   tileSource.getParentBox().gainPointBySunBox();
-		tileSource.getParentBox().getGameboard().getActivePlayer().addPoints(-points);
-		tileSource.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setPointProperty();
+		GameManager.getActivePlayer().addPoints(-points);
+		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 	}
 	
 	private void setTileEffects() {
@@ -182,7 +184,7 @@ public class TileFX extends ImageView implements Serializable {
 		this.setOnMouseExited(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent t) {
-		    	if (tileSource.isLocked()) {
+		    	if (tileSource.isLocked() || tileSource.getParentBox()==null) {
 		    		setStyle(SHADOW_EFFECT);
 		    	} else {
 		    		if (isLastTilePlayed) {

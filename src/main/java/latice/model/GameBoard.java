@@ -13,7 +13,6 @@ public class GameBoard implements Serializable{
 	
 	private Map<Position, Box> gameboardTiles;
 	private List<Tile> playingTiles;
-	private Player activePlayer;
 	
 	public GameBoard() {
 		this.gameboardTiles = new HashMap<>();
@@ -53,15 +52,6 @@ public class GameBoard implements Serializable{
     	}
     }
     
-    
-    
-    public Player getActivePlayer() {
-		return activePlayer;
-	}
-
-	public void setActivePlayer(Player activePlayer) {
-		this.activePlayer = activePlayer;
-	}
 
 	//JAVAFX
     public GridPane generateGameBoard() {

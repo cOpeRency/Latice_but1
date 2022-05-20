@@ -16,6 +16,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import latice.application.GameMain;
 import latice.model.Color;
+import latice.model.GameManager;
 import latice.model.Rack;
 import latice.model.Shape;
 import latice.model.Tile;
@@ -87,13 +88,11 @@ public class RackFX extends HBox implements Serializable{
 		    		}
 		    		
 		    		
-		    		if (tile.getParentBox().getGameboard().getActivePlayer().getPoints()>=2 && tile.getParentBox().getGameboard().getPlayingTiles().size()>0) {
+		    		if (GameManager.getActivePlayer().getPoints()>=2 && tile.getParentBox().getGameboard().getPlayingTiles().size()>0) {
 		    			rackSource.getOwner().getPlayerFX().setExtraMoveButtonDisability(false);
-		    			//tile.getParentBox().getGameboard().getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
 		    		}
 		    		tile.exitBox();
 		    		tile.getParentBox().getBoxFX().getChildren().remove(tile.getTileFX());
-	    			System.out.println(tile.getParentBox().getGameboard().getActivePlayer().isAbleToPutATile());
 		    		tile.setParentBox(null);
 					rackSource.addTile(tile);
 					tile.setTileImage();

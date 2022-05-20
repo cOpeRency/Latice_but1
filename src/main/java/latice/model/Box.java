@@ -16,6 +16,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
+import latice.application.GameMain;
 import latice.vue.BoxFX;
 
 public class Box implements Serializable{
@@ -53,8 +54,8 @@ public class Box implements Serializable{
 	public void setTile(Tile tile) {
 		tile.setParentBox(this);
 		this.tile = tile;
-		System.out.println(getTileMatchType(getAdjacentBoxes())+" for player "+gameboard.getActivePlayer().getName());
-		gameboard.getActivePlayer().addPoints(getTileMatchType( getAdjacentBoxes()).value()+gainPointBySunBox() );
+		System.out.println(getTileMatchType(getAdjacentBoxes())+" for player "+GameManager.getActivePlayer().getName());
+		GameManager.getActivePlayer().addPoints(getTileMatchType( getAdjacentBoxes()).value()+gainPointBySunBox() );
 		
 
 	}
