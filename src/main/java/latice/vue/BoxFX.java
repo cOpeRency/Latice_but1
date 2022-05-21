@@ -112,6 +112,7 @@ public class BoxFX extends StackPane implements Serializable{
 		    		setTile((Tile)dragboard.getContent(GameMain.TILE_DATA));
 		    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 		    		GameManager.getActivePlayer().setAblilityToPutATile(false);
+		    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(false);
 		    		if (!GameManager.getActivePlayer().isAbleToPutATile() && GameManager.getActivePlayer().getPoints()>=2) {
 		    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
 		    		}
@@ -134,6 +135,7 @@ public class BoxFX extends StackPane implements Serializable{
 		this.box.getTile().setTileImage();
 		this.getChildren().add(this.box.getTile().getTileFX());
 		this.box.getGameboard().addPlayingTile(tile);
+		GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
 	}
 	
 	public boolean checkValidity(Tile tile) {

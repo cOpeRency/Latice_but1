@@ -62,6 +62,24 @@ class LaticeMainTest {
 		assertEquals(36-5, player2.getStack().stackLength());
 	}
 	
+	@Test
+	void test_rack_joueur_filled_when_stack_less_than_5() {
+		
+		assertEquals(5, this.player1.getRack().rackLength());
+		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		assertEquals(1, this.player1.getRack().rackLength());
+		for (int i = 0; i < 30; i++) {
+			this.player1.getStack().removeTile();
+		}
+		assertEquals(1, this.player1.getStack().stackLength());
+		this.player1.getRack().fillRack(this.player1.getStack());
+		assertEquals(0, this.player1.getStack().stackLength());
+		assertEquals(2, this.player1.getRack().rackLength());
+		
+	}
 	
 	@Test
 	void testCheckBoxType() {
@@ -379,6 +397,26 @@ class LaticeMainTest {
 		
 		assertEquals(matchType,MatchType.LATICE);
 		assertEquals(GameManager.getActivePlayer().getPoints(),laticePoint);
+		
+	}
+	
+	
+	@Test
+	void test_() {
+		
+		assertEquals(5, this.player1.getRack().rackLength());
+		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		assertEquals(1, this.player1.getRack().rackLength());
+		for (int i = 0; i < 30; i++) {
+			this.player1.getStack().removeTile();
+		}
+		assertEquals(1, this.player1.getStack().stackLength());
+		this.player1.getRack().fillRack(this.player1.getStack());
+		assertEquals(0, this.player1.getStack().stackLength());
+		assertEquals(2, this.player1.getRack().rackLength());
 		
 	}
 }

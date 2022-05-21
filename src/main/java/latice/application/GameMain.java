@@ -111,7 +111,7 @@ public class GameMain extends Application {
 	}
 	
 	
-	public void gameStart() {
+	private void gameStart() {
 		this.stack = new Stack();
 		this.player1 = new Player("Albert");
 		this.player2 = new Player("Bernard");
@@ -123,7 +123,7 @@ public class GameMain extends Application {
 		player2.createRack();
 	}
 	
-	public void startGameplay(Player firstPlayer, Player secondPlayer,Stage primaryStage) {
+	private void startGameplay(Player firstPlayer, Player secondPlayer,Stage primaryStage) {
 		System.out.println(firstPlayer.getName()+" commence ! Que la partie débute !");
     	System.out.println("Cycle n°"+GameManager.getCurrentNbOfCycles());
 
@@ -133,6 +133,8 @@ public class GameMain extends Application {
 		initializePlayersRack(firstPlayer,secondPlayer);
 		startTurn(firstPlayer,secondPlayer);
 		rackP2vbox.hideTiles(secondPlayer.getRack().getTiles());
+		secondPlayer.getPlayerFX().getBtnValidate().setDisable(true);
+		secondPlayer.getPlayerFX().getBtnExchange().setDisable(true);
 
 		firstPlayer.getPlayerFX().getBtnValidate().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
@@ -152,6 +154,32 @@ public class GameMain extends Application {
 	}
 	
 	
+	private void initializePlayersRack(Player firstPlayer, Player secondPlayer) {
+		firstPlayer.getRack().createRackFX();
+		this.rackP1vbox = firstPlayer.getRack().getRackFX();
+		this.rackP1vbox.setRack(firstPlayer.getRack().getTiles());
+		
+		secondPlayer.getRack().createRackFX();
+		this.rackP2vbox = secondPlayer.getRack().getRackFX();
+		this.rackP2vbox.setRack(secondPlayer.getRack().getTiles());
+	
+		this.playersRacks = new HBox();
+		this.playersRacks.getChildren().addAll(this.rackP1vbox,this.rackP2vbox);
+		this.playersRacks.setAlignment(Pos.CENTER);
+		this.playersRacks.setSpacing(150);
+		this.playersRacks.setPadding(new Insets(0,0,23,0));
+	}
+
+
+	private void startTurn(Player activePlayer, Player inactivePlayer) {
+		GameManager.startTurn(activePlayer, inactivePlayer);
+		activePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
+		activePlayer.getRack().getRackFX().createCanPlayEffect(true);
+		inactivePlayer.getRack().getRackFX().createCanPlayEffect(false);
+		
+	}
+
+
 	private void pressValidateButton(Player playerWhoPressed, Player otherPlayer, RackFX hbRackPlayerWhoPressed, RackFX hbRackOtherPlayer) {
     	if (playerWhoPressed.isAbleToPutATile() && gameBoard.getPlayingTiles().size()>0) {
     		playerWhoPressed.addPoints(2);
@@ -167,6 +195,8 @@ public class GameMain extends Application {
     	startTurn(otherPlayer,playerWhoPressed);
     	otherPlayer.getPlayerFX().getBtnValidate().setDisable(false);
     	playerWhoPressed.getPlayerFX().getBtnValidate().setDisable(true);
+    	playerWhoPressed.getPlayerFX().getBtnExchange().setDisable(true);
+    	otherPlayer.getPlayerFX().getBtnExchange().setDisable(false);
 	}
 
 	private void determineGameEnd(Stage primaryStage) {
@@ -180,30 +210,6 @@ public class GameMain extends Application {
 	}
 
 
-	private void startTurn(Player activePlayer, Player inactivePlayer) {
-		GameManager.startTurn(activePlayer, inactivePlayer);
-		activePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
-		
-	}
-	
-	private void initializePlayersRack(Player firstPlayer, Player secondPlayer) {
-		firstPlayer.getRack().createRackFX();
-		this.rackP1vbox = firstPlayer.getRack().getRackFX();
-		this.rackP1vbox.setRack(firstPlayer.getRack().getTiles());
-		
-		secondPlayer.getRack().createRackFX();
-		this.rackP2vbox = secondPlayer.getRack().getRackFX();
-		this.rackP2vbox.setRack(secondPlayer.getRack().getTiles());
-
-		this.playersRacks = new HBox();
-		this.playersRacks.getChildren().addAll(this.rackP1vbox,this.rackP2vbox);
-		this.playersRacks.setAlignment(Pos.CENTER);
-		this.playersRacks.setSpacing(150);
-		this.playersRacks.setPadding(new Insets(0,0,23,0));
-	}
-	
-
-	
 	private void gameEnd(Stage primaryStage) {
 		this.player1.setMyTurn(false);
 		this.player2.setMyTurn(false);

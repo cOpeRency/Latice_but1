@@ -117,11 +117,14 @@ public class TileFX extends ImageView implements Serializable {
 			    		tileSource.getParentBox().getBoxFX().getChildren().remove(tileSource.getTileFX());
 			    		tileSource.getParentBox().getGameboard().removePlayingTile();
 			    		
+			    		GameManager.getActivePlayer().getPlayerFX().enableExchangeButton();
+			    		
 			    		if (tileSource.getParentBox().getGameboard().getPlayingTiles().size()==0) {
 			    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
 			    		}
 			    		
 			    		GameManager.getActivePlayer().setAblilityToPutATile(true);
+			    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(true);
 			    	}
 			        dragboard.setContent(content);
 			        event.consume();
@@ -134,7 +137,6 @@ public class TileFX extends ImageView implements Serializable {
 		setOnDragDone(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	System.out.println(GameManager.getActivePlayer());
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
 			    	if (tileSource.getParentRack()!=null) {
 			    		tileSource.exitRack();
@@ -144,6 +146,7 @@ public class TileFX extends ImageView implements Serializable {
 		    	} else  if (tileSource.getParentBox()!=null) {
 		    		tileSource.resetPosition();
 		    		GameManager.getActivePlayer().setAblilityToPutATile(false);
+		    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(false);
 		    		if (GameManager.getActivePlayer().getPoints()>=2) {
 		    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
 		    		}
@@ -151,6 +154,7 @@ public class TileFX extends ImageView implements Serializable {
 		    		tileSource.getParentBox().getBoxFX().getChildren().add(tileSource.getTileFX());
 		    		
 		    		tileSource.getParentBox().getGameboard().addPlayingTile(tileSource);
+		    		GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
 		    		
 		    		// If there is more than 1 playing tile on the gamebord, it mean that the extra move is reused, so we lose 2 points
 		    		if (tileSource.getParentBox().getGameboard().getPlayingTiles().size()>1) {

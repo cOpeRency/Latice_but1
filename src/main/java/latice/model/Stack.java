@@ -29,6 +29,10 @@ public class Stack implements Serializable{
 		return tiles.get(0);
 	}
 	
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+	
 	public void showTiles() {
 		for (Tile tile : tiles) {
 			System.out.println(tile.toString());

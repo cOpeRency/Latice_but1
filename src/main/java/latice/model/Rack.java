@@ -2,6 +2,7 @@ package latice.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +17,7 @@ public class Rack implements Serializable{
 	private RackFX rackFX;
 	private boolean locked;
 	private Player owner;
+	private Integer maxRackSize = 5;
 	
 	public Rack(Stack stack, Player owner) {
 		this.tiles = new ArrayList();
@@ -45,7 +47,10 @@ public class Rack implements Serializable{
 	}
 	
 	public void fillRack(Stack stack) {
-		while (tiles.size() < 5) {
+		if (stack.stackLength()+tiles.size() < 5) {
+			this.maxRackSize = stack.stackLength()+tiles.size();
+		}
+		while (tiles.size() < this.maxRackSize) {
 			tiles.add(stack.getTile());
 			tiles.get(tiles.size()-1).setParentRack(this);;
 			stack.removeTile();
@@ -54,6 +59,20 @@ public class Rack implements Serializable{
 	
 	public void removeTile(Tile tile) {
 		this.tiles.remove(tile);
+	}
+	
+	public void exchange(Stack stack) {
+		Integer currentTileNumber = tiles.size();
+		while (tiles.size()>0) {
+			stack.addTile(tiles.remove(0));
+		}
+		Collections.shuffle(stack.getTiles());
+		
+		while (tiles.size() < currentTileNumber) {
+			tiles.add(stack.getTile());
+			tiles.get(tiles.size()-1).setParentRack(this);
+			stack.removeTile();
+		}
 	}
 	
 	public void showRack() {
