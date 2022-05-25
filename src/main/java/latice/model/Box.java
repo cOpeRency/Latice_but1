@@ -22,13 +22,13 @@ import latice.vue.BoxFX;
 public class Box implements Serializable{
 	private BoxFX boxFX;
 	private BoxType boxType;
-	private Tile tile;
+	private BoardTile tile;
 	private Position position;
 	private GameBoard gameboard;
 	
 	public Box(BoxType boxType, GameBoard gameboard,Position position) {
 		this.boxType = boxType;
-		this.tile = Tile.NO;
+		this.tile = BoardTile.NO;
 		this.gameboard = gameboard;
 		this.position = position;
 		
@@ -51,7 +51,7 @@ public class Box implements Serializable{
 	}
 	
 	
-	public void setTile(Tile tile) {
+	public void setTile(BoardTile tile) {
 		tile.setParentBox(this);
 		this.tile = tile;
 		System.out.println(getTileMatchType(getAdjacentBoxes())+" for player "+GameManager.getActivePlayer().getName());
@@ -60,11 +60,11 @@ public class Box implements Serializable{
 
 	}
 	
-	public Tile getTile() {
+	public BoardTile getTile() {
 		return this.tile;
 	}
 
-	public void removeTile(Tile tile) {
+	public void removeTile(BoardTile tile) {
 		this.tile = null;
 	}
 	
@@ -78,7 +78,7 @@ public class Box implements Serializable{
 	public MatchType getTileMatchType(List<Box> boxAdjacent) {
 		Integer numberOfTile = 0;
 		for (Box box : boxAdjacent) {
-			if (box.getTile()!=Tile.NO) {
+			if (box.getTile()!=BoardTile.NO) {
 					numberOfTile += 1;
 			}
 		}
@@ -124,7 +124,7 @@ public class Box implements Serializable{
 			return false;
 		}
 
-		if (this.tile!=Tile.NO) {
+		if (this.tile!=BoardTile.NO) {
 
 			return false;
 		}

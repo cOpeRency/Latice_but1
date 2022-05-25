@@ -17,12 +17,13 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import latice.application.GameMain;
+import latice.model.BoardTile;
 import latice.model.GameManager;
 import latice.model.Tile;
 
 public class TileFX extends ImageView implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Tile tileSource;
+	private BoardTile tileSource;
 	private boolean isLastTilePlayed;
 	private static String HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,200,0,0.8), 15, 0.6, 0, 0);";
 	private static String NOT_FIXED_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,0,200,0.8), 15, 0.6, 0, 0);";
@@ -30,7 +31,7 @@ public class TileFX extends ImageView implements Serializable {
 	public static String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.4, 0, 0);";
 	
 	
-	public TileFX(Tile tile) {
+	public TileFX(BoardTile tile) {
 		this.tileSource = tile;
 		this.isLastTilePlayed = true;
 		initDragAndDrop();
@@ -78,7 +79,7 @@ public class TileFX extends ImageView implements Serializable {
 		}
 	}	
 	
-	public Tile getTileSource() {
+	public BoardTile getTileSource() {
 		return tileSource;
 	}
 

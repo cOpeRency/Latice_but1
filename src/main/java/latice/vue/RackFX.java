@@ -20,15 +20,16 @@ import latice.model.GameManager;
 import latice.model.Rack;
 import latice.model.Shape;
 import latice.model.Tile;
+import latice.model.BoardTile;
 
 public class RackFX extends HBox implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private List<Tile> tiles;
+	private List<BoardTile> tiles;
 	private Rack rackSource;
 	
 	
 	public RackFX(Rack rack) {
-		this.tiles = new ArrayList<Tile>();
+		this.tiles = new ArrayList<BoardTile>();
 		this.rackSource = rack;
 		setPadding(new Insets(10,10,10,10));
 		setSpacing(20);
@@ -45,9 +46,9 @@ public class RackFX extends HBox implements Serializable{
 		}
 	}
 	
-	public void setRack(List<Tile> tiles) {
+	public void setRack(List<Tile> list) {
 		this.getChildren().clear();
-		for (Tile tile : tiles) {
+		for (Tile tile : list) {
 			tile.setTileImage();
 			this.getChildren().add(tile.getTileFX());
 		}
@@ -59,8 +60,8 @@ public class RackFX extends HBox implements Serializable{
 		}
 	}
 	
-	public void showTiles(List<Tile> tiles) {
-		for (Tile tile : tiles) {
+	public void showTiles(List<Tile> list) {
+		for (Tile tile : list) {
 			tile.getTileFX().setTileImage();
 		}
 	}
@@ -88,7 +89,7 @@ public class RackFX extends HBox implements Serializable{
 		    		success = true;
 		    	}
 		    	if (dragboard.hasString()) {
-		    		Tile tile = ((Tile)dragboard.getContent(GameMain.TILE_DATA));
+		    		BoardTile tile = ((BoardTile)dragboard.getContent(GameMain.TILE_DATA));
 		    		tile.setParentRack(rackSource);
 		    		
 		    		// If gameboard has at least one not locked tile, we delete the ability to play until he buy an extra move.

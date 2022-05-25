@@ -42,7 +42,7 @@ import latice.model.Position;
 import latice.model.Rack;
 import latice.model.Shape;
 import latice.model.Stack;
-import latice.model.Tile;
+import latice.model.BoardTile;
 import latice.vue.RackFX;
 
 public class GameMain extends Application {

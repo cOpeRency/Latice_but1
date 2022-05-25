@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 public class GameBoard implements Serializable{
 	
 	private Map<Position, Box> gameboardTiles;
-	private List<Tile> playingTiles;
+	private List<BoardTile> playingTiles;
 	
 	public GameBoard() {
 		this.gameboardTiles = new HashMap<>();
@@ -29,7 +29,7 @@ public class GameBoard implements Serializable{
 		return null;
 	}
 
-	public List<Tile> getPlayingTiles() {
+	public List<BoardTile> getPlayingTiles() {
 		return playingTiles;
 	}
 
@@ -68,9 +68,9 @@ public class GameBoard implements Serializable{
     	return board;
     }
     
-    public void addPlayingTile(Tile newTile) {
+    public void addPlayingTile(BoardTile newTile) {
 
-		for (Tile tile : playingTiles) {
+		for (BoardTile tile : playingTiles) {
 			tile.getTileFX().setLastTilePlayed(false);
 		}
 		this.playingTiles.add(newTile);
@@ -84,7 +84,7 @@ public class GameBoard implements Serializable{
 	}
     
     public void lockPlayingTiles() {
-    	for (Tile tile : playingTiles) {
+    	for (BoardTile tile : playingTiles) {
 			tile.setLocked(true);
 		}
     	this.playingTiles.clear();
@@ -92,7 +92,7 @@ public class GameBoard implements Serializable{
     }
     
     public void resetPlayingTileEffect() {
-    	for (Tile tile : playingTiles) {
+    	for (BoardTile tile : playingTiles) {
 			tile.getTileFX().setStyle(tile.getTileFX().SHADOW_EFFECT);
 		}
     	

@@ -42,7 +42,7 @@ public class Rack implements Serializable{
 		return tiles;
 	}
 	
-	public void addTile(Tile tile) {
+	public void addTile(BoardTile tile) {
 		tiles.add(tile);
 	}
 	

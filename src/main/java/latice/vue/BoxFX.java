@@ -24,7 +24,7 @@ import latice.model.BoxType;
 import latice.model.Color;
 import latice.model.GameManager;
 import latice.model.Shape;
-import latice.model.Tile;
+import latice.model.BoardTile;
 
 public class BoxFX extends StackPane implements Serializable{
 	private Box box;
@@ -65,8 +65,10 @@ public class BoxFX extends StackPane implements Serializable{
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	//String[] tileData = event.getDragboard().getString().split("_");
-		    	if (checkValidity((Tile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
+		    	if (event.getDragboard().getString()=="WIND") {
+			        setStyle(VALID_HOVER_EFFECT);
+			        toFront();
+		    	} else if (checkValidity((BoardTile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
 		    		if (event.getDragboard().hasImage()) {
 				        setStyle(VALID_HOVER_EFFECT);
 				        toFront();
@@ -91,8 +93,9 @@ public class BoxFX extends StackPane implements Serializable{
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
-		    	//String[] tileData = dragboard.getString().split("_");
-		    	if (checkValidity((Tile)dragboard.getContent(GameMain.TILE_DATA))) {
+		    	if (event.getDragboard().getString()=="WIND") {
+	    			event.acceptTransferModes(TransferMode.MOVE);
+		    	} else if (checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA))) {
 		    		if (dragboard.hasImage()) {
 		    			event.acceptTransferModes(TransferMode.MOVE);
 		    		}
@@ -109,12 +112,16 @@ public class BoxFX extends StackPane implements Serializable{
 		    		success = true;
 		    	}
 		    	if (dragboard.hasString()) {
-		    		setTile((Tile)dragboard.getContent(GameMain.TILE_DATA));
-		    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
-		    		GameManager.getActivePlayer().setAblilityToPutATile(false);
-		    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(false);
-		    		if (!GameManager.getActivePlayer().isAbleToPutATile() && GameManager.getActivePlayer().getPoints()>=2) {
-		    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+		    		if (dragboard.getString()=="WIND") {
+		    			System.out.println("vent detecté");
+		    		} else {
+			    		setTile((BoardTile)dragboard.getContent(GameMain.TILE_DATA));
+			    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+			    		GameManager.getActivePlayer().setAblilityToPutATile(false);
+			    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(false);
+			    		if (!GameManager.getActivePlayer().isAbleToPutATile() && GameManager.getActivePlayer().getPoints()>=2) {
+			    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+			    		}
 		    		}
 		    	}
 		    	
@@ -124,7 +131,7 @@ public class BoxFX extends StackPane implements Serializable{
 		});
 	}
 	
-	public void setTile(Tile tile) {
+	public void setTile(BoardTile tile) {
 		//If there is at least one tile on gameboard and tile is from a box, we reuse the extra move 
 		if (this.box.getGameboard().getPlayingTiles().size()>0 && tile.getParentBox()!=null) {
 			GameManager.getActivePlayer().addPoints(-2);
@@ -138,7 +145,7 @@ public class BoxFX extends StackPane implements Serializable{
 		GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
 	}
 	
-	public boolean checkValidity(Tile tile) {
+	public boolean checkValidity(BoardTile tile) {
 		return this.box.checkValidity(tile.getShape(),tile.getColor());
 	}
 	

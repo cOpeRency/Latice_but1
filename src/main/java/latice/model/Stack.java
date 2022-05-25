@@ -44,7 +44,7 @@ public class Stack implements Serializable{
 		for (Color color : Color.values()) {
 			for (Shape shape : Shape.values()) {
 				for (int i = 0; i < 2; i++) {
-					this.addTile(new Tile(shape, color));
+					this.addTile(new BoardTile(shape, color));
 				}
 			}
 		}
