@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import latice.model.GameManager;
 import latice.model.Player;
 
 public class PlayerFX implements Serializable{
@@ -88,6 +89,7 @@ public class PlayerFX implements Serializable{
 	    		playerSource.getRack().getRackFX().createCanPlayEffect(true);
 		    	playerSource.addPoints(-2);
 		    	extraMoveButton.setDisable(true);
+		    	btnExchange.setDisable(true);
 		    	setPointProperty();
 		    }
 		});
@@ -98,7 +100,7 @@ public class PlayerFX implements Serializable{
 		this.btnExchange.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (!playerSource.isAbleToPutATile() && playerSource.getPoints()>2) {
+		    	if (!playerSource.isAbleToPutATile() && playerSource.getPoints()>=2) {
 		    		
 		    		Alert dialog = new Alert(AlertType.NONE);
 					dialog.setTitle("Attention");
@@ -119,6 +121,7 @@ public class PlayerFX implements Serializable{
 						playerSource.addPoints(-2);
 						setPointProperty();
 				    	disableExchangeButton();
+				    	extraMoveButton.setDisable(!(playerSource.getPoints()>=2));
 				    	
 					} else if (choix.get() == btnTypeChoix2) {
 					}
@@ -126,13 +129,18 @@ public class PlayerFX implements Serializable{
 		    		
 		    		
 		    	} else {
+		    		System.out.println(playerSource.isAbleToPutATile()+"   "+playerSource.getPoints());
 		    		playerSource.getRack().exchange(playerSource.getStack());
 		    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
 		    		playerSource.setAblilityToPutATile(false);
 		    		playerSource.getRack().getRackFX().createCanPlayEffect(false);
 			    	disableExchangeButton();
+			    	extraMoveButton.setDisable(!(playerSource.getPoints()>=2));
 			    	
 		    	}
+		    	
+		    	GameManager.getGameboard().resetPlayingTileEffect();
+		    	GameManager.getGameboard().lockPlayingTiles();
 		    	
 		    }
 
@@ -147,6 +155,16 @@ public class PlayerFX implements Serializable{
 		this.vbInfos.setPrefWidth(300);
 		this.vbInfos.getChildren().addAll(this.lblName,this.imgProfilePicture,this.lblPoints,this.playerStackSize,this.extraMoveButton,this.btnExchange,this.btnValidate);
 		this.vbInfos.setAlignment(Pos.CENTER);
+	}
+	
+	
+	private void updateExtraMoveButtonDisability() {
+		if (playerSource.getPoints()>=2) {
+			extraMoveButton.setDisable(false);
+		} else {
+			extraMoveButton.setDisable(true);
+		}
+		
 	}
 
 	public Button getExtraMoveButton() {

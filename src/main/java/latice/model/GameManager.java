@@ -6,6 +6,7 @@ public class GameManager {
 	private static Player activePlayer;
 	private static Integer nbCycleMax = 10;
 	private static Integer currentNbOfCycles = 1;
+	private static GameBoard gameboard;
 	
 	public static Player getActivePlayer() {
 		return activePlayer;
@@ -15,8 +16,18 @@ public class GameManager {
 		GameManager.activePlayer = activePlayer;
 	}
 	
+
+	
+	public static GameBoard getGameboard() {
+		return gameboard;
+	}
+
+	public static void setGameboard(GameBoard gameboard) {
+		GameManager.gameboard = gameboard;
+	}
 	
 	
+
 	public static void addCycles(Integer value) {
 		GameManager.currentNbOfCycles += value;
 	}

@@ -65,6 +65,7 @@ public class GameMain extends Application {
 		
 		gameStart();
 		this.gameBoard = new GameBoard();
+		GameManager.setGameboard(gameBoard);
 		this.borderPane = new BorderPane();
 		
 		player1.getRack().showRack();
@@ -174,6 +175,7 @@ public class GameMain extends Application {
 	private void startTurn(Player activePlayer, Player inactivePlayer) {
 		GameManager.startTurn(activePlayer, inactivePlayer);
 		activePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
+		inactivePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
 		activePlayer.getRack().getRackFX().createCanPlayEffect(true);
 		inactivePlayer.getRack().getRackFX().createCanPlayEffect(false);
 		
