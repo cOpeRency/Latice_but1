@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.boxes;
 
 import java.io.Serializable;
 import java.util.Objects;

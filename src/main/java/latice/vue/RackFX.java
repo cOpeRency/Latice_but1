@@ -15,12 +15,12 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import latice.application.GameMain;
-import latice.model.Color;
-import latice.model.GameManager;
-import latice.model.Rack;
-import latice.model.Shape;
-import latice.model.Tile;
-import latice.model.BoardTile;
+import latice.model.players.Rack;
+import latice.model.system.GameManager;
+import latice.model.tiles.BoardTile;
+import latice.model.tiles.Color;
+import latice.model.tiles.Shape;
+import latice.model.tiles.Tile;
 
 public class RackFX extends HBox implements Serializable{
 	private static final long serialVersionUID = 1L;

@@ -1,6 +1,8 @@
-package latice.model;
+package latice.model.system;
 
 import javafx.stage.Stage;
+import latice.model.game.GameBoard;
+import latice.model.players.Player;
 
 public class GameManager {
 	private static Player activePlayer;

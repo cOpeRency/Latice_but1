@@ -19,14 +19,14 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import latice.application.GameMain;
-import latice.model.Box;
-import latice.model.BoxType;
-import latice.model.Color;
-import latice.model.GameManager;
-import latice.model.GameMode;
-import latice.model.Position;
-import latice.model.Shape;
-import latice.model.BoardTile;
+import latice.model.boxes.Box;
+import latice.model.boxes.BoxType;
+import latice.model.boxes.Position;
+import latice.model.system.GameManager;
+import latice.model.system.GameMode;
+import latice.model.tiles.BoardTile;
+import latice.model.tiles.Color;
+import latice.model.tiles.Shape;
 
 public class BoxFX extends StackPane implements Serializable{
 	private Box box;

@@ -11,17 +11,17 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
-import latice.model.Box;
-import latice.model.BoxType;
-import latice.model.Color;
-import latice.model.GameBoard;
-import latice.model.GameManager;
-import latice.model.MatchType;
-import latice.model.Player;
-import latice.model.Position;
-import latice.model.Shape;
-import latice.model.Stack;
-import latice.model.BoardTile;
+import latice.model.boxes.Box;
+import latice.model.boxes.BoxType;
+import latice.model.boxes.Position;
+import latice.model.game.GameBoard;
+import latice.model.players.Player;
+import latice.model.players.Stack;
+import latice.model.system.GameManager;
+import latice.model.system.MatchType;
+import latice.model.tiles.BoardTile;
+import latice.model.tiles.Color;
+import latice.model.tiles.Shape;
 
 class LaticeMainTest {
 	private Stack stack;

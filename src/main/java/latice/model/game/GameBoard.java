@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +8,10 @@ import java.util.Map;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
+import latice.model.boxes.Box;
+import latice.model.boxes.BoxType;
+import latice.model.boxes.Position;
+import latice.model.tiles.BoardTile;
 
 public class GameBoard implements Serializable{
 	

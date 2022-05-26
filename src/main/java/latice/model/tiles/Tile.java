@@ -1,7 +1,8 @@
-package latice.model;
+package latice.model.tiles;
 
 import java.io.Serializable;
 
+import latice.model.players.Rack;
 import latice.vue.TileFX;
 
 public abstract class Tile implements Serializable {

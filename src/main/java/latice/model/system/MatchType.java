@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.system;
 
 public enum MatchType {
 	SIMPLE(0),DOUBLE(1),TREFOIL(2),LATICE(4);

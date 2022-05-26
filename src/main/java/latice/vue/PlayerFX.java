@@ -22,10 +22,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import latice.model.GameManager;
-import latice.model.Player;
-import latice.model.SpecialTile;
-import latice.model.TypeOfSpecialTile;
+import latice.model.players.Player;
+import latice.model.system.GameManager;
+import latice.model.tiles.SpecialTile;
+import latice.model.tiles.TypeOfSpecialTile;
 
 public class PlayerFX implements Serializable{
 	private transient SimpleIntegerProperty p1PointsProperty;

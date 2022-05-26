@@ -1,9 +1,16 @@
-package latice.model;
+package latice.model.players;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import latice.model.tiles.BoardTile;
+import latice.model.tiles.Color;
+import latice.model.tiles.Shape;
+import latice.model.tiles.SpecialTile;
+import latice.model.tiles.Tile;
+import latice.model.tiles.TypeOfSpecialTile;
 
 
 public class Stack implements Serializable{

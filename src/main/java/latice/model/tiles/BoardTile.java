@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.tiles;
 
 import java.io.File;
 import java.io.Serializable;
@@ -13,6 +13,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
+import latice.model.boxes.Box;
+import latice.model.players.Rack;
 import latice.vue.TileFX;
 
 public class BoardTile extends Tile implements Serializable{

@@ -17,12 +17,12 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import latice.application.GameMain;
-import latice.model.BoardTile;
-import latice.model.GameManager;
-import latice.model.GameMode;
-import latice.model.Position;
-import latice.model.SpecialTile;
-import latice.model.Tile;
+import latice.model.boxes.Position;
+import latice.model.system.GameManager;
+import latice.model.system.GameMode;
+import latice.model.tiles.BoardTile;
+import latice.model.tiles.SpecialTile;
+import latice.model.tiles.Tile;
 
 public class TileFX extends ImageView implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.boxes;
 
 import java.io.File;
 import java.io.Serializable;
@@ -18,6 +18,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import latice.application.GameMain;
+import latice.model.game.GameBoard;
+import latice.model.system.GameManager;
+import latice.model.system.GameMode;
+import latice.model.system.MatchType;
+import latice.model.tiles.BoardTile;
+import latice.model.tiles.Color;
+import latice.model.tiles.Shape;
 import latice.vue.BoxFX;
 
 public class Box implements Serializable{

@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.players;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import latice.model.tiles.Tile;
 import latice.vue.RackFX;
 import latice.vue.TileFX;
 

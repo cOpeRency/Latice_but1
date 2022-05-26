@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.tiles;
 
 public enum Color {
 	COLOR1("g"),COLOR2("m"),COLOR3("n"),COLOR4("r"),COLOR5("t"),COLOR6("y");

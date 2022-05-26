@@ -1,4 +1,4 @@
-package latice.model;
+package latice.model.players;
 
 import java.io.Serializable;
 import java.util.Objects;
