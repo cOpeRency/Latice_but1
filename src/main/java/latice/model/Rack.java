@@ -42,8 +42,9 @@ public class Rack implements Serializable{
 		return tiles;
 	}
 	
-	public void addTile(BoardTile tile) {
+	public void addTile(Tile tile) {
 		tiles.add(tile);
+		tiles.get(tiles.size()-1).setParentRack(this);
 	}
 	
 	public void fillRack(Stack stack) {
@@ -52,7 +53,7 @@ public class Rack implements Serializable{
 		}
 		while (tiles.size() < this.maxRackSize) {
 			tiles.add(stack.getTile());
-			tiles.get(tiles.size()-1).setParentRack(this);;
+			tiles.get(tiles.size()-1).setParentRack(this);
 			stack.removeTile();
 		}
 	}

@@ -41,12 +41,14 @@ import latice.model.Player;
 import latice.model.Position;
 import latice.model.Rack;
 import latice.model.Shape;
+import latice.model.SpecialTile;
 import latice.model.Stack;
+import latice.model.TypeOfSpecialTile;
 import latice.model.BoardTile;
 import latice.vue.RackFX;
 
 public class GameMain extends Application {
-		public static DataFormat TILE_DATA = new DataFormat("Tile");
+		public static DataFormat TILE_DATA = new DataFormat("BoardTile");
 		private GameBoard gameBoard;
 		
 		private BorderPane borderPane;
@@ -151,6 +153,22 @@ public class GameMain extends Application {
 		    	determineGameEnd(primaryStage);
 		    }
 		});
+		
+		
+		
+		
+		Button tempAddWindButton = new Button("vent");
+		tempAddWindButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		    	if (firstPlayer.getRack().rackLength()<5) {
+		    		firstPlayer.getRack().addTile(new SpecialTile(TypeOfSpecialTile.WIND));
+		    		rackP1vbox.setRack(firstPlayer.getRack().getTiles());
+		    	}
+		    }
+		});
+		
+		this.borderPane.setTop(tempAddWindButton);
 		
 	}
 	

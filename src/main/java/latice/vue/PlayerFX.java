@@ -24,6 +24,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import latice.model.GameManager;
 import latice.model.Player;
+import latice.model.SpecialTile;
+import latice.model.TypeOfSpecialTile;
 
 public class PlayerFX implements Serializable{
 	private transient SimpleIntegerProperty p1PointsProperty;
@@ -150,6 +152,7 @@ public class PlayerFX implements Serializable{
 		this.btnValidate = new Button("Valider");
 		this.btnValidate.setPrefSize(170, 70);
 		this.btnValidate.setFont(Font.font(null, FontWeight.NORMAL, 35));
+
 		
 		this.vbInfos = new VBox();
 		this.vbInfos.setPrefWidth(300);

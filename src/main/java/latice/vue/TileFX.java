@@ -19,11 +19,12 @@ import javafx.scene.input.TransferMode;
 import latice.application.GameMain;
 import latice.model.BoardTile;
 import latice.model.GameManager;
+import latice.model.SpecialTile;
 import latice.model.Tile;
 
 public class TileFX extends ImageView implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private BoardTile tileSource;
+	private Tile tileSource;
 	private boolean isLastTilePlayed;
 	private static String HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,200,0,0.8), 15, 0.6, 0, 0);";
 	private static String NOT_FIXED_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,0,200,0.8), 15, 0.6, 0, 0);";
@@ -31,11 +32,17 @@ public class TileFX extends ImageView implements Serializable {
 	public static String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.4, 0, 0);";
 	
 	
-	public TileFX(BoardTile tile) {
+	public TileFX(Tile tile) {
 		this.tileSource = tile;
 		this.isLastTilePlayed = true;
-		initDragAndDrop();
-		setTileEffects();
+		if (tileSource.getClass().equals(BoardTile.class)) {
+			initDragAndDrop((BoardTile) tileSource);
+			setTileEffects((BoardTile) tileSource);
+			
+		} else {
+			initDragAndDrop((SpecialTile) tileSource);
+			setSpecialTileEffects();
+		}
 		setTileImage();
 	}
 
@@ -53,6 +60,7 @@ public class TileFX extends ImageView implements Serializable {
 		}
 	}
 
+	
 	public void hideTile() {
 		String urlFichier;
 		try {
@@ -78,49 +86,50 @@ public class TileFX extends ImageView implements Serializable {
 			e.printStackTrace();
 		}
 	}	
+
 	
-	public BoardTile getTileSource() {
+	public Tile getTileSource() {
 		return tileSource;
 	}
 
-	public void initDragAndDrop() {
+	public void initDragAndDrop(BoardTile boardTile) {
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (!tileSource.isLocked() && isLastTilePlayed && !tileSource.getParentRack().isLocked() && tileSource.getParentRack().getOwner().isAbleToPutATile()) {
+		    	if (!boardTile.isLocked() && isLastTilePlayed && !boardTile.getParentRack().isLocked() && boardTile.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			        setStyle(SHADOW_EFFECT);
 			        
 			        ClipboardContent content = new ClipboardContent();
 			        content.putImage(getImage());
-			        content.putString(tileSource.getShape().toString()+"_"+tileSource.getColor().toString());
+			        content.putString(boardTile.getShape().toString()+"_"+boardTile.getColor().toString());
 			        
-			        if (tileSource.getParentBox()!=null) {
+			        if (boardTile.getParentBox()!=null) {
 			        	content.putString("BoxToRack");
 			        }
 			        
-			        content.put(GameMain.TILE_DATA, tileSource);
+			        content.put(GameMain.TILE_DATA, boardTile);
 			        
 			        
 			        
 			        
-			        if (tileSource.getParentBox()!=null) {
-			        	deletePlayerPointsOnExit();
+			        if (boardTile.getParentBox()!=null) {
+			        	deletePlayerPointsOnExit(boardTile);
 			    		
 			        	//When we bought an extra move and then we move a tile from the gameboard before using it, we reset the extra move
 			        	// Or when we take an extra tile which is already played, we reset the extra move too
-			        	if (GameManager.getActivePlayer().isAbleToPutATile() || tileSource.getParentBox().getGameboard().getPlayingTiles().size()>1) {
+			        	if (GameManager.getActivePlayer().isAbleToPutATile() || boardTile.getParentBox().getGameboard().getPlayingTiles().size()>1) {
 			        		GameManager.getActivePlayer().addPoints(2);
 			        		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 			        	}
 			        	
-			        	tileSource.exitBox();
-			    		tileSource.getParentBox().getBoxFX().getChildren().remove(tileSource.getTileFX());
-			    		tileSource.getParentBox().getGameboard().removePlayingTile();
+			        	boardTile.exitBox();
+			        	boardTile.getParentBox().getBoxFX().getChildren().remove(boardTile.getTileFX());
+			        	boardTile.getParentBox().getGameboard().removePlayingTile();
 			    		
 			    		GameManager.getActivePlayer().getPlayerFX().enableExchangeButton();
 			    		
-			    		if (tileSource.getParentBox().getGameboard().getPlayingTiles().size()==0) {
+			    		if (boardTile.getParentBox().getGameboard().getPlayingTiles().size()==0) {
 			    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
 			    		}
 			    		
@@ -139,26 +148,26 @@ public class TileFX extends ImageView implements Serializable {
 		    @Override
 		    public void handle(DragEvent event) {
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
-			    	if (tileSource.getParentRack()!=null) {
-			    		tileSource.exitRack();
-			    		tileSource.getParentRack().getRackFX().getChildren().remove(tileSource.getTileFX());
+			    	if (boardTile.getParentRack()!=null) {
+			    		boardTile.exitRack();
+			    		boardTile.getParentRack().getRackFX().getChildren().remove(boardTile.getTileFX());
 				        setStyle(NOT_FIXED_EFFECT);
 			    	}
-		    	} else  if (tileSource.getParentBox()!=null) {
-		    		tileSource.resetPosition();
+		    	} else  if (boardTile.getParentBox()!=null) {
+		    		boardTile.resetPosition();
 		    		GameManager.getActivePlayer().setAblilityToPutATile(false);
 		    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(false);
 		    		if (GameManager.getActivePlayer().getPoints()>=2) {
 		    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
 		    		}
 		    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
-		    		tileSource.getParentBox().getBoxFX().getChildren().add(tileSource.getTileFX());
+		    		boardTile.getParentBox().getBoxFX().getChildren().add(boardTile.getTileFX());
 		    		
-		    		tileSource.getParentBox().getGameboard().addPlayingTile(tileSource);
+		    		boardTile.getParentBox().getGameboard().addPlayingTile(boardTile);
 		    		GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
 		    		
 		    		// If there is more than 1 playing tile on the gamebord, it mean that the extra move is reused, so we lose 2 points
-		    		if (tileSource.getParentBox().getGameboard().getPlayingTiles().size()>1) {
+		    		if (boardTile.getParentBox().getGameboard().getPlayingTiles().size()>1) {
 		    			GameManager.getActivePlayer().addPoints(-2);
 		    			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 		    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
@@ -170,18 +179,18 @@ public class TileFX extends ImageView implements Serializable {
 	}
 	
 
-	private void deletePlayerPointsOnExit() {
-		Integer points = tileSource.getParentBox().getTileMatchType(tileSource.getParentBox().getAdjacentBoxes()).value()   +   tileSource.getParentBox().gainPointBySunBox();
+	private void deletePlayerPointsOnExit(BoardTile boardTile) {
+		Integer points = boardTile.getParentBox().getTileMatchType(boardTile.getParentBox().getAdjacentBoxes()).value()   +   boardTile.getParentBox().gainPointBySunBox();
 		GameManager.getActivePlayer().addPoints(-points);
 		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 	}
 	
-	private void setTileEffects() {
+	private void setTileEffects(BoardTile boardTile) {
 		this.setStyle(SHADOW_EFFECT);
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent t) {
-		    	if (tileSource.getParentRack() != null) {
+		    	if (boardTile.getParentRack() != null) {
 			        setStyle(HOVER_EFFECT);
 		    	}
 		    }
@@ -189,7 +198,7 @@ public class TileFX extends ImageView implements Serializable {
 		this.setOnMouseExited(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent t) {
-		    	if (tileSource.isLocked() || tileSource.getParentBox()==null) {
+		    	if (boardTile.isLocked() || boardTile.getParentBox()==null) {
 		    		setStyle(SHADOW_EFFECT);
 		    	} else {
 		    		if (isLastTilePlayed) {
@@ -202,4 +211,55 @@ public class TileFX extends ImageView implements Serializable {
 		});
 	}
 	
+	
+	private void setSpecialTileEffects() {
+		this.setStyle(SHADOW_EFFECT);
+		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent t) {
+		    	setStyle(HOVER_EFFECT);
+		    }
+		});
+		this.setOnMouseExited(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent t) {
+		    	setStyle(SHADOW_EFFECT);
+		    }
+		});
+	}
+	
+	
+	
+	public void initDragAndDrop(SpecialTile SpecialTile) {
+		setOnDragDetected(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		    	System.out.println(SpecialTile.getParentRack());
+		    	if (!SpecialTile.getParentRack().isLocked() && SpecialTile.getParentRack().getOwner().isAbleToPutATile()) {
+			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
+			        setStyle(SHADOW_EFFECT);
+			        
+			        ClipboardContent content = new ClipboardContent();
+			        content.putImage(getImage());
+			        content.putString(SpecialTile.getType().toString());
+			        
+			        dragboard.setContent(content);
+			        event.consume();
+		    	}
+		    }
+
+
+		});
+		
+		setOnDragDone(new EventHandler<DragEvent>() {
+		    @Override
+		    public void handle(DragEvent event) {
+		    	if (event.getTransferMode() == TransferMode.MOVE) {
+			    	System.out.println("WIND ok");
+		    	}
+		        event.consume();
+		    }
+		});
+	}
+
 }

@@ -1,26 +1,29 @@
 package latice.model;
 
+import java.io.Serializable;
+
 import latice.vue.TileFX;
 
-public class SpecialTile extends Tile{
-	private TileFX tileFX;
+public class SpecialTile extends Tile implements Serializable{
+	private static final long serialVersionUID = 1L;
+	private TileFX image;
 	private String imagePath;
 	private Rack parentRack;
 	private TypeOfSpecialTile type;
 	
 	public SpecialTile(TypeOfSpecialTile type) {
 		this.type = type;
-		this.imagePath = this.themePath+this.type+".png";
+		this.imagePath = this.themePath+this.type+".gif";
 	}
 
 	@Override
 	public void setTileImage() {
-		this.tileFX = new TileFX(null);
+		this.image = new TileFX(this);
 	}
 
 	@Override
 	public TileFX getTileFX() {
-		return this.tileFX;
+		return this.image;
 	}
 
 	@Override
