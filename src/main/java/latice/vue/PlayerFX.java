@@ -78,7 +78,7 @@ public class PlayerFX implements Serializable{
 		this.playerStackSize.setTextFill(javafx.scene.paint.Color.WHITE);
 		this.playerStackSize.setFont(Font.font(null, FontWeight.NORMAL, 35));
 		this.playerStackSize.setMinHeight(50);
-		this.playerStackSize.setText("Tiles left : 31");
+		this.playerStackSize.setText("Tiles left : 37");
 		
 		this.extraMoveButton = new Button("Action sup.");
 		this.extraMoveButton.setPrefSize(250, 60);
@@ -131,7 +131,6 @@ public class PlayerFX implements Serializable{
 		    		
 		    		
 		    	} else {
-		    		System.out.println(playerSource.isAbleToPutATile()+"   "+playerSource.getPoints());
 		    		playerSource.getRack().exchange(playerSource.getStack());
 		    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
 		    		playerSource.setAblilityToPutATile(false);

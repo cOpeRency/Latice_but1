@@ -67,10 +67,10 @@ public class BoxFX extends StackPane implements Serializable{
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	if (event.getDragboard().getString()=="WIND") {
+		    	if (event.getDragboard().getString()=="WIND" || (!GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && canDragedTileBePutHere(event.getDragboard()))) {
 			        setStyle(VALID_HOVER_EFFECT);
 			        toFront();
-		    	} else if (checkValidity((BoardTile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
+		    	} else if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && checkValidity((BoardTile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
 		    		if (event.getDragboard().hasImage()) {
 				        setStyle(VALID_HOVER_EFFECT);
 				        toFront();
@@ -97,12 +97,9 @@ public class BoxFX extends StackPane implements Serializable{
 		    	Dragboard dragboard = event.getDragboard();
 		    	if (event.getDragboard().getString()=="WIND") {
 	    			event.acceptTransferModes(TransferMode.MOVE);
-		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && box.getTile()==null) {
-		    		BoardTile tile = (BoardTile)dragboard.getContent(GameMain.TILE_DATA);
-		    		if (tile.getParentBox().getAdjacentBoxes().contains(box)) {
-		    			event.acceptTransferModes(TransferMode.MOVE);
-		    		}
-		    	} else if (checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA))) {
+		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && canDragedTileBePutHere(dragboard)) {
+		    		event.acceptTransferModes(TransferMode.MOVE);
+		    	} else if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA))) {
 		    		if (dragboard.hasImage()) {
 		    			event.acceptTransferModes(TransferMode.MOVE);
 		    		}
@@ -127,6 +124,9 @@ public class BoxFX extends StackPane implements Serializable{
 			    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(true);
 		    		} else {
 			    		setTile((BoardTile)dragboard.getContent(GameMain.TILE_DATA));
+			    		if (!GameManager.canUseSpecialTiles()) {
+			    			GameManager.setCanUseSpecialTiles();
+			    		}
 			    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 			    		GameManager.getActivePlayer().setAblilityToPutATile(false);
 			    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(false);
@@ -140,6 +140,15 @@ public class BoxFX extends StackPane implements Serializable{
 		        event.consume();
 		    }
 		});
+	}
+	
+	
+	public boolean canDragedTileBePutHere(Dragboard dragboard) {
+		BoardTile tile = (BoardTile)dragboard.getContent(GameMain.TILE_DATA);
+		if (box.getTile()==null && tile.getParentBox().getAdjacentBoxes().contains(box)) {
+			return true;
+		}
+		return false;
 	}
 	
 	public void setTile(BoardTile tile) {

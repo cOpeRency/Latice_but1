@@ -35,6 +35,10 @@ public class Box implements Serializable{
 		
 	}
 
+	public Position getPosition() {
+		return position;
+	}
+
 	public GameBoard getGameboard() {
 		return gameboard;
 	}

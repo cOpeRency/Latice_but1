@@ -8,7 +8,23 @@ public class GameManager {
 	private static Integer currentNbOfCycles = 1;
 	private static GameBoard gameboard;
 	private static GameMode gameMode;
+	private static boolean canUseSpecialTiles = false;
 	
+	
+	
+	public static boolean canUseSpecialTiles() {
+		return canUseSpecialTiles;
+	}
+
+	public static void setCanUseSpecialTiles() {
+		if (gameboard.howManyTileHaveBeenPlayed()>=2) {
+			GameManager.canUseSpecialTiles = true;
+		} else {
+			GameManager.canUseSpecialTiles = false;
+		}
+		
+	}
+
 	public static Player getActivePlayer() {
 		return activePlayer;
 	}

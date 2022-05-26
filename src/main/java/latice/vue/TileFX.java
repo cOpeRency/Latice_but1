@@ -20,6 +20,7 @@ import latice.application.GameMain;
 import latice.model.BoardTile;
 import latice.model.GameManager;
 import latice.model.GameMode;
+import latice.model.Position;
 import latice.model.SpecialTile;
 import latice.model.Tile;
 
@@ -140,7 +141,7 @@ public class TileFX extends ImageView implements Serializable {
 			        dragboard.setContent(content);
 			        event.consume();
 		    	
-		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && boardTile.getParentBox()!=null) {
+		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && boardTile.getParentBox()!=null && !boardTile.getParentBox().getPosition().equals(new Position(4,4))) {
 		        	
 		    		Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			        setStyle(SHADOW_EFFECT);
@@ -263,8 +264,7 @@ public class TileFX extends ImageView implements Serializable {
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	System.out.println(SpecialTile.getParentRack());
-		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && !SpecialTile.getParentRack().isLocked() && SpecialTile.getParentRack().getOwner().isAbleToPutATile()) {
+		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && GameManager.canUseSpecialTiles() && !SpecialTile.getParentRack().isLocked() && SpecialTile.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			        setStyle(SHADOW_EFFECT);
 			        

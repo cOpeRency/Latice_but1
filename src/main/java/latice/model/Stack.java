@@ -49,8 +49,12 @@ public class Stack implements Serializable{
 			}
 		}
 		
+		for (int i = 0; i < 12; i++) {
+			this.addTile(new SpecialTile(TypeOfSpecialTile.WIND));
+		}
+		
 		Collections.shuffle(tiles);
-		for (int j = 0; j < 36; j++) {
+		for (int j = 0; j < 42; j++) {
 			j1.getStack().addTile(tiles.get(0));
 			this.removeTile();
 			j2.getStack().addTile(tiles.get(0));

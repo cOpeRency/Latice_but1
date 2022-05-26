@@ -22,6 +22,16 @@ public class GameBoard implements Serializable{
     public Box getBox(Position position) {
 		return gameboardTiles.get(position);
 	}
+    
+    public Integer howManyTileHaveBeenPlayed() {
+    	Integer numberOfTile = 0;
+    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
+    		if (entry.getValue().getTile()!=null) {
+    			numberOfTile += 1;
+    		}
+		}
+    	return numberOfTile;
+    }
 
 	public List<BoardTile> getPlayingTiles() {
 		return playingTiles;
