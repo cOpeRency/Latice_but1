@@ -67,7 +67,7 @@ public class BoxFX extends StackPane implements Serializable{
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	if (event.getDragboard().getString()=="WIND" || (!GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && canDragedTileBePutHere(event.getDragboard()))) {
+		    	if (event.getDragboard().getString()=="WIND" || event.getDragboard().getString()=="THUNDER" || (!GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && canDragedTileBePutHere(event.getDragboard()))) {
 			        setStyle(VALID_HOVER_EFFECT);
 			        toFront();
 		    	} else if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && checkValidity((BoardTile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
@@ -95,7 +95,7 @@ public class BoxFX extends StackPane implements Serializable{
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
-		    	if (event.getDragboard().getString()=="WIND") {
+		    	if (event.getDragboard().getString()=="WIND" || event.getDragboard().getString()=="THUNDER") {
 	    			event.acceptTransferModes(TransferMode.MOVE);
 		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && canDragedTileBePutHere(dragboard)) {
 		    		event.acceptTransferModes(TransferMode.MOVE);
@@ -116,7 +116,7 @@ public class BoxFX extends StackPane implements Serializable{
 		    		success = true;
 		    	}
 		    	if (dragboard.hasString()) {
-		    		if (dragboard.getString()=="WIND") {
+		    		if (dragboard.getString()=="WIND" || dragboard.getString()=="THUNDER") {
 		    			System.out.println("vent detecté");
 		    		} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE)) {
 			    		setTile((BoardTile)dragboard.getContent(GameMain.TILE_DATA));

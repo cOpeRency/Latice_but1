@@ -57,7 +57,7 @@ public class Stack implements Serializable{
 		}
 		
 		for (int i = 0; i < 12; i++) {
-			this.addTile(new SpecialTile(TypeOfSpecialTile.WIND));
+			this.addTile(new SpecialTile(TypeOfSpecialTile.THUNDER));
 		}
 		
 		Collections.shuffle(tiles);

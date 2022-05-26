@@ -17,12 +17,14 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import latice.application.GameMain;
+import latice.model.boxes.BoxType;
 import latice.model.boxes.Position;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
 import latice.model.tiles.BoardTile;
 import latice.model.tiles.SpecialTile;
 import latice.model.tiles.Tile;
+import latice.model.tiles.TypeOfSpecialTile;
 
 public class TileFX extends ImageView implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +40,22 @@ public class TileFX extends ImageView implements Serializable {
 		this.tileSource = tile;
 		this.isLastTilePlayed = true;
 		if (tileSource.getClass().equals(BoardTile.class)) {
+			
+			this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			    @Override
+			    public void handle(MouseEvent event) {
+			    	if (GameManager.getGameMode().equals(GameMode.THUNDER_TILE) && !((BoardTile) tileSource).getParentBox().getBoxType().equals(BoxType.MOON)) {
+			    		((BoardTile) tileSource).exitBox();
+			    		((BoardTile) tileSource).getParentBox().getBoxFX().getChildren().remove(((BoardTile) tileSource).getTileFX());
+		    			GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
+				    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
+				    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(false);
+				    	GameManager.getActivePlayer().getPlayerFX().getBtnValidate().setDisable(false);
+				    	GameManager.setCanUseSpecialTiles();
+			    	}
+			    }
+			});
+			
 			initDragAndDrop((BoardTile) tileSource);
 			setTileEffects((BoardTile) tileSource);
 			
@@ -286,7 +304,12 @@ public class TileFX extends ImageView implements Serializable {
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
 		    		SpecialTile.exitRack();
 		    		SpecialTile.getParentRack().getRackFX().getChildren().remove(SpecialTile.getTileFX());
-			    	GameManager.setGameMode(GameMode.WIND_TILE);
+		    		if (SpecialTile.getType().equals(TypeOfSpecialTile.WIND)) {
+		    			GameManager.setGameMode(GameMode.WIND_TILE);
+		    		} else {
+		    			GameManager.setGameMode(GameMode.THUNDER_TILE);
+		    		}
+			    	
 			    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
 			    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(true);
 			    	GameManager.getActivePlayer().getPlayerFX().getBtnValidate().setDisable(true);
