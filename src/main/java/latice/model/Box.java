@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -150,4 +151,23 @@ public class Box implements Serializable{
 		}
 		return true;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(position);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Box other = (Box) obj;
+		return Objects.equals(position, other.position);
+	}
+	
+	
 }

@@ -24,6 +24,7 @@ import latice.model.BoxType;
 import latice.model.Color;
 import latice.model.GameManager;
 import latice.model.GameMode;
+import latice.model.Position;
 import latice.model.Shape;
 import latice.model.BoardTile;
 
@@ -97,7 +98,10 @@ public class BoxFX extends StackPane implements Serializable{
 		    	if (event.getDragboard().getString()=="WIND") {
 	    			event.acceptTransferModes(TransferMode.MOVE);
 		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && box.getTile()==null) {
-	    			event.acceptTransferModes(TransferMode.MOVE);
+		    		BoardTile tile = (BoardTile)dragboard.getContent(GameMain.TILE_DATA);
+		    		if (tile.getParentBox().getAdjacentBoxes().contains(box)) {
+		    			event.acceptTransferModes(TransferMode.MOVE);
+		    		}
 		    	} else if (checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA))) {
 		    		if (dragboard.hasImage()) {
 		    			event.acceptTransferModes(TransferMode.MOVE);

@@ -175,6 +175,9 @@ public class TileFX extends ImageView implements Serializable {
 			    			setStyle(NOT_FIXED_EFFECT);
 			    		} else {
 			    			GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
+					    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
+					    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(false);
+					    	GameManager.getActivePlayer().getPlayerFX().getBtnValidate().setDisable(false);
 			    		}
 			    	}
 		    	} else  if (boardTile.getParentBox()!=null) {
@@ -261,7 +264,7 @@ public class TileFX extends ImageView implements Serializable {
 		    @Override
 		    public void handle(MouseEvent event) {
 		    	System.out.println(SpecialTile.getParentRack());
-		    	if (!SpecialTile.getParentRack().isLocked() && SpecialTile.getParentRack().getOwner().isAbleToPutATile()) {
+		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && !SpecialTile.getParentRack().isLocked() && SpecialTile.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			        setStyle(SHADOW_EFFECT);
 			        
@@ -284,6 +287,9 @@ public class TileFX extends ImageView implements Serializable {
 		    		SpecialTile.exitRack();
 		    		SpecialTile.getParentRack().getRackFX().getChildren().remove(SpecialTile.getTileFX());
 			    	GameManager.setGameMode(GameMode.WIND_TILE);
+			    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
+			    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(true);
+			    	GameManager.getActivePlayer().getPlayerFX().getBtnValidate().setDisable(true);
 		    	}
 		        event.consume();
 		    }

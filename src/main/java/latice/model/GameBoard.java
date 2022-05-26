@@ -20,13 +20,7 @@ public class GameBoard implements Serializable{
     }
 
     public Box getBox(Position position) {
-		for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
-			if (entry.getKey().row()==position.row() && entry.getKey().column()==position.column()) {
-				return entry.getValue();
-			}
-		}
-		
-		return null;
+		return gameboardTiles.get(position);
 	}
 
 	public List<BoardTile> getPlayingTiles() {
@@ -97,6 +91,7 @@ public class GameBoard implements Serializable{
 		}
     	
     }
+    
     
 }
 
