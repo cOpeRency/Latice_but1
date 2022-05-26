@@ -7,6 +7,7 @@ public class GameManager {
 	private static Integer nbCycleMax = 10;
 	private static Integer currentNbOfCycles = 1;
 	private static GameBoard gameboard;
+	private static GameMode gameMode;
 	
 	public static Player getActivePlayer() {
 		return activePlayer;
@@ -16,8 +17,16 @@ public class GameManager {
 		GameManager.activePlayer = activePlayer;
 	}
 	
-
 	
+	
+	public static GameMode getGameMode() {
+		return gameMode;
+	}
+
+	public static void setGameMode(GameMode gameMode) {
+		GameManager.gameMode = gameMode;
+	}
+
 	public static GameBoard getGameboard() {
 		return gameboard;
 	}

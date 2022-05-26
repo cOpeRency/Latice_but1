@@ -37,6 +37,7 @@ import latice.model.Box;
 import latice.model.Color;
 import latice.model.GameBoard;
 import latice.model.GameManager;
+import latice.model.GameMode;
 import latice.model.Player;
 import latice.model.Position;
 import latice.model.Rack;
@@ -129,6 +130,8 @@ public class GameMain extends Application {
 	private void startGameplay(Player firstPlayer, Player secondPlayer,Stage primaryStage) {
 		System.out.println(firstPlayer.getName()+" commence ! Que la partie débute !");
     	System.out.println("Cycle n°"+GameManager.getCurrentNbOfCycles());
+    	
+    	GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
 
 		this.borderPane.setLeft(firstPlayer.getPlayerFX().getVbInfos());
 		this.borderPane.setRight(secondPlayer.getPlayerFX().getVbInfos());

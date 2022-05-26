@@ -23,6 +23,7 @@ import latice.model.Box;
 import latice.model.BoxType;
 import latice.model.Color;
 import latice.model.GameManager;
+import latice.model.GameMode;
 import latice.model.Shape;
 import latice.model.BoardTile;
 
@@ -95,6 +96,8 @@ public class BoxFX extends StackPane implements Serializable{
 		    	Dragboard dragboard = event.getDragboard();
 		    	if (event.getDragboard().getString()=="WIND") {
 	    			event.acceptTransferModes(TransferMode.MOVE);
+		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && box.getTile()==null) {
+	    			event.acceptTransferModes(TransferMode.MOVE);
 		    	} else if (checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA))) {
 		    		if (dragboard.hasImage()) {
 		    			event.acceptTransferModes(TransferMode.MOVE);
@@ -114,6 +117,10 @@ public class BoxFX extends StackPane implements Serializable{
 		    	if (dragboard.hasString()) {
 		    		if (dragboard.getString()=="WIND") {
 		    			System.out.println("vent detecté");
+		    		} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE)) {
+			    		setTile((BoardTile)dragboard.getContent(GameMain.TILE_DATA));
+			    		GameManager.getActivePlayer().setAblilityToPutATile(true);
+			    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(true);
 		    		} else {
 			    		setTile((BoardTile)dragboard.getContent(GameMain.TILE_DATA));
 			    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
@@ -133,7 +140,7 @@ public class BoxFX extends StackPane implements Serializable{
 	
 	public void setTile(BoardTile tile) {
 		//If there is at least one tile on gameboard and tile is from a box, we reuse the extra move 
-		if (this.box.getGameboard().getPlayingTiles().size()>0 && tile.getParentBox()!=null) {
+		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && this.box.getGameboard().getPlayingTiles().size()>0 && tile.getParentBox()!=null) {
 			GameManager.getActivePlayer().addPoints(-2);
 			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
