@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -19,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -35,6 +37,7 @@ public class PlayerFX implements Serializable{
 	private transient Label lblPoints;
 	private transient Label lblName;
 	private transient Button btnExchange;
+	private transient Button btnBuyTile;
 	private transient Button btnValidate;
 	private transient VBox vbInfos;
 	private transient ImageView imgProfilePicture;
@@ -80,8 +83,9 @@ public class PlayerFX implements Serializable{
 		this.playerStackSize.setMinHeight(50);
 		this.playerStackSize.setText("Tiles left : 37");
 		
-		this.extraMoveButton = new Button("Action sup.");
-		this.extraMoveButton.setPrefSize(250, 60);
+		this.extraMoveButton = new Button("");
+		this.extraMoveButton.setPrefSize(80, 80);
+		this.extraMoveButton.setStyle("-fx-background-image: url('themes/pokemon/extraButton.png');"+"-fx-background-size: 80px;");
 		this.extraMoveButton.setDisable(true);
 		this.extraMoveButton.setFont(Font.font(null, FontWeight.NORMAL, 27));
 		this.extraMoveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -96,8 +100,9 @@ public class PlayerFX implements Serializable{
 		    }
 		});
 		
-		this.btnExchange = new Button("Echange");
-		this.btnExchange.setPrefSize(220, 60);
+		this.btnExchange = new Button("");
+		this.btnExchange.setPrefSize(80, 80);
+		this.btnExchange.setStyle("-fx-background-image: url('themes/pokemon/exchangeButton.png');"+"-fx-background-size: 80px;");
 		this.btnExchange.setFont(Font.font(null, FontWeight.NORMAL, 27));
 		this.btnExchange.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
@@ -111,10 +116,7 @@ public class PlayerFX implements Serializable{
 
 					ButtonType btnTypeChoix1 = new ButtonType("Oui");
 					ButtonType btnTypeChoix2 = new ButtonType("Non");
-					
-
 					dialog.getButtonTypes().addAll(btnTypeChoix1, btnTypeChoix2);
-					
 					
 					Optional<ButtonType> choix = dialog.showAndWait();
 					if(choix.get() == btnTypeChoix1) {
@@ -148,15 +150,36 @@ public class PlayerFX implements Serializable{
 
 		});
 		
+		this.btnBuyTile = new Button("");
+		this.btnBuyTile.setPrefSize(80, 80);
+		this.btnBuyTile.setStyle("-fx-background-image: url('themes/pokemon/buyButton.png');"+"-fx-background-size: 80px;");
+		this.btnBuyTile.setFont(Font.font(null, FontWeight.NORMAL, 27));
+		this.btnBuyTile.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		    	if (playerSource.getRack().rackLength()<5 && playerSource.getPoints()>=1) {
+		    		playerSource.getRack().addTile(new SpecialTile(TypeOfSpecialTile.WIND));
+		    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
+		    		playerSource.addPoints(-1);
+		    		updateBuyTileButtonDisability();
+		    		setPointProperty();
+		    	}
+		    }
+		});
+		
 		this.btnValidate = new Button("Valider");
 		this.btnValidate.setPrefSize(170, 70);
 		this.btnValidate.setFont(Font.font(null, FontWeight.NORMAL, 35));
 
-		
+		HBox hbButtons = new HBox();
+		hbButtons.getChildren().addAll(this.extraMoveButton,this.btnExchange,this.btnBuyTile);
+		hbButtons.setSpacing(10);
+		hbButtons.setAlignment(Pos.CENTER);
 		this.vbInfos = new VBox();
-		this.vbInfos.setPrefWidth(300);
-		this.vbInfos.getChildren().addAll(this.lblName,this.imgProfilePicture,this.lblPoints,this.playerStackSize,this.extraMoveButton,this.btnExchange,this.btnValidate);
+		//this.vbInfos.setPrefWidth(400);
+		this.vbInfos.getChildren().addAll(this.lblName,this.imgProfilePicture,this.lblPoints,this.playerStackSize,hbButtons,this.btnValidate);
 		this.vbInfos.setAlignment(Pos.CENTER);
+		//this.vbInfos.setPadding(new Insets(0, 20, 0, 20));
 	}
 	
 	
@@ -167,6 +190,19 @@ public class PlayerFX implements Serializable{
 			extraMoveButton.setDisable(true);
 		}
 		
+	}
+	
+	public void updateBuyTileButtonDisability() {
+		if (playerSource.getPoints()>=1) {
+			btnBuyTile.setDisable(false);
+		} else {
+			btnBuyTile.setDisable(true);
+		}
+		
+	}
+	
+	public Button getBuyTileButton() {
+		return this.btnBuyTile;
 	}
 
 	public Button getExtraMoveButton() {

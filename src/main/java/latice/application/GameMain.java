@@ -18,6 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -28,6 +29,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -62,6 +64,8 @@ public class GameMain extends Application {
 		private RackFX rackP1vbox;
 		private RackFX rackP2vbox;
 		
+		private ImageView imgWindBuy;
+		
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -82,7 +86,9 @@ public class GameMain extends Application {
 		}
 		
 		this.gameBoard.generateBox();
-		this.borderPane.setCenter(gameBoard.generateGameBoard());
+		GridPane gp = gameBoard.generateGameBoard();
+		this.borderPane.setCenter(gp);
+		BorderPane.setAlignment(gp, Pos.CENTER);
 		this.borderPane.setBottom(playersRacks);
 		
 		StackPane root = new StackPane();
@@ -99,9 +105,9 @@ public class GameMain extends Application {
 
 		root.getChildren().add(borderPane);
 		
-		// Creation de la scene
+		
 		Scene scene = new Scene(root, 1280, 720);
-		// affichage de la fenetre
+		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Fenetre");
 		primaryStage.setResizable(false);
@@ -132,9 +138,11 @@ public class GameMain extends Application {
     	System.out.println("Cycle n°"+GameManager.getCurrentNbOfCycles());
     	
     	GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
-
+    	
 		this.borderPane.setLeft(firstPlayer.getPlayerFX().getVbInfos());
 		this.borderPane.setRight(secondPlayer.getPlayerFX().getVbInfos());
+		((VBox) this.borderPane.getLeft()).setPadding(new Insets(0, 0, 0, 40));
+		((VBox) this.borderPane.getRight()).setPadding(new Insets(0, 40, 0, 0));
 		
 		initializePlayersRack(firstPlayer,secondPlayer);
 		startTurn(firstPlayer,secondPlayer);
@@ -156,22 +164,6 @@ public class GameMain extends Application {
 		    	determineGameEnd(primaryStage);
 		    }
 		});
-		
-		
-		
-		
-		Button tempAddWindButton = new Button("vent");
-		tempAddWindButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-		    @Override
-		    public void handle(MouseEvent event) {
-		    	if (firstPlayer.getRack().rackLength()<5) {
-		    		firstPlayer.getRack().addTile(new SpecialTile(TypeOfSpecialTile.WIND));
-		    		rackP1vbox.setRack(firstPlayer.getRack().getTiles());
-		    	}
-		    }
-		});
-		
-		this.borderPane.setTop(tempAddWindButton);
 		
 	}
 	
@@ -195,6 +187,8 @@ public class GameMain extends Application {
 
 	private void startTurn(Player activePlayer, Player inactivePlayer) {
 		GameManager.startTurn(activePlayer, inactivePlayer);
+		activePlayer.getPlayerFX().updateBuyTileButtonDisability();
+		inactivePlayer.getPlayerFX().getBuyTileButton().setDisable(true);
 		activePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
 		inactivePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
 		activePlayer.getRack().getRackFX().createCanPlayEffect(true);
