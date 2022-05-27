@@ -206,12 +206,12 @@ public class GameMain extends Application {
 
 
 	private void pressValidateButton(Player playerWhoPressed, Player otherPlayer, RackFX hbRackPlayerWhoPressed, RackFX hbRackOtherPlayer) {
-    	if (playerWhoPressed.isAbleToPutATile() && gameBoard.getPlayingTiles().size()>0) {
+    	if (playerWhoPressed.isAbleToPutATile() && GameVisual.getPlayingTiles().size()>0) {
     		playerWhoPressed.addPoints(2);
     		playerWhoPressed.getPlayerFX().setPointProperty();
     	}
-    	gameBoard.resetPlayingTileEffect();
-    	gameBoard.lockPlayingTiles();
+    	GameVisual.resetPlayingTileEffect();
+    	GameVisual.lockPlayingTiles();
     	playerWhoPressed.getRack().fillRack(playerWhoPressed.getStack());
     	hbRackPlayerWhoPressed.setRack(playerWhoPressed.getRack().getTiles());
     	hbRackPlayerWhoPressed.hideTiles(playerWhoPressed.getRack().getTiles());

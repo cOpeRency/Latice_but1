@@ -1,5 +1,7 @@
 package latice.vue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javafx.geometry.Insets;
@@ -9,13 +11,17 @@ import javafx.scene.layout.StackPane;
 import latice.model.boxes.Box;
 import latice.model.boxes.Position;
 import latice.model.game.GameBoard;
+import latice.model.tiles.BoardTile;
 
 public class GameVisual {
 	private static GameBoard gameboard;
 	private static AnchorPane root;
+	private static List<BoardTile> playingTiles = new ArrayList<BoardTile>();
 
 	
-	
+	public static List<BoardTile> getPlayingTiles() {
+		return playingTiles;
+	}
 	
 	
 	public static void setGameboard(GameBoard gameboard) {
@@ -44,5 +50,33 @@ public class GameVisual {
     	return board;
     }
 	
+    public static void addPlayingTile(BoardTile newTile) {
+
+		for (BoardTile tile : playingTiles) {
+			tile.getTileFX().setLastTilePlayed(false);
+		}
+		playingTiles.add(newTile);
+	}
 	
+	public static void removePlayingTile() {
+		playingTiles.remove(playingTiles.size()-1);
+		if (playingTiles.size()>=1) {
+			playingTiles.get(playingTiles.size()-1).getTileFX().setLastTilePlayed(true);
+		}
+	}
+    
+    public static void lockPlayingTiles() {
+    	for (BoardTile tile : playingTiles) {
+			tile.setLocked(true);
+		}
+    	playingTiles.clear();
+    	
+    }
+    
+    public static void resetPlayingTileEffect() {
+    	for (BoardTile tile : playingTiles) {
+			tile.getTileFX().setStyle(tile.getTileFX().SHADOW_EFFECT);
+		}
+    	
+    }
 }

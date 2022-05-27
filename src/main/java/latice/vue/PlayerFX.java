@@ -142,8 +142,8 @@ public class PlayerFX implements Serializable{
 			    	
 		    	}
 		    	
-		    	GameManager.getGameboard().resetPlayingTileEffect();
-		    	GameManager.getGameboard().lockPlayingTiles();
+		    	GameVisual.resetPlayingTileEffect();
+		    	GameVisual.lockPlayingTiles();
 		    	
 		    }
 

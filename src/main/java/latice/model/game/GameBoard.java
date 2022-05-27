@@ -16,23 +16,14 @@ import latice.model.tiles.BoardTile;
 public class GameBoard implements Serializable{
 	
 	private Map<Position, Box> gameboardTiles;
-	private List<BoardTile> playingTiles;
 	
 	public GameBoard() {
 		this.gameboardTiles = new HashMap<>();
-		this.playingTiles = new ArrayList();
     }
 	
-	
-	
-	
-
     public Map<Position, Box> getGameboardTiles() {
 		return gameboardTiles;
 	}
-
-
-
 
 
 	public Box getBox(Position position) {
@@ -48,10 +39,6 @@ public class GameBoard implements Serializable{
 		}
     	return numberOfTile;
     }
-
-	public List<BoardTile> getPlayingTiles() {
-		return playingTiles;
-	}
 
 	public Map<Position, Box> tiles() {
         return this.gameboardTiles;
@@ -71,41 +58,6 @@ public class GameBoard implements Serializable{
     		}
     	}
     }
-    
 
-	//JAVAFX
-
-    
-    public void addPlayingTile(BoardTile newTile) {
-
-		for (BoardTile tile : playingTiles) {
-			tile.getTileFX().setLastTilePlayed(false);
-		}
-		this.playingTiles.add(newTile);
-	}
-	
-	public void removePlayingTile() {
-		this.playingTiles.remove(this.playingTiles.size()-1);
-		if (this.playingTiles.size()>=1) {
-			this.playingTiles.get(this.playingTiles.size()-1).getTileFX().setLastTilePlayed(true);
-		}
-	}
-    
-    public void lockPlayingTiles() {
-    	for (BoardTile tile : playingTiles) {
-			tile.setLocked(true);
-		}
-    	this.playingTiles.clear();
-    	
-    }
-    
-    public void resetPlayingTileEffect() {
-    	for (BoardTile tile : playingTiles) {
-			tile.getTileFX().setStyle(tile.getTileFX().SHADOW_EFFECT);
-		}
-    	
-    }
-    
-    
 }
 

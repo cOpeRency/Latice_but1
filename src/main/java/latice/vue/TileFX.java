@@ -137,18 +137,18 @@ public class TileFX extends ImageView implements Serializable {
 			    		
 			        	//When we bought an extra move and then we move a tile from the gameboard before using it, we reset the extra move
 			        	// Or when we take an extra tile which is already played, we reset the extra move too
-			        	if (GameManager.getActivePlayer().isAbleToPutATile() || boardTile.getParentBox().getGameboard().getPlayingTiles().size()>1) {
+			        	if (GameManager.getActivePlayer().isAbleToPutATile() || GameVisual.getPlayingTiles().size()>1) {
 			        		GameManager.getActivePlayer().addPoints(2);
 			        		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 			        	}
 			        	
 			        	boardTile.exitBox();
 			        	boardTile.getParentBox().getBoxFX().getChildren().remove(boardTile.getTileFX());
-			        	boardTile.getParentBox().getGameboard().removePlayingTile();
+			        	GameVisual.removePlayingTile();
 			    		
 			    		GameManager.getActivePlayer().getPlayerFX().enableExchangeButton();
 			    		
-			    		if (boardTile.getParentBox().getGameboard().getPlayingTiles().size()==0) {
+			    		if (GameVisual.getPlayingTiles().size()==0) {
 			    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
 			    		}
 			    		
@@ -209,11 +209,11 @@ public class TileFX extends ImageView implements Serializable {
 		    			}
 		    			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 		    			
-		    			boardTile.getParentBox().getGameboard().addPlayingTile(boardTile);
+		    			GameVisual.addPlayingTile(boardTile);
 		    			GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
 		    			
 		    			// If there is more than 1 playing tile on the gamebord, it mean that the extra move is reused, so we lose 2 points
-		    			if (boardTile.getParentBox().getGameboard().getPlayingTiles().size()>1) {
+		    			if (GameVisual.getPlayingTiles().size()>1) {
 		    				GameManager.getActivePlayer().addPoints(-2);
 		    				GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 		    				GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);

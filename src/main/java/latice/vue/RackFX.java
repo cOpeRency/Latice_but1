@@ -93,7 +93,7 @@ public class RackFX extends HBox implements Serializable{
 		    		tile.setParentRack(rackSource);
 		    		
 		    		// If gameboard has at least one not locked tile, we delete the ability to play until he buy an extra move.
-		    		if (tile.getParentBox().getGameboard().getPlayingTiles().size() >= 1) {
+		    		if (GameVisual.getPlayingTiles().size() >= 1) {
 		    			tile.getParentRack().getOwner().setAblilityToPutATile(false);
 		    			createCanPlayEffect(false);
 		    		} else {
@@ -101,7 +101,7 @@ public class RackFX extends HBox implements Serializable{
 		    		}
 		    		
 		    		
-		    		if (GameManager.getActivePlayer().getPoints()>=2 && tile.getParentBox().getGameboard().getPlayingTiles().size()>0) {
+		    		if (GameManager.getActivePlayer().getPoints()>=2 && GameVisual.getPlayingTiles().size()>0) {
 		    			rackSource.getOwner().getPlayerFX().setExtraMoveButtonDisability(false);
 		    		}
 		    		tile.exitBox();

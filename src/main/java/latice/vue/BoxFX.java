@@ -192,7 +192,7 @@ public class BoxFX extends StackPane implements Serializable{
 	
 	public void setTile(BoardTile tile) {
 		//If there is at least one tile on gameboard and tile is from a box, we reuse the extra move 
-		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && this.box.getGameboard().getPlayingTiles().size()>0 && tile.getParentBox()!=null) {
+		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && GameVisual.getPlayingTiles().size()>0 && tile.getParentBox()!=null) {
 			GameManager.getActivePlayer().addPoints(-2);
 			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
@@ -200,7 +200,7 @@ public class BoxFX extends StackPane implements Serializable{
 		this.box.setTile(tile);
 		this.box.getTile().setTileImage();
 		this.getChildren().add(this.box.getTile().getTileFX());
-		this.box.getGameboard().addPlayingTile(tile);
+		GameVisual.addPlayingTile(tile);
 		GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
 	}
 	
