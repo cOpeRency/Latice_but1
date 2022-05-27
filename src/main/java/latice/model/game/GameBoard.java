@@ -22,8 +22,20 @@ public class GameBoard implements Serializable{
 		this.gameboardTiles = new HashMap<>();
 		this.playingTiles = new ArrayList();
     }
+	
+	
+	
+	
 
-    public Box getBox(Position position) {
+    public Map<Position, Box> getGameboardTiles() {
+		return gameboardTiles;
+	}
+
+
+
+
+
+	public Box getBox(Position position) {
 		return gameboardTiles.get(position);
 	}
     
@@ -62,19 +74,7 @@ public class GameBoard implements Serializable{
     
 
 	//JAVAFX
-    public GridPane generateGameBoard() {
-    	GridPane board = new GridPane();
 
-    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
-    		entry.getValue().setBoxImage();
-    		board.add(entry.getValue().getBoxFX(), entry.getKey().column(), entry.getKey().row());
-		}
-		    	
-    	
-    	board.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(255,255,153,0.8), 15, 0.7, 0, 0);");
-    	board.setPadding(new Insets(20,68,0,68));
-    	return board;
-    }
     
     public void addPlayingTile(BoardTile newTile) {
 

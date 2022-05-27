@@ -16,12 +16,15 @@ import latice.model.boxes.BoxType;
 import latice.model.boxes.Position;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
+import latice.model.players.Rack;
 import latice.model.players.Stack;
 import latice.model.system.GameManager;
+import latice.model.system.GameMode;
 import latice.model.system.MatchType;
 import latice.model.tiles.BoardTile;
 import latice.model.tiles.Color;
 import latice.model.tiles.Shape;
+import latice.model.tiles.Tile;
 
 class LaticeMainTest {
 	private Stack stack;
@@ -37,6 +40,7 @@ class LaticeMainTest {
 	
 	@BeforeEach
 	public void initEach(){
+		GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
 		this.stack = new Stack();
 		this.player1 = new Player("Albert");
 		this.player2 = new Player("Bernard");
@@ -57,9 +61,9 @@ class LaticeMainTest {
 	@Test
 	void testStackJoueurDebiteApresCreationRack() {
 		assertEquals(5, this.player1.getRack().rackLength());
-		assertEquals(36-5, this.player1.getStack().stackLength());
+		assertEquals(42-5, this.player1.getStack().stackLength());
 		assertEquals(5, player2.getRack().rackLength());
-		assertEquals(36-5, player2.getStack().stackLength());
+		assertEquals(42-5, player2.getStack().stackLength());
 	}
 	
 	@Test
@@ -71,7 +75,7 @@ class LaticeMainTest {
 		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
 		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
 		assertEquals(1, this.player1.getRack().rackLength());
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 36; i++) {
 			this.player1.getStack().removeTile();
 		}
 		assertEquals(1, this.player1.getStack().stackLength());
@@ -120,7 +124,6 @@ class LaticeMainTest {
 		Position position = new Position(0, 4);
 		
 		assertNull(gameBoard.getBox(position).getTile());
-		
 		gameBoard.getBox(position).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
 		
 		assertNotNull(gameBoard.getBox(position).getTile());
@@ -193,21 +196,16 @@ class LaticeMainTest {
 	void testRackDebitéWhenPutTileToBox() {
 		Position position = new Position(0, 4);
 		
-		BoardTile tile = (BoardTile) player1.getRack().getTiles().get(0);
-		
-		assertEquals(tile.getParentRack(),player1.getRack());
-		
-		gameBoard.getBox(position).setTile(tile);
-		tile.exitRack();
-		
-		assertEquals(player1.getRack().rackLength(),4);
-		
-		tile = (BoardTile) player1.getRack().getTiles().get(0);
-		gameBoard.generateBox();
-		gameBoard.getBox(position).setTile(tile);
-		tile.exitRack();
-		
-		assertEquals(player1.getRack().rackLength(),3);
+		if (player1.getRack().getTiles().get(0).getClass().equals(BoardTile.class)) {
+			BoardTile tile = (BoardTile) player1.getRack().getTiles().get(0);
+			
+			assertEquals(tile.getParentRack(),player1.getRack());
+			
+			gameBoard.getBox(position).setTile(tile);
+			tile.exitRack();
+			
+			assertEquals(player1.getRack().rackLength(),4);
+		}
 		
 	}
 	
@@ -215,14 +213,15 @@ class LaticeMainTest {
 	void testTileIsLockedWhenPutIt() {
 		Position position = new Position(0, 4);
 
-		
-		BoardTile tile = (BoardTile) player1.getRack().getTiles().get(0);
-		
-		gameBoard.getBox(position).setTile(tile);
-		tile.exitRack();
-		tile.setLocked(true);
-		
-		assertTrue(tile.isLocked());
+		if (player1.getRack().getTiles().get(0).getClass().equals(BoardTile.class)) {
+			BoardTile tile = (BoardTile) player1.getRack().getTiles().get(0);
+			
+			gameBoard.getBox(position).setTile(tile);
+			tile.exitRack();
+			tile.setLocked(true);
+			
+			assertTrue(tile.isLocked());
+		}
 	}
 	
 	@Test
@@ -402,7 +401,7 @@ class LaticeMainTest {
 	
 	
 	@Test
-	void test_() {
+	void test_add_all_tiles_lefts_when_stack_cannot_fill_rack_completly() {
 		
 		assertEquals(5, this.player1.getRack().rackLength());
 		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
@@ -410,13 +409,26 @@ class LaticeMainTest {
 		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
 		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
 		assertEquals(1, this.player1.getRack().rackLength());
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 36; i++) {
 			this.player1.getStack().removeTile();
 		}
 		assertEquals(1, this.player1.getStack().stackLength());
 		this.player1.getRack().fillRack(this.player1.getStack());
 		assertEquals(0, this.player1.getStack().stackLength());
 		assertEquals(2, this.player1.getRack().rackLength());
+		
+	}
+	
+	
+	@Test
+	void test_rack_is_different_after_exchanging() {
+		
+		List<Tile> oldRack = new ArrayList<Tile>();
+		oldRack.addAll(this.player1.getRack().getTiles());
+		
+		this.player1.getRack().exchange(player1.getStack());
+		
+		assertNotEquals(oldRack,this.player1.getRack().getTiles());
 		
 	}
 }

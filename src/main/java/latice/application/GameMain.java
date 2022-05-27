@@ -79,6 +79,7 @@ public class GameMain extends Application {
 		gameStart();
 		this.gameBoard = new GameBoard();
 		GameManager.setGameboard(gameBoard);
+		GameVisual.setGameboard(gameBoard);
 		this.borderPane = new BorderPane();
 		
 		player1.getRack().showRack();
@@ -92,7 +93,7 @@ public class GameMain extends Application {
 		}
 		
 		this.gameBoard.generateBox();
-		GridPane gp = gameBoard.generateGameBoard();
+		GridPane gp = GameVisual.generateGameBoard();
 		this.borderPane.setCenter(gp);
 		BorderPane.setAlignment(gp, Pos.CENTER);
 		this.borderPane.setBottom(playersRacks);

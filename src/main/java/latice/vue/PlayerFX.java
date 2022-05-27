@@ -176,6 +176,7 @@ public class PlayerFX implements Serializable{
 			    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
 			    		playerSource.addPoints(-1);
 			    		updateBuyTileButtonDisability();
+			    		updateExtraMoveButtonDisability();
 			    		setPointProperty();
 				    	
 					} else if (choix.get() == btnTypeChoix2) {
@@ -183,6 +184,7 @@ public class PlayerFX implements Serializable{
 			    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
 			    		playerSource.addPoints(-1);
 			    		updateBuyTileButtonDisability();
+			    		updateExtraMoveButtonDisability();
 			    		setPointProperty();
 					}
 		    	}
