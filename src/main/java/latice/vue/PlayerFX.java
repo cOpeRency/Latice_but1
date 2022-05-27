@@ -158,11 +158,33 @@ public class PlayerFX implements Serializable{
 		    @Override
 		    public void handle(MouseEvent event) {
 		    	if (playerSource.getRack().rackLength()<5 && playerSource.getPoints()>=1) {
-		    		playerSource.getRack().addTile(new SpecialTile(TypeOfSpecialTile.WIND));
-		    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
-		    		playerSource.addPoints(-1);
-		    		updateBuyTileButtonDisability();
-		    		setPointProperty();
+		    		
+		    		Alert dialog = new Alert(AlertType.NONE);
+					dialog.setTitle("Choisissez");
+					dialog.setHeaderText(null);
+					dialog.setContentText("Pour l'achat de quelle tuile voulez-vous dépenser 6 points ?");
+
+					ButtonType btnTypeChoix1 = new ButtonType("Vent");
+					ButtonType btnTypeChoix2 = new ButtonType("Foudre");
+					ButtonType btnTypeChoix3 = new ButtonType("Retour");
+					
+					dialog.getButtonTypes().addAll(btnTypeChoix1, btnTypeChoix2, btnTypeChoix3);
+					
+					Optional<ButtonType> choix = dialog.showAndWait();
+					if(choix.get() == btnTypeChoix1) {
+			    		playerSource.getRack().addTile(new SpecialTile(TypeOfSpecialTile.WIND));
+			    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
+			    		playerSource.addPoints(-1);
+			    		updateBuyTileButtonDisability();
+			    		setPointProperty();
+				    	
+					} else if (choix.get() == btnTypeChoix2) {
+			    		playerSource.getRack().addTile(new SpecialTile(TypeOfSpecialTile.THUNDER));
+			    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
+			    		playerSource.addPoints(-1);
+			    		updateBuyTileButtonDisability();
+			    		setPointProperty();
+					}
 		    	}
 		    }
 		});
