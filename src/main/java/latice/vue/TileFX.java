@@ -45,8 +45,7 @@ public class TileFX extends ImageView implements Serializable {
 			    @Override
 			    public void handle(MouseEvent event) {
 			    	if (GameManager.getGameMode().equals(GameMode.THUNDER_TILE) && !((BoardTile) tileSource).getParentBox().getBoxType().equals(BoxType.MOON)) {
-			    		((BoardTile) tileSource).exitBox();
-			    		((BoardTile) tileSource).getParentBox().getBoxFX().getChildren().remove(((BoardTile) tileSource).getTileFX());
+			    		((BoardTile) tileSource).getParentBox().getBoxFX().callThunder();
 		    			GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
 				    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
 				    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(false);

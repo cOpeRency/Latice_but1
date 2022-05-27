@@ -1,32 +1,28 @@
 package latice.vue;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import latice.application.GameMain;
 import latice.model.boxes.Box;
 import latice.model.boxes.BoxType;
-import latice.model.boxes.Position;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
 import latice.model.tiles.BoardTile;
-import latice.model.tiles.Color;
-import latice.model.tiles.Shape;
 
 public class BoxFX extends StackPane implements Serializable{
 	private Box box;
@@ -56,6 +52,49 @@ public class BoxFX extends StackPane implements Serializable{
 			Image img = new Image(urlFichier, 62, 62, true, true);
 			ImageView imgView = new ImageView(img);
 			this.getChildren().add(imgView);
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void callThunder(){
+
+		String urlFichier;
+		try {
+			File fichier = new File("src/main/resources/effects/thunderEffect.gif");
+			urlFichier = fichier.toURI().toURL().toString();
+			Image img = new Image(urlFichier,800*2,450*2,true,true);
+			ImageView imgView = new ImageView(img);
+			ColorAdjust colorAdjust = new ColorAdjust();
+			
+			Blend blend = new Blend();    
+			blend.setMode(BlendMode.ADD);
+			
+			colorAdjust.setInput(blend);
+			
+			imgView.setEffect(colorAdjust);
+
+			System.out.println(this.getLayoutY());
+			// 502 = posX de la 8e colonne de tuile (la ou la foudre tombe si setX(0))
+			imgView.setX(this.getLayoutX()-502);
+			// 578 = posY de la 10e ligne de tuile (en dehors du plateau du coup) (la ou la foudre tombe si setY(0))
+			imgView.setY(this.getLayoutY()-578);
+			
+			Timeline timeline = new Timeline(
+				    new KeyFrame(Duration.ZERO, e -> { 
+				    	GameVisual.getRoot().getChildren().add(imgView);
+				    	}),
+				    new KeyFrame(Duration.seconds(0.4), e -> {
+				    	box.getTile().getParentBox().getBoxFX().getChildren().remove(box.getTile().getTileFX());
+			    		box.getTile().exitBox();
+				    }),
+				    new KeyFrame(Duration.seconds(1.2), e -> { 
+				    	GameVisual.getRoot().getChildren().remove(imgView);
+				    	})
+				);
+				timeline.play();
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

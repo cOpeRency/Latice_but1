@@ -26,6 +26,7 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -48,6 +49,7 @@ import latice.model.tiles.Color;
 import latice.model.tiles.Shape;
 import latice.model.tiles.SpecialTile;
 import latice.model.tiles.TypeOfSpecialTile;
+import latice.vue.GameVisual;
 import latice.vue.RackFX;
 
 public class GameMain extends Application {
@@ -91,22 +93,23 @@ public class GameMain extends Application {
 		BorderPane.setAlignment(gp, Pos.CENTER);
 		this.borderPane.setBottom(playersRacks);
 		
-		StackPane root = new StackPane();
+		AnchorPane root = new AnchorPane();
+		GameVisual.setRoot(root);
 		String urlFichier;
 		try {
 			File fichier = new File("src/main/resources/themes/pokemon/bg_game.png");
 			urlFichier = fichier.toURI().toURL().toString();
 			ImageView background = new ImageView(new Image(urlFichier, 1300, 731, true, true));
-			root.getChildren().add(background);
+			GameVisual.getRoot().getChildren().add(background);
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 
-		root.getChildren().add(borderPane);
+		GameVisual.getRoot().getChildren().add(borderPane);
 		
 		
-		Scene scene = new Scene(root, 1280, 720);
+		Scene scene = new Scene(GameVisual.getRoot(), 1280, 720);
 		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Fenetre");
@@ -181,7 +184,7 @@ public class GameMain extends Application {
 		this.playersRacks.getChildren().addAll(this.rackP1vbox,this.rackP2vbox);
 		this.playersRacks.setAlignment(Pos.CENTER);
 		this.playersRacks.setSpacing(150);
-		this.playersRacks.setPadding(new Insets(0,0,23,0));
+		this.playersRacks.setPadding(new Insets(44,0,0,0));
 	}
 
 
