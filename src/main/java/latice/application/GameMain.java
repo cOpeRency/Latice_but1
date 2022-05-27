@@ -71,6 +71,10 @@ public class GameMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setScene(LoadingScreen.getScene());
+		primaryStage.setTitle("Fenetre");
+		primaryStage.setResizable(false);
+		primaryStage.show();
 		
 		gameStart();
 		this.gameBoard = new GameBoard();
@@ -110,11 +114,11 @@ public class GameMain extends Application {
 		
 		
 		Scene scene = new Scene(GameVisual.getRoot(), 1280, 720);
-		
+		System.out.println("start");
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Fenetre");
-		primaryStage.setResizable(false);
-		primaryStage.show();
+		//primaryStage.setTitle("Fenetre");
+		//primaryStage.setResizable(false);
+		//primaryStage.show();
 
 	}
 	
