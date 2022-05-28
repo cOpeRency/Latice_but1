@@ -6,12 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javafx.geometry.Insets;
-import javafx.scene.layout.GridPane;
 import latice.model.boxes.Box;
 import latice.model.boxes.BoxType;
 import latice.model.boxes.Position;
-import latice.model.tiles.BoardTile;
 
 public class GameBoard implements Serializable{
 	
@@ -20,7 +17,7 @@ public class GameBoard implements Serializable{
 	
 	public GameBoard() {
 		this.gameboardTiles = new HashMap<>();
-		this.sunBoxesPosition = new ArrayList<Position>();
+		this.sunBoxesPosition = new ArrayList<>();
 		this.sunBoxesPosition.add(new Position(0,0));
 		this.sunBoxesPosition.add(new Position(1,1));
 		this.sunBoxesPosition.add(new Position(2,2));

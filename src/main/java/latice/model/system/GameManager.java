@@ -1,6 +1,6 @@
 package latice.model.system;
 
-import javafx.stage.Stage;
+import java.util.Objects;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
 
@@ -74,7 +74,7 @@ public class GameManager {
 	}
 	
 	public static boolean determineGameEnd() {
-		if (currentNbOfCycles == nbCycleMax) {
+		if (Objects.equals(currentNbOfCycles, nbCycleMax)) {
 			return true;	
 		}
 		return false;

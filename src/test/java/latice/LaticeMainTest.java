@@ -142,7 +142,7 @@ class LaticeMainTest {
 		gameBoard.getBox(position).setTile(tile);
 		
 		assertNotNull(gameBoard.getBox(position).getTile());
-		gameBoard.getBox(position).removeTile(tile);
+		gameBoard.getBox(position).removeTile();
 		assertNull(gameBoard.getBox(position).getTile());
 		
 		

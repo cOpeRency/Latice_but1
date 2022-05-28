@@ -14,10 +14,11 @@ import latice.model.tiles.TypeOfSpecialTile;
 
 
 public class Stack implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private List<Tile> tiles;
 	
 	public Stack() {
-		this.tiles = new ArrayList();
+		this.tiles = new ArrayList<>();
 	}
 	
 	public Integer stackLength() {

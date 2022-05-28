@@ -2,53 +2,28 @@ package latice.application;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import latice.model.boxes.Box;
-import latice.model.boxes.Position;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
-import latice.model.players.Rack;
 import latice.model.players.Stack;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
-import latice.model.tiles.BoardTile;
-import latice.model.tiles.Color;
-import latice.model.tiles.Shape;
-import latice.model.tiles.SpecialTile;
-import latice.model.tiles.TypeOfSpecialTile;
 import latice.vue.GameVisual;
 import latice.vue.RackFX;
 
@@ -65,8 +40,7 @@ public class GameMain extends Application {
 		private HBox playersRacks;
 		private RackFX rackP1vbox;
 		private RackFX rackP2vbox;
-		
-		private ImageView imgWindBuy;
+
 		
 
 	@Override

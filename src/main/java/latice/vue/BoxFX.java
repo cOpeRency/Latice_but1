@@ -25,10 +25,11 @@ import latice.model.system.GameMode;
 import latice.model.tiles.BoardTile;
 
 public class BoxFX extends StackPane implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Box box;
-	public static String VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,0,0.8), 15, 0.8, 0, 0);";
-	public static String NOT_VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(150,0,0,0.8), 15, 0.8, 0, 0);";
-	public static String NO_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0);";
+	public static final String VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,0,0.8), 15, 0.8, 0, 0);";
+	public static final String NOT_VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(150,0,0,0.8), 15, 0.8, 0, 0);";
+	public static final String NO_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0);";
 	private String imgURL;
 	
 	public BoxFX(Box box) {
@@ -54,7 +55,6 @@ public class BoxFX extends StackPane implements Serializable{
 			this.getChildren().add(imgView);
 			
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -65,7 +65,7 @@ public class BoxFX extends StackPane implements Serializable{
 		try {
 			File fichier = new File("src/main/resources/effects/thunderEffect.gif");
 			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier,800*2,450*2,true,true);
+			Image img = new Image(urlFichier,1600,900,true,true);
 			ImageView imgView = new ImageView(img);
 			ColorAdjust colorAdjust = new ColorAdjust();
 			
@@ -83,21 +83,20 @@ public class BoxFX extends StackPane implements Serializable{
 			imgView.setY(this.getLayoutY()-578);
 			
 			Timeline timeline = new Timeline(
-				    new KeyFrame(Duration.ZERO, e -> { 
-				    	GameVisual.getRoot().getChildren().add(imgView);
-				    	}),
+				    new KeyFrame(Duration.ZERO, e ->  
+				    	GameVisual.getRoot().getChildren().add(imgView)
+				    	),
 				    new KeyFrame(Duration.seconds(0.4), e -> {
 				    	box.getTile().getParentBox().getBoxFX().getChildren().remove(box.getTile().getTileFX());
 			    		box.getTile().exitBox();
 				    }),
-				    new KeyFrame(Duration.seconds(1.2), e -> { 
-				    	GameVisual.getRoot().getChildren().remove(imgView);
-				    	})
+				    new KeyFrame(Duration.seconds(1.2), e ->  
+				    	GameVisual.getRoot().getChildren().remove(imgView)
+				    	)
 				);
 				timeline.play();
 			
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -106,7 +105,7 @@ public class BoxFX extends StackPane implements Serializable{
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	if (event.getDragboard().getString()=="WIND" || event.getDragboard().getString()=="THUNDER" || (!GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && canDragedTileBePutHere(event.getDragboard()))) {
+		    	if (event.getDragboard().getString().equals("WIND") || event.getDragboard().getString().equals("THUNDER")|| (!GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && canDragedTileBePutHere(event.getDragboard()))) {
 			        setStyle(VALID_HOVER_EFFECT);
 			        toFront();
 		    	} else if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && checkValidity((BoardTile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
@@ -134,14 +133,10 @@ public class BoxFX extends StackPane implements Serializable{
 		    @Override
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
-		    	if (event.getDragboard().getString()=="WIND" || event.getDragboard().getString()=="THUNDER") {
+		    	if (("WIND".equals(event.getDragboard().getString()) || "THUNDER".equals(event.getDragboard().getString())) 
+		    			|| (GameManager.getGameMode().equals(GameMode.WIND_TILE) && canDragedTileBePutHere(dragboard))
+		    			|| (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA)) && dragboard.hasImage())) {
 	    			event.acceptTransferModes(TransferMode.MOVE);
-		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && canDragedTileBePutHere(dragboard)) {
-		    		event.acceptTransferModes(TransferMode.MOVE);
-		    	} else if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA))) {
-		    		if (dragboard.hasImage()) {
-		    			event.acceptTransferModes(TransferMode.MOVE);
-		    		}
 		    	}
 		        event.consume();
 		    }
@@ -155,7 +150,7 @@ public class BoxFX extends StackPane implements Serializable{
 		    		success = true;
 		    	}
 		    	if (dragboard.hasString()) {
-		    		if (dragboard.getString()=="WIND" || dragboard.getString()=="THUNDER") {
+		    		if (dragboard.getString().equals("WIND") || dragboard.getString().equals("THUNDER")) {
 		    			System.out.println("vent detecté");
 		    		} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE)) {
 			    		setTile((BoardTile)dragboard.getContent(GameMain.TILE_DATA));
@@ -184,7 +179,7 @@ public class BoxFX extends StackPane implements Serializable{
 	
 	public boolean canDragedTileBePutHere(Dragboard dragboard) {
 		BoardTile tile = (BoardTile)dragboard.getContent(GameMain.TILE_DATA);
-		if (box.getTile()==null && tile.getParentBox().getAdjacentBoxes().contains(box)) {
+		if (box.getTile()==BoardTile.NO && tile.getParentBox().getAdjacentBoxes().contains(box)) {
 			return true;
 		}
 		return false;
@@ -192,7 +187,7 @@ public class BoxFX extends StackPane implements Serializable{
 	
 	public void setTile(BoardTile tile) {
 		//If there is at least one tile on gameboard and tile is from a box, we reuse the extra move 
-		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && GameVisual.getPlayingTiles().size()>0 && tile.getParentBox()!=null) {
+		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && !GameVisual.getPlayingTiles().isEmpty() && tile.getParentBox()!=null) {
 			GameManager.getActivePlayer().addPoints(-2);
 			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);

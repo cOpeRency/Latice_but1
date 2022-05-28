@@ -5,12 +5,10 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.Optional;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -25,7 +23,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import latice.model.players.Player;
-import latice.model.system.GameManager;
 import latice.model.tiles.SpecialTile;
 import latice.model.tiles.TypeOfSpecialTile;
 

@@ -1,9 +1,6 @@
 package latice.vue;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 
@@ -11,7 +8,6 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -30,10 +26,10 @@ public class TileFX extends ImageView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Tile tileSource;
 	private boolean isLastTilePlayed;
-	private static String HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,200,0,0.8), 15, 0.6, 0, 0);";
-	private static String NOT_FIXED_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,0,200,0.8), 15, 0.6, 0, 0);";
-	private static String LAST_TILE_PLAYED_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,250,200,0.8), 15, 0.6, 0, 0);";
-	public static String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.4, 0, 0);";
+	private static final String HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,200,0,0.8), 15, 0.6, 0, 0);";
+	private static final String NOT_FIXED_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(200,0,200,0.8), 15, 0.6, 0, 0);";
+	private static final String LAST_TILE_PLAYED_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,250,200,0.8), 15, 0.6, 0, 0);";
+	public static final String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.4, 0, 0);";
 	
 	
 	public TileFX(Tile tile) {
@@ -137,7 +133,12 @@ public class TileFX extends ImageView implements Serializable {
 			    		
 			        	//When we bought an extra move and then we move a tile from the gameboard before using it, we reset the extra move
 			        	// Or when we take an extra tile which is already played, we reset the extra move too
-			        	if (GameManager.getActivePlayer().isAbleToPutATile() || GameVisual.getPlayingTiles().size()>1) {
+			        	if (GameVisual.getPlayingTiles().size()>1) {
+			        		GameManager.getActivePlayer().addPoints(2);
+			        		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+			        	}
+			        	
+			        	if (GameManager.getActivePlayer().isAbleToPutATile()) {
 			        		GameManager.getActivePlayer().addPoints(2);
 			        		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
 			        	}
@@ -148,7 +149,7 @@ public class TileFX extends ImageView implements Serializable {
 			    		
 			    		GameManager.getActivePlayer().getPlayerFX().enableExchangeButton();
 			    		
-			    		if (GameVisual.getPlayingTiles().size()==0) {
+			    		if (GameVisual.getPlayingTiles().isEmpty()) {
 			    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
 			    		}
 			    		
@@ -277,17 +278,17 @@ public class TileFX extends ImageView implements Serializable {
 	
 	
 	
-	public void initDragAndDrop(SpecialTile SpecialTile) {
+	public void initDragAndDrop(SpecialTile specialTile) {
 		setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && GameManager.canUseSpecialTiles() && !SpecialTile.getParentRack().isLocked() && SpecialTile.getParentRack().getOwner().isAbleToPutATile()) {
+		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && GameManager.canUseSpecialTiles() && !specialTile.getParentRack().isLocked() && specialTile.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
 			        setStyle(SHADOW_EFFECT);
 			        
 			        ClipboardContent content = new ClipboardContent();
 			        content.putImage(getImage());
-			        content.putString(SpecialTile.getType().toString());
+			        content.putString(specialTile.getType().toString());
 			        
 			        dragboard.setContent(content);
 			        event.consume();
@@ -301,9 +302,9 @@ public class TileFX extends ImageView implements Serializable {
 		    @Override
 		    public void handle(DragEvent event) {
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
-		    		SpecialTile.exitRack();
-		    		SpecialTile.getParentRack().getRackFX().getChildren().remove(SpecialTile.getTileFX());
-		    		if (SpecialTile.getType().equals(TypeOfSpecialTile.WIND)) {
+		    		specialTile.exitRack();
+		    		specialTile.getParentRack().getRackFX().getChildren().remove(specialTile.getTileFX());
+		    		if (specialTile.getType().equals(TypeOfSpecialTile.WIND)) {
 		    			GameManager.setGameMode(GameMode.WIND_TILE);
 		    		} else {
 		    			GameManager.setGameMode(GameMode.THUNDER_TILE);

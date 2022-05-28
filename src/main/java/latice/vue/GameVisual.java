@@ -7,7 +7,6 @@ import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import latice.model.boxes.Box;
 import latice.model.boxes.Position;
 import latice.model.game.GameBoard;
@@ -75,7 +74,8 @@ public class GameVisual {
     
     public static void resetPlayingTileEffect() {
     	for (BoardTile tile : playingTiles) {
-			tile.getTileFX().setStyle(tile.getTileFX().SHADOW_EFFECT);
+			tile.getTileFX();
+			tile.getTileFX().setStyle(TileFX.SHADOW_EFFECT);
 		}
     	
     }

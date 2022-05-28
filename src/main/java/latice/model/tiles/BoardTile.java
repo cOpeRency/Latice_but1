@@ -1,18 +1,7 @@
 package latice.model.tiles;
 
-import java.io.File;
 import java.io.Serializable;
-import java.net.MalformedURLException;
 
-import javafx.event.EventHandler;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.VBox;
 import latice.model.boxes.Box;
 import latice.model.players.Rack;
 import latice.vue.TileFX;
@@ -21,7 +10,7 @@ public class BoardTile extends Tile implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private final Shape shape;
 	private final Color color;
-	public static BoardTile NO = null;
+	public final static BoardTile NO = null;
 	private Box parentBox;
 	private boolean locked = false;
 	private TileFX tileFX;
@@ -74,7 +63,7 @@ public class BoardTile extends Tile implements Serializable{
 
 	
 	public void exitBox() {
-    	parentBox.removeTile(this);
+    	parentBox.removeTile();
 	}
 
 	

@@ -1,9 +1,5 @@
 package latice.vue;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +14,6 @@ import latice.application.GameMain;
 import latice.model.players.Rack;
 import latice.model.system.GameManager;
 import latice.model.tiles.BoardTile;
-import latice.model.tiles.Color;
-import latice.model.tiles.Shape;
 import latice.model.tiles.Tile;
 
 public class RackFX extends HBox implements Serializable{

@@ -1,23 +1,10 @@
 package latice.model.boxes;
 
-import java.io.File;
 import java.io.Serializable;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import javafx.event.EventHandler;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.StackPane;
-import latice.application.GameMain;
 import latice.model.game.GameBoard;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
@@ -28,6 +15,7 @@ import latice.model.tiles.Shape;
 import latice.vue.BoxFX;
 
 public class Box implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private BoxFX boxFX;
 	private BoxType boxType;
 	private BoardTile tile;
@@ -78,7 +66,7 @@ public class Box implements Serializable{
 		return this.tile;
 	}
 
-	public void removeTile(BoardTile tile) {
+	public void removeTile() {
 		this.tile = null;
 	}
 	
@@ -104,8 +92,10 @@ public class Box implements Serializable{
 			return MatchType.TREFOIL;
 		case 4:
 			return MatchType.LATICE;
+		default:
+			return MatchType.SIMPLE;
 		}
-		return MatchType.SIMPLE;
+		
 	}
 	
 	public List<Box> getAdjacentBoxes(){
@@ -146,8 +136,6 @@ public class Box implements Serializable{
 		Integer numberOfNullTiles = 0;
 		List<Box> listBoxes = getAdjacentBoxes();
 		for (Box box : listBoxes) {
-			//System.out.println(box.getTile().toString());
-			//System.out.println(box.getTile().getShape()+shape.toString());
 			if (box.getTile()!=null) {
 				if (box.getTile().getShape()!=shape && box.getTile().getColor()!=color) {				
 					return false;
@@ -157,9 +145,9 @@ public class Box implements Serializable{
 			}
 		}
 		
-		if (numberOfNullTiles==listBoxes.size()) {
+		if (numberOfNullTiles==listBoxes.size())
 			return false;
-		}
+		
 		return true;
 	}
 

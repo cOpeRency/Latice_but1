@@ -4,13 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import latice.model.tiles.Tile;
 import latice.vue.RackFX;
-import latice.vue.TileFX;
 
 public class Rack implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -21,7 +17,7 @@ public class Rack implements Serializable{
 	private Integer maxRackSize = 5;
 	
 	public Rack(Stack stack, Player owner) {
-		this.tiles = new ArrayList();
+		this.tiles = new ArrayList<>();
 		this.fillRack(stack);
 		this.locked = false;
 		this.owner = owner;
@@ -65,7 +61,7 @@ public class Rack implements Serializable{
 	
 	public void exchange(Stack stack) {
 		Integer currentTileNumber = tiles.size();
-		while (tiles.size()>0) {
+		while (!tiles.isEmpty()) {
 			stack.addTile(tiles.remove(0));
 		}
 		Collections.shuffle(stack.getTiles());
