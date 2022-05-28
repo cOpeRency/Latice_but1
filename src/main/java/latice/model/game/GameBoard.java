@@ -16,9 +16,27 @@ import latice.model.tiles.BoardTile;
 public class GameBoard implements Serializable{
 	
 	private Map<Position, Box> gameboardTiles;
+	private List<Position> sunBoxesPosition;
 	
 	public GameBoard() {
 		this.gameboardTiles = new HashMap<>();
+		this.sunBoxesPosition = new ArrayList<Position>();
+		this.sunBoxesPosition.add(new Position(0,0));
+		this.sunBoxesPosition.add(new Position(1,1));
+		this.sunBoxesPosition.add(new Position(2,2));
+		this.sunBoxesPosition.add(new Position(6,2));
+		this.sunBoxesPosition.add(new Position(7,1));
+		this.sunBoxesPosition.add(new Position(8,0));
+		this.sunBoxesPosition.add(new Position(0,8));
+		this.sunBoxesPosition.add(new Position(1,7));
+		this.sunBoxesPosition.add(new Position(2,6));
+		this.sunBoxesPosition.add(new Position(6,6));
+		this.sunBoxesPosition.add(new Position(7,7));
+		this.sunBoxesPosition.add(new Position(8,8));
+		this.sunBoxesPosition.add(new Position(0,4));
+		this.sunBoxesPosition.add(new Position(4,0));
+		this.sunBoxesPosition.add(new Position(4,8));
+		this.sunBoxesPosition.add(new Position(8,4));
     }
 	
     public Map<Position, Box> getGameboardTiles() {
@@ -48,7 +66,7 @@ public class GameBoard implements Serializable{
     	for (int i = 0; i < 9; i++) {
     		for (int j = 0; j < 9; j++) {
 	    		Position position = new Position(i, j);
-	    		if ((i==0 && j==0)||(i==1 && j==1)||(i==2 && j==2)||(i==0 && j==8)||(i==1 && j==7)||(i==2 && j==6)   ||(i==8 && j==0)||(i==7 && j==1)||(i==6 && j==2)||(i==8 && j==8)||(i==7 && j==7)||(i==6 && j==6)   ||(i==0 && j==4)||(i==4 && j==0)||(i==4 && j==8)||(i==8 && j==4)) {
+	    		if (this.sunBoxesPosition.contains(position)) {
 	    			this.gameboardTiles.put(position, new Box(BoxType.SUN,this,position));
 	    		} else if ((i==4 && j==4)) {
 	    			this.gameboardTiles.put(position, new Box(BoxType.MOON,this,position));
