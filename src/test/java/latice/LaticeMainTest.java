@@ -54,6 +54,8 @@ class LaticeMainTest {
 		this.gameBoard.generateBox();
 
 		GameManager.setActivePlayer(player1);
+		GameManager.setGameboard(gameBoard);
+		GameManager.startTurn(player1, player2);
 	}
 
 
@@ -63,6 +65,18 @@ class LaticeMainTest {
 		GameManager.startTurn(player2, player1);
 		assertFalse(player1.isMyTurn());
 		assertTrue(player2.isMyTurn());
+	}
+	
+	
+	@Test
+	void testChangeGameTurn() {
+		player1.setMyTurn(true);
+		player2.setMyTurn(false);
+		
+		assertTrue(player1.isMyTurn());
+		assertFalse(player1.getRack().isLocked());
+		assertFalse(player2.isMyTurn());
+		assertTrue(player2.getRack().isLocked());
 	}
 	
 	@Test
@@ -208,6 +222,16 @@ class LaticeMainTest {
 		
 	}
 	
+	@Test
+	void test_play_a_tile_will_put_it_at_moon_position() {
+		Position position = new Position(4, 4);
+		BoardTile tile = new BoardTile(Shape.SHAPE1,Color.COLOR1);
+		
+		GameManager.playBoardTileAt(tile, position);
+		
+		assertEquals(tile, GameManager.getGameboard().getBox(position).getTile());
+		
+	}
 	
 	@Test
 	void testRackDebitéWhenPutTileToBox() {
@@ -262,17 +286,7 @@ class LaticeMainTest {
 		
 		assertFalse(gameBoard.getBox(new Position(4, 3)).checkValidity(Shape.SHAPE1, Color.COLOR1));
 	}
-	
-	@Test
-	void testChangeGameTurn() {
-		player1.setMyTurn(true);
-		player2.setMyTurn(false);
-		
-		assertTrue(player1.isMyTurn());
-		assertFalse(player1.getRack().isLocked());
-		assertFalse(player2.isMyTurn());
-		assertTrue(player2.getRack().isLocked());
-	}
+
 	
 	@Test
 	void test_make_a_double_when_playing_near_to_two_tiles() {
