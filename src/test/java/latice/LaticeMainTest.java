@@ -234,6 +234,17 @@ class LaticeMainTest {
 	}
 	
 	@Test
+	void test_cannot_put_a_tile_after_playing_if_we_not_have_enough_points() {
+		BoardTile tile = new BoardTile(Shape.SHAPE2,Color.COLOR1);
+		
+		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE1,Color.COLOR1), new Position(4, 4));
+		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE2,Color.COLOR1), new Position(4, 3));
+		
+		assertNotEquals(tile, GameManager.getGameboard().getBox(new Position(4, 3)).getTile());
+		
+	}
+	
+	@Test
 	void test_play_a_tile_will_put_it_at_specified_position_after_checked_move_validity() {
 		BoardTile tile = new BoardTile(Shape.SHAPE2,Color.COLOR5);
 		
