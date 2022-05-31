@@ -107,11 +107,6 @@ public class GameMain extends Application {
 	}
 	
 	
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
-	
-	
 	private void gameStart() {
 		this.stack = new Stack();
 		this.player1 = new Player("Albert");
@@ -231,6 +226,11 @@ public class GameMain extends Application {
 		}
 		
 		primaryStage.close();
+	}
+
+
+	public static void main(String[] args) {
+		Application.launch(args);
 	}
 	
 }

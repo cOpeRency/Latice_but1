@@ -18,12 +18,10 @@ import latice.model.tiles.Tile;
 
 public class RackFX extends HBox implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private List<BoardTile> tiles;
 	private Rack rackSource;
 	
 	
 	public RackFX(Rack rack) {
-		this.tiles = new ArrayList<BoardTile>();
 		this.rackSource = rack;
 		setPadding(new Insets(10,10,10,10));
 		setSpacing(20);
