@@ -3,6 +3,7 @@ package latice;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -59,6 +60,19 @@ class LaticeMainTest {
 	}
 
 
+	@Test
+	void test_game_end_when_reach_max_number_of_cycle() {
+		
+		for (int i = 1; i < GameManager.getNbCycleMax()-1; i++) {
+			GameManager.addCycles(1);
+		}
+		
+		assertFalse(GameManager.determineGameEnd());
+		assertEquals(9, GameManager.getCurrentNbOfCycles());
+		GameManager.addCycles(1);
+		assertTrue(GameManager.determineGameEnd());
+	}
+	
 	@Test
 	void test_startTurn_invert_players_myTurn_attribute() {
 		
