@@ -6,6 +6,7 @@ import java.util.Objects;
 import latice.vue.PlayerFX;
 
 public class Player implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private boolean myTurn;
 	private Rack rack;
 	private String name;
