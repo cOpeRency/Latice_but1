@@ -1,8 +1,12 @@
 package latice.model.system;
 
 import java.util.Objects;
+
+import latice.model.boxes.Box;
+import latice.model.boxes.Position;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
+import latice.model.tiles.BoardTile;
 
 public class GameManager {
 	private static Player activePlayer;
@@ -12,6 +16,22 @@ public class GameManager {
 	private static GameMode gameMode;
 	private static boolean canUseSpecialTiles = false;
 	
+	public static void playBoardTileAt(BoardTile tile,Position position) {
+		if (gameboard.getBox(position).checkValidity(tile.getShape(), tile.getColor())) {
+			putBoardTile(tile, position);
+		}
+	}
+	
+	public static void putBoardTile(BoardTile tile, Position position) {
+		if (activePlayer.isAbleToPutATile()) {
+			gameboard.getBox(position).setTile(tile);
+			activePlayer.setAblilityToPutATile(false);
+		} else if (activePlayer.getPoints()>=2) {
+			activePlayer.addPoints(-2);
+			gameboard.getBox(position).setTile(tile);
+			activePlayer.setAblilityToPutATile(false);
+		}
+	}
 	
 	
 	public static boolean canUseSpecialTiles() {
