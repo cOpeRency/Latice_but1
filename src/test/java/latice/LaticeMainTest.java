@@ -234,6 +234,25 @@ class LaticeMainTest {
 	}
 	
 	@Test
+	void test_play_a_tile_will_put_it_at_specified_position_after_checked_move_validity() {
+		BoardTile tile = new BoardTile(Shape.SHAPE2,Color.COLOR5);
+		
+		
+		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE1,Color.COLOR1), new Position(4, 4));
+		GameManager.getActivePlayer().addPoints(2);
+		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE2,Color.COLOR1), new Position(4, 3));
+		GameManager.getActivePlayer().addPoints(2);
+		GameManager.playBoardTileAt(tile, new Position(4, 4));
+		GameManager.playBoardTileAt(tile, new Position(4, 5));
+		GameManager.playBoardTileAt(tile, new Position(3, 3));
+		
+		assertNotEquals(tile, GameManager.getGameboard().getBox(new Position(4, 4)).getTile());
+		assertNotEquals(tile, GameManager.getGameboard().getBox(new Position(4, 5)).getTile());
+		assertEquals(tile, GameManager.getGameboard().getBox(new Position(3, 3)).getTile());
+		
+	}
+	
+	@Test
 	void testRackDebitéWhenPutTileToBox() {
 		Position position = new Position(0, 4);
 		
