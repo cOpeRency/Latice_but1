@@ -7,6 +7,7 @@ import latice.model.boxes.Position;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
 import latice.model.tiles.BoardTile;
+import latice.model.tiles.SpecialTile;
 
 public class GameManager {
 	private static Player activePlayer;
@@ -44,9 +45,17 @@ public class GameManager {
 		} else {
 			GameManager.canUseSpecialTiles = false;
 		}
-		
 	}
 
+	public static void playSpecialTile(SpecialTile tile, Position position) {
+		if (canUseSpecialTiles) {
+			switch (tile.getType()) {
+			case
+			}
+		}
+	}
+
+	
 	public static Player getActivePlayer() {
 		return activePlayer;
 	}
