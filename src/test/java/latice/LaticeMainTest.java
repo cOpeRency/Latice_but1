@@ -56,6 +56,14 @@ class LaticeMainTest {
 		GameManager.setActivePlayer(player1);
 	}
 
+
+	@Test
+	void test_startTurn_invert_players_myTurn_attribute() {
+		
+		GameManager.startTurn(player2, player1);
+		assertFalse(player1.isMyTurn());
+		assertTrue(player2.isMyTurn());
+	}
 	
 	
 	@Test
