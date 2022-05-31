@@ -47,13 +47,13 @@ public class GameManager {
 		}
 	}
 
-	public static void playSpecialTile(SpecialTile tile, Position position) {
+	/*public static void playSpecialTile(SpecialTile tile, Position position) {
 		if (canUseSpecialTiles) {
 			switch (tile.getType()) {
 			case
 			}
 		}
-	}
+	} */
 
 	
 	public static Player getActivePlayer() {

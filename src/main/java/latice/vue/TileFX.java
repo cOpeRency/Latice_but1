@@ -92,7 +92,7 @@ public class TileFX extends ImageView implements Serializable {
 	public void setTileImage() {
 		String urlFichier;
 		try {
-			File fichier = new File(this.tileSource.getImagePath());
+			File fichier = new File("src/main/resources/themes/"+GameVisual.getTheme()+"/"+this.tileSource.getImagePath());
 			urlFichier = fichier.toURI().toURL().toString();
 			Image img = new Image(urlFichier, 62, 62, true, true);
 			setImage(img);

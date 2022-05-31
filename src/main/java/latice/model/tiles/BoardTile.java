@@ -20,7 +20,7 @@ public class BoardTile extends Tile implements Serializable{
 	public BoardTile(Shape shape, Color color) {
 		this.shape = shape;
 		this.color = color;
-		this.imagePath = this.themePath+this.shape.code()+"_"+this.color.code()+".png";
+		this.imagePath = this.shape.code()+"_"+this.color.code()+".png";
 
 	}
 	

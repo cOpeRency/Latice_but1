@@ -16,8 +16,20 @@ public class GameVisual {
 	private static GameBoard gameboard;
 	private static AnchorPane root;
 	private static List<BoardTile> playingTiles = new ArrayList<BoardTile>();
+	private static GameTheme theme;
 
 	
+	
+	public static String getTheme() {
+		return theme.code();
+	}
+
+
+	public static void setTheme(GameTheme theme) {
+		GameVisual.theme = theme;
+	}
+
+
 	public static List<BoardTile> getPlayingTiles() {
 		return playingTiles;
 	}

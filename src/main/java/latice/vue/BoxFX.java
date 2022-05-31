@@ -40,11 +40,11 @@ public class BoxFX extends StackPane implements Serializable{
 	
 	public void initBoxImage(BoxType boxType) {
 		if (boxType == BoxType.SUN) {
-			this.imgURL = "src/main/resources/themes/pokemon/bg_sun.png";
+			this.imgURL = "src/main/resources/themes/"+GameVisual.getTheme()+"/bg_sun.png";
 		} else if (boxType == BoxType.MOON) {
-			this.imgURL = "src/main/resources/themes/pokemon/bg_moon.png";
+			this.imgURL = "src/main/resources/themes/"+GameVisual.getTheme()+"/bg_moon.png";
 		} else {
-			this.imgURL = "src/main/resources/themes/pokemon/bg_sea.png";
+			this.imgURL = "src/main/resources/themes/"+GameVisual.getTheme()+"/bg_sea.png";
 		}
 		String urlFichier;
 		try {

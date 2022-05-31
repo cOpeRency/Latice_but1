@@ -24,6 +24,7 @@ import latice.model.players.Player;
 import latice.model.players.Stack;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
+import latice.vue.GameTheme;
 import latice.vue.GameVisual;
 import latice.vue.RackFX;
 import latice.vue.menu.GameMenu;
@@ -50,6 +51,7 @@ public class GameMain extends Application {
 		GameMenu.getBtnStart().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
+		    	GameVisual.setTheme(GameTheme.ONE_PIECE);
 		    	primaryStage.setScene(LoadingScreen.getScene());
 		    	initGame(primaryStage);
 
@@ -89,7 +91,7 @@ public class GameMain extends Application {
 		String urlFichier;
 		GameVisual.setRoot(root);
 		try {
-			File fichier = new File("src/main/resources/themes/pokemon/bg_game.png");
+			File fichier = new File("src/main/resources/themes/"+GameVisual.getTheme()+"/bg_game.png");
 			urlFichier = fichier.toURI().toURL().toString();
 			ImageView background = new ImageView(new Image(urlFichier, 1300, 731, true, true));
 			GameVisual.getRoot().getChildren().add(background);

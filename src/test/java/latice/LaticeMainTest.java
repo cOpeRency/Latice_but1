@@ -157,13 +157,7 @@ class LaticeMainTest {
 		
 	}
 
-	@Test
-	void testTileImagePath() {
-		
-		assertEquals(new BoardTile(Shape.SHAPE1,Color.COLOR1).getImagePath(),"src/main/resources/themes/pokemon/"+Shape.SHAPE1.code()+"_"+Color.COLOR1.code()+".png");
-		
-	}
-	
+
 	@Test
 	void testPutTileAtPosition() {
 		Position position = new Position(0, 4);

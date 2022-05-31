@@ -14,7 +14,7 @@ public class SpecialTile extends Tile implements Serializable{
 	
 	public SpecialTile(TypeOfSpecialTile type) {
 		this.type = type;
-		this.imagePath = this.themePath+this.type+".gif";
+		this.imagePath = this.type+".gif";
 	}
 
 	@Override
