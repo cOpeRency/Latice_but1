@@ -1,7 +1,7 @@
 package latice.vue;
 
 public enum GameTheme {
-	POKEMON("pokemon"),ONE_PIECE("one_piece");
+	POKEMON("pokemon"),ONE_PIECE("one_piece"),ZELDA("zelda");
 	
 	private String code;
 
