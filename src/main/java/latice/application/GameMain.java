@@ -26,6 +26,7 @@ import latice.model.system.GameManager;
 import latice.model.system.GameMode;
 import latice.vue.GameVisual;
 import latice.vue.RackFX;
+import latice.vue.menu.GameMenu;
 
 public class GameMain extends Application {
 		public static DataFormat TILE_DATA = new DataFormat("BoardTile");
@@ -45,11 +46,23 @@ public class GameMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setScene(LoadingScreen.getScene());
+		primaryStage.setScene(GameMenu.getSceneMenu());
+		GameMenu.getBtnStart().setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		    	primaryStage.setScene(LoadingScreen.getScene());
+		    	initGame(primaryStage);
+
+		    }
+		});
 		primaryStage.setTitle("Fenetre");
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		
+	}
+
+
+	public void initGame(Stage primaryStage) {
 		gameStart();
 		this.gameBoard = new GameBoard();
 		GameManager.setGameboard(gameBoard);
@@ -73,8 +86,8 @@ public class GameMain extends Application {
 		this.borderPane.setBottom(playersRacks);
 		
 		AnchorPane root = new AnchorPane();
-		GameVisual.setRoot(root);
 		String urlFichier;
+		GameVisual.setRoot(root);
 		try {
 			File fichier = new File("src/main/resources/themes/pokemon/bg_game.png");
 			urlFichier = fichier.toURI().toURL().toString();
@@ -91,10 +104,6 @@ public class GameMain extends Application {
 		Scene scene = new Scene(GameVisual.getRoot(), 1280, 720);
 		System.out.println("start");
 		primaryStage.setScene(scene);
-		//primaryStage.setTitle("Fenetre");
-		//primaryStage.setResizable(false);
-		//primaryStage.show();
-
 	}
 	
 	
