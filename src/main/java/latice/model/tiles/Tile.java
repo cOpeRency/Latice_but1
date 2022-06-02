@@ -6,16 +6,40 @@ import latice.model.players.Rack;
 import latice.vue.GameVisual;
 import latice.vue.TileFX;
 
-public abstract class Tile implements Serializable {
+public class Tile implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	protected TileFX image;
+	protected Rack parentRack;
+	protected String imagePath;
+	
+	protected Tile() {
+		
+	}
+	
 	//protected String themePath = "src/main/resources/themes/"+GameVisual.getTheme()+"/";
 	
-	public abstract void setTileImage();
+	public void setTileImage() {
+		this.image = new TileFX(this);
+	}
 
-	public abstract TileFX getTileFX();
+	public TileFX getTileFX() {
+		return this.image;
+	}
 
-	public abstract void setParentRack(Rack rack);
-
-	public abstract String getImagePath();
+	public void setParentRack(Rack rack) {
+		this.parentRack = rack;
+		
+	}
+	
+	public String getImagePath() {
+		return imagePath;
+	}	
+	
+	public void exitRack() {
+    	parentRack.removeTile(this);
+	}
+	
+	public Rack getParentRack() {
+		return parentRack;
+	}	
 }

@@ -13,9 +13,6 @@ public class BoardTile extends Tile implements Serializable{
 	public final static BoardTile NO = null;
 	private Box parentBox;
 	private boolean locked = false;
-	private TileFX tileFX;
-	private String imagePath;
-	private Rack parentRack;
 	
 	public BoardTile(Shape shape, Color color) {
 		this.shape = shape;
@@ -24,23 +21,6 @@ public class BoardTile extends Tile implements Serializable{
 
 	}
 	
-	@Override
-	public TileFX getTileFX() {
-		return this.tileFX;
-	}
-	
-	public Rack getParentRack() {
-		return parentRack;
-	}	
-	
-	public void exitRack() {
-    	parentRack.removeTile(this);
-	}
-	
-	public void setParentRack(Rack parent) {
-		this.parentRack = parent;
-	}
-
 	public boolean isLocked() {
 		return this.locked;
 	}
@@ -75,18 +55,8 @@ public class BoardTile extends Tile implements Serializable{
 		return this.shape.code()+" "+this.color.code();
 	}
 
-	@Override
-	public void setTileImage() {
-		this.tileFX = new TileFX(this);
-	}
-	
-
 	public Box getParentBox() {
 		return parentBox;
 	}
-	
-	public String getImagePath() {
-		return imagePath;
-	}	
 
 }
