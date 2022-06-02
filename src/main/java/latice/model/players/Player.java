@@ -16,6 +16,8 @@ public class Player implements Serializable{
 	private boolean ableToPutATile;
 	private PlayerFX playerFX;
 	
+	public static final Integer EXTRA_MOVE_COST = 2;
+	
 	public Player(String name) {
 		this.name = name;
 		this.stack = new Stack();

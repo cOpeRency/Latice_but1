@@ -24,6 +24,7 @@ public class GameManager {
 	public static final Integer LATICE_POINT = 4;
 	
 	public static final Integer BOARD_SIZE = 9;
+	public static final Integer MINIMUM_OF_PUT_TILES_FOR_USE_SPECIAL_ONE = 2;
 	
 	public static void playBoardTileAt(BoardTile tile,Position position) {
 		if (gameboard.getBox(position).checkValidity(tile.getShape(), tile.getColor())) {
@@ -35,8 +36,8 @@ public class GameManager {
 		if (activePlayer.isAbleToPutATile()) {
 			gameboard.getBox(position).setTile(tile);
 			activePlayer.setAblilityToPutATile(false);
-		} else if (activePlayer.getPoints()>=2) {
-			activePlayer.addPoints(-2);
+		} else if (activePlayer.getPoints()>=Player.EXTRA_MOVE_COST) {
+			activePlayer.addPoints(-Player.EXTRA_MOVE_COST);
 			gameboard.getBox(position).setTile(tile);
 			activePlayer.setAblilityToPutATile(false);
 		}
@@ -48,7 +49,7 @@ public class GameManager {
 	}
 
 	public static void setCanUseSpecialTiles() {
-		if (gameboard.howManyTileHaveBeenPlayed()>=2) {
+		if (gameboard.howManyTileHaveBeenPlayed()>=MINIMUM_OF_PUT_TILES_FOR_USE_SPECIAL_ONE) {
 			GameManager.canUseSpecialTiles = true;
 		} else {
 			GameManager.canUseSpecialTiles = false;
