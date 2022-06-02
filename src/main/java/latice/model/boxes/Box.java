@@ -12,11 +12,11 @@ import latice.model.system.MatchType;
 import latice.model.tiles.BoardTile;
 import latice.model.tiles.Color;
 import latice.model.tiles.Shape;
-import latice.vue.BoxFX;
+import latice.vue.BoxImageData;
 
 public class Box implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private BoxFX boxFX;
+	private BoxImageData boxFX;
 	private BoxType boxType;
 	private BoardTile tile;
 	private Position position;
@@ -40,14 +40,14 @@ public class Box implements Serializable{
 	}
 	
 	public void setBoxImage() {
-		this.boxFX = new BoxFX(this);
+		this.boxFX = new BoxImageData(this);
 	}
 	
 	public BoxType getBoxType() {
 		return boxType;
 	}
 
-	public BoxFX getBoxFX() {
+	public BoxImageData getBoxFX() {
 		return boxFX;
 	}
 	

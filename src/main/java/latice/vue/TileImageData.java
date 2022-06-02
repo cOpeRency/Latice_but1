@@ -16,7 +16,7 @@ import latice.model.tiles.SpecialTile;
 import latice.model.tiles.Tile;
 import latice.vue.controller.DnDTileController;
 
-public class TileFX extends ImageView implements Serializable {
+public class TileImageData extends ImageView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Tile tileSource;
 	private boolean isLastTilePlayed;
@@ -26,7 +26,7 @@ public class TileFX extends ImageView implements Serializable {
 	public static final String SHADOW_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.4, 0, 0);";
 	
 	
-	public TileFX(Tile tile) {
+	public TileImageData(Tile tile) {
 		this.tileSource = tile;
 		this.isLastTilePlayed = true;
 		if (tileSource.getClass().equals(BoardTile.class)) {

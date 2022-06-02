@@ -24,7 +24,7 @@ import latice.model.system.GameManager;
 import latice.model.system.GameMode;
 import latice.model.tiles.BoardTile;
 
-public class BoxFX extends StackPane implements Serializable{
+public class BoxImageData extends StackPane implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Box box;
 	public static final String VALID_HOVER_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(255,255,0,0.8), 15, 0.8, 0, 0);";
@@ -32,7 +32,7 @@ public class BoxFX extends StackPane implements Serializable{
 	public static final String NO_EFFECT = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0);";
 	private String imgURL;
 	
-	public BoxFX(Box box) {
+	public BoxImageData(Box box) {
 		this.box = box;
 		initBoxImage(this.box.getBoxType());
 		initDragSystem();

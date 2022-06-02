@@ -4,19 +4,19 @@ import java.io.Serializable;
 
 import latice.model.players.Rack;
 import latice.vue.GameVisual;
-import latice.vue.TileFX;
+import latice.vue.TileImageData;
 
 public abstract class Tile implements Serializable {
 	private static final long serialVersionUID = 1L;
-	protected TileFX image;
+	protected TileImageData image;
 	protected Rack parentRack;
 	protected String imagePath;
 	
 	public void setTileImage() {
-		this.image = new TileFX(this);
+		this.image = new TileImageData(this);
 	}
 
-	public TileFX getTileFX() {
+	public TileImageData getTileFX() {
 		return this.image;
 	}
 

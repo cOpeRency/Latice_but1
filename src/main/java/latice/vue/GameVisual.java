@@ -87,7 +87,7 @@ public class GameVisual {
     public static void resetPlayingTileEffect() {
     	for (BoardTile tile : playingTiles) {
 			tile.getTileFX();
-			tile.getTileFX().setStyle(TileFX.SHADOW_EFFECT);
+			tile.getTileFX().setStyle(TileImageData.SHADOW_EFFECT);
 		}
     	
     }

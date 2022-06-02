@@ -14,18 +14,18 @@ import latice.model.tiles.BoardTile;
 import latice.model.tiles.SpecialTile;
 import latice.model.tiles.TypeOfSpecialTile;
 import latice.vue.GameVisual;
-import latice.vue.TileFX;
+import latice.vue.TileImageData;
 
 public abstract class DnDTileController {
 
 	
-	public static void initBoardTileDnD(TileFX tile, BoardTile boardTile) {
+	public static void initBoardTileDnD(TileImageData tile, BoardTile boardTile) {
 		tile.setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
 		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && !boardTile.isLocked() && tile.isLastTilePlayed() && !boardTile.getParentRack().isLocked() && boardTile.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = tile.startDragAndDrop(TransferMode.MOVE);
-			    	tile.setStyle(TileFX.SHADOW_EFFECT);
+			    	tile.setStyle(TileImageData.SHADOW_EFFECT);
 			        
 			        ClipboardContent content = new ClipboardContent();
 			        content.putImage(tile.getImage());
@@ -74,7 +74,7 @@ public abstract class DnDTileController {
 		    	} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE) && boardTile.getParentBox()!=null && !boardTile.getParentBox().getPosition().equals(new Position(4,4))) {
 		        	
 		    		Dragboard dragboard = tile.startDragAndDrop(TransferMode.MOVE);
-		    		tile.setStyle(TileFX.SHADOW_EFFECT);
+		    		tile.setStyle(TileImageData.SHADOW_EFFECT);
 			        
 			        ClipboardContent content = new ClipboardContent();
 			        content.putImage(tile.getImage());
@@ -103,7 +103,7 @@ public abstract class DnDTileController {
 			    		boardTile.exitRack();
 			    		boardTile.getParentRack().getRackFX().getChildren().remove(boardTile.getTileFX());
 			    		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)) {
-			    			tile.setStyle(TileFX.NOT_FIXED_EFFECT);
+			    			tile.setStyle(TileImageData.NOT_FIXED_EFFECT);
 			    		} else {
 			    			GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
 					    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
@@ -138,13 +138,13 @@ public abstract class DnDTileController {
 		});
 	}
 	
-	public static void initSpecialTileDnD(TileFX tile, SpecialTile specialTile) {
+	public static void initSpecialTileDnD(TileImageData tile, SpecialTile specialTile) {
 		tile.setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
 		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && GameManager.canUseSpecialTiles() && !specialTile.getParentRack().isLocked() && specialTile.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = tile.startDragAndDrop(TransferMode.MOVE);
-			    	tile.setStyle(TileFX.SHADOW_EFFECT);
+			    	tile.setStyle(TileImageData.SHADOW_EFFECT);
 			        
 			        ClipboardContent content = new ClipboardContent();
 			        content.putImage(tile.getImage());
