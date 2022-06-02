@@ -21,6 +21,7 @@ public class Box implements Serializable{
 	private BoardTile tile;
 	private Position position;
 	private GameBoard gameboard;
+	public static final Position MOON_POSITION = new Position(4,4);
 	
 	public Box(BoxType boxType, GameBoard gameboard,Position position) {
 		this.boxType = boxType;
@@ -72,9 +73,9 @@ public class Box implements Serializable{
 	
 	public Integer gainPointBySunBox() {
 		if (this.boxType==BoxType.SUN) {
-			return 2;
+			return GameManager.SUN_POINT;
 		}
-		return 0;
+		return GameManager.NO_POINT;
 	}
 	
 	public MatchType getTileMatchType(List<Box> boxAdjacent) {
@@ -120,16 +121,15 @@ public class Box implements Serializable{
 	}
 	
 	public boolean checkValidity(Shape shape, Color color) {
-		if ((position.column()==4 && position.row()==4)&&tile==null) {
+		if ((position.column()==MOON_POSITION.column() && position.row()==MOON_POSITION.column())&&tile==BoardTile.NO) {
 			return true;
 		}
 		
-		if (gameboard.getBox(new Position(4, 4)).tile==null) {
+		if (gameboard.getBox(MOON_POSITION).getTile()==BoardTile.NO) {
 			return false;
 		}
 
 		if (this.tile!=BoardTile.NO) {
-
 			return false;
 		}
 		

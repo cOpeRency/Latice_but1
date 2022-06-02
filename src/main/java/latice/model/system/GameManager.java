@@ -17,6 +17,12 @@ public class GameManager {
 	private static GameMode gameMode;
 	private static boolean canUseSpecialTiles = false;
 	
+	public static final Integer NO_POINT = 0;
+	public static final Integer SUN_POINT = 2;
+	public static final Integer DOUBLE_POINT = 1;
+	public static final Integer TREFOIL_POINT = 2;
+	public static final Integer LATICE_POINT = 4;
+	
 	public static void playBoardTileAt(BoardTile tile,Position position) {
 		if (gameboard.getBox(position).checkValidity(tile.getShape(), tile.getColor())) {
 			putBoardTile(tile, position);
