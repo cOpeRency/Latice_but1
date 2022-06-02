@@ -51,7 +51,7 @@ public class GameMain extends Application {
 		GameMenu.getBtnStart().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	GameVisual.setTheme(GameTheme.ZELDA);
+		    	GameVisual.setTheme(GameMenu.getComboBoxTheme());
 		    	primaryStage.setScene(LoadingScreen.getScene());
 		    	initGame(primaryStage);
 
