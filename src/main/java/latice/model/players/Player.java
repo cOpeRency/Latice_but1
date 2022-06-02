@@ -3,6 +3,7 @@ package latice.model.players;
 import java.io.Serializable;
 import java.util.Objects;
 
+import latice.model.system.GameManager;
 import latice.vue.PlayerFX;
 
 public class Player implements Serializable{
@@ -18,7 +19,7 @@ public class Player implements Serializable{
 	public Player(String name) {
 		this.name = name;
 		this.stack = new Stack();
-		this.points = 0;
+		this.points = GameManager.NO_POINT;
 		this.myTurn = false;
 		this.ableToPutATile = false;
 

@@ -16,6 +16,8 @@ import latice.model.tiles.TypeOfSpecialTile;
 public class Stack implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<Tile> tiles;
+	private static final Integer TOTAL_NUMBER_OF_SPECIAL_TILES = 12;
+	private static final Integer TOTAL_NUMBER_OF_TILES_PER_PLAYER = 42;
 	
 	public Stack() {
 		this.tiles = new ArrayList<>();
@@ -57,16 +59,16 @@ public class Stack implements Serializable{
 			}
 		}
 		
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < TOTAL_NUMBER_OF_SPECIAL_TILES/2; i++) {
 			this.addTile(new SpecialTile(TypeOfSpecialTile.THUNDER));
 		}
 		
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < TOTAL_NUMBER_OF_SPECIAL_TILES/2; i++) {
 			this.addTile(new SpecialTile(TypeOfSpecialTile.WIND));
 		}
 		
 		Collections.shuffle(tiles);
-		for (int j = 0; j < 42; j++) {
+		for (int j = 0; j < TOTAL_NUMBER_OF_TILES_PER_PLAYER; j++) {
 			j1.getStack().addTile(tiles.get(0));
 			this.removeTile();
 			j2.getStack().addTile(tiles.get(0));

@@ -16,6 +16,8 @@ public class Rack implements Serializable{
 	private Player owner;
 	private Integer maxRackSize = 5;
 	
+	private static final Integer RACK_CAPACITY = 5;
+	
 	public Rack(Stack stack, Player owner) {
 		this.tiles = new ArrayList<>();
 		this.fillRack(stack);
@@ -45,7 +47,7 @@ public class Rack implements Serializable{
 	}
 	
 	public void fillRack(Stack stack) {
-		if (stack.stackLength()+tiles.size() < 5) {
+		if (stack.stackLength()+tiles.size() < RACK_CAPACITY) {
 			this.maxRackSize = stack.stackLength()+tiles.size();
 		}
 		while (tiles.size() < this.maxRackSize) {
