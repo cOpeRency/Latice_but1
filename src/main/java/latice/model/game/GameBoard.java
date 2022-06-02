@@ -9,6 +9,7 @@ import java.util.Map;
 import latice.model.boxes.Box;
 import latice.model.boxes.BoxType;
 import latice.model.boxes.Position;
+import latice.model.system.GameManager;
 
 public class GameBoard implements Serializable{
 	
@@ -60,12 +61,12 @@ public class GameBoard implements Serializable{
     }
     
     public void generateBox() {
-    	for (int i = 0; i < 9; i++) {
-    		for (int j = 0; j < 9; j++) {
+    	for (int i = 0; i < GameManager.BOARD_SIZE; i++) {
+    		for (int j = 0; j < GameManager.BOARD_SIZE; j++) {
 	    		Position position = new Position(i, j);
 	    		if (this.sunBoxesPosition.contains(position)) {
 	    			this.gameboardTiles.put(position, new Box(BoxType.SUN,this,position));
-	    		} else if ((i==4 && j==4)) {
+	    		} else if (position.equals(Box.MOON_POSITION)) {
 	    			this.gameboardTiles.put(position, new Box(BoxType.MOON,this,position));
 	    		} else {
 	    			this.gameboardTiles.put(position, new Box(BoxType.NORMAL,this,position));

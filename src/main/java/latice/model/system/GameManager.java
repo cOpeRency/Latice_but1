@@ -23,6 +23,8 @@ public class GameManager {
 	public static final Integer TREFOIL_POINT = 2;
 	public static final Integer LATICE_POINT = 4;
 	
+	public static final Integer BOARD_SIZE = 9;
+	
 	public static void playBoardTileAt(BoardTile tile,Position position) {
 		if (gameboard.getBox(position).checkValidity(tile.getShape(), tile.getColor())) {
 			putBoardTile(tile, position);
