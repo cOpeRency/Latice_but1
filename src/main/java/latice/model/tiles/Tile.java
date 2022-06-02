@@ -6,17 +6,11 @@ import latice.model.players.Rack;
 import latice.vue.GameVisual;
 import latice.vue.TileFX;
 
-public class Tile implements Serializable {
+public abstract class Tile implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected TileFX image;
 	protected Rack parentRack;
 	protected String imagePath;
-	
-	protected Tile() {
-		
-	}
-	
-	//protected String themePath = "src/main/resources/themes/"+GameVisual.getTheme()+"/";
 	
 	public void setTileImage() {
 		this.image = new TileFX(this);
