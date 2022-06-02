@@ -195,7 +195,9 @@ public class BoxImageData extends StackPane implements Serializable{
 		this.box.setTile(tile);
 		this.box.getTile().setTileImage();
 		this.getChildren().add(this.box.getTile().getTileFX());
-		GameVisual.addPlayingTile(tile);
+		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)) {
+			GameVisual.addPlayingTile(tile);
+		}
 		GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
 	}
 	

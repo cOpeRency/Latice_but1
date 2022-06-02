@@ -24,7 +24,6 @@ import latice.model.players.Player;
 import latice.model.players.Stack;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
-import latice.vue.GameTheme;
 import latice.vue.GameVisual;
 import latice.vue.RackFX;
 import latice.vue.menu.GameMenu;
