@@ -1,5 +1,7 @@
 package latice.model.system;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import latice.model.boxes.Box;
@@ -15,6 +17,7 @@ public class GameManager {
 	private static Integer currentNbOfCycles = 1;
 	private static GameBoard gameboard;
 	private static GameMode gameMode;
+	private static Integer nbOfPlayerWhoCantPlayUntilTheEnd = 0;
 	private static boolean canUseSpecialTiles = false;
 	
 	public static final Integer NO_POINT = 0;
@@ -31,6 +34,30 @@ public class GameManager {
 			putBoardTile(tile, position);
 		}
 	}
+	
+	public static boolean canPlayerPlay() {
+    	List<BoardTile> boardtiles = activePlayer.getStack().getBoardTiles();
+		if (boardtiles.size()>10) {
+			return false;
+		} else {
+			if (gameboard.howManyTileHaveBeenPlayed()>60) {
+		    	List<Box> emptyBoxes = gameboard.getEmptyBoxes();
+		    	for (Box box : emptyBoxes) {
+					for (BoardTile tile : boardtiles) {
+						if (box.checkValidity(tile.getShape(), tile.getColor())) {
+							return true;
+						}
+					}
+				}
+		    	// ici, le joueur est bloqué jusqu'à la fin de la partie
+		    	nbOfPlayerWhoCantPlayUntilTheEnd += 1;
+		    	return false;
+			}
+			
+			return true;
+		}
+	}
+	
 	
 	public static void putBoardTile(BoardTile tile, Position position) {
 		if (activePlayer.isAbleToPutATile()) {

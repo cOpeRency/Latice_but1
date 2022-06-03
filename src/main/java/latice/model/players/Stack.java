@@ -43,6 +43,16 @@ public class Stack implements Serializable{
 		return tiles;
 	}
 	
+	public List<BoardTile> getBoardTiles() {
+		List<BoardTile> boardtiles = new ArrayList<>();
+		for (Tile tile : tiles) {
+			if (tile.getClass().equals(BoardTile.class)) {
+				boardtiles.add((BoardTile)tile);
+			}
+		}
+		return boardtiles;
+	}
+	
 	public void showTiles() {
 		for (Tile tile : tiles) {
 			System.out.println(tile.toString());

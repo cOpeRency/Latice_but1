@@ -55,6 +55,16 @@ public class GameBoard implements Serializable{
 		}
     	return numberOfTile;
     }
+    
+    public List<Box> getEmptyBoxes() {
+    	List<Box> emptyBoxes = new ArrayList<>();
+    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
+    		if (entry.getValue().getTile()==null) {
+    			emptyBoxes.add(entry.getValue());
+    		}
+		}
+    	return emptyBoxes;
+    }
 
 	public Map<Position, Box> tiles() {
         return this.gameboardTiles;
