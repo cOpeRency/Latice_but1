@@ -57,7 +57,7 @@ public class GameVisual {
 		    	
     	
     	board.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(255,255,153,0.8), 15, 0.7, 0, 0);");
-    	board.setPadding(new Insets(20,68,0,68));
+    	board.setPadding(new Insets(0,68,0,68));
     	return board;
     }
 	

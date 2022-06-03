@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DataFormat;
@@ -23,6 +24,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import latice.audio.musicManager;
 import latice.model.game.GameBoard;
@@ -49,6 +52,8 @@ public class GameMain extends Application {
 		private RackFX rackP2vbox;
 		
 		private MediaPlayer audio;
+		
+		private Label lblCycles;
 
 		
 
@@ -95,6 +100,13 @@ public class GameMain extends Application {
 		this.borderPane.setCenter(gp);
 		BorderPane.setAlignment(gp, Pos.CENTER);
 		this.borderPane.setBottom(playersRacks);
+		
+		this.lblCycles = new Label("Cycle : "+GameManager.getCurrentNbOfCycles()+"/"+GameManager.getNbCycleMax());
+		this.lblCycles.setTextFill(javafx.scene.paint.Color.WHITE);
+		this.lblCycles.setFont(Font.font(null, FontWeight.BOLD, 15));
+		this.lblCycles.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 6, 0.4, 0, 0);");
+		this.borderPane.setTop(lblCycles);
+		BorderPane.setAlignment(lblCycles, Pos.CENTER);
 		
 		AnchorPane root = new AnchorPane();
 		String urlFichier;
@@ -242,6 +254,7 @@ public class GameMain extends Application {
 			gameEnd(primaryStage);
 		} else {
 	    	GameManager.addCycles(1);
+	    	this.lblCycles.setText("Cycle : "+GameManager.getCurrentNbOfCycles()+"/"+GameManager.getNbCycleMax());
 	    	System.out.println("Cycle n°"+GameManager.getCurrentNbOfCycles());
 		}
 		
