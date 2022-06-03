@@ -4,8 +4,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Random;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -63,7 +61,7 @@ public class GameMain extends Application {
 		GameMenu.getBtnStart().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (!GameMenu.getTfNameJ1().getText().isEmpty() && !GameMenu.getTfNameJ2().getText().isEmpty()) {		    		
+		    	if (!GameMenu.getTfNameJ1().getText().isEmpty() && !GameMenu.getTfNameJ2().getText().isEmpty() && !GameMenu.getTfNameJ1().getText().equals(GameMenu.getTfNameJ2().getText())) {		    		
 		    		GameVisual.setTheme(GameMenu.getComboBoxTheme());
 		    		primaryStage.setScene(LoadingScreen.getScene());
 		    		initGame(primaryStage);
