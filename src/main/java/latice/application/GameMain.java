@@ -24,7 +24,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import latice.audio.musicManager;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
@@ -59,9 +58,11 @@ public class GameMain extends Application {
 		GameMenu.getBtnStart().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	GameVisual.setTheme(GameMenu.getComboBoxTheme());
-		    	primaryStage.setScene(LoadingScreen.getScene());
-		    	initGame(primaryStage);
+		    	if (!GameMenu.getTfNameJ1().getText().isEmpty() && !GameMenu.getTfNameJ2().getText().isEmpty()) {		    		
+		    		GameVisual.setTheme(GameMenu.getComboBoxTheme());
+		    		primaryStage.setScene(LoadingScreen.getScene());
+		    		initGame(primaryStage);
+		    	}
 
 		    }
 		});
@@ -143,8 +144,8 @@ public class GameMain extends Application {
 	
 	private void gameStart() {
 		this.stack = new Stack();
-		this.player1 = new Player("Albert");
-		this.player2 = new Player("Bernard");
+		this.player1 = new Player(GameMenu.getTfNameJ1().getText());
+		this.player2 = new Player(GameMenu.getTfNameJ2().getText());
 		
 		this.player1.initPlayerFX();
 		this.player2.initPlayerFX();

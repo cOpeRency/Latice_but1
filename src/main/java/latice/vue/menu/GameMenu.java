@@ -57,14 +57,15 @@ public class GameMenu {
 		tfNameJ1.setLayoutY(630);
 		
 		tfNameJ2 = new TextField();
-		tfNameJ2.setPromptText("Nom du joueur 1");
+		tfNameJ2.setPromptText("Nom du joueur 2");
 		tfNameJ2.setMinSize(240, 40);
-		tfNameJ2.setLayoutX(100);
+		tfNameJ2.setLayoutX(940);
 		tfNameJ2.setLayoutY(630);
 		
 		apMenu.getChildren().add(btnStart);
 		apMenu.getChildren().add(cbTheme);
 		apMenu.getChildren().add(tfNameJ1);
+		apMenu.getChildren().add(tfNameJ2);
 		sceneMenu = new Scene(apMenu,1280,720);
 		return sceneMenu;
 	}
@@ -85,6 +86,13 @@ public class GameMenu {
 	public static Button getBtnStart() {
 		return btnStart;
 	}
-	
+
+	public static TextField getTfNameJ1() {
+		return tfNameJ1;
+	}
+
+	public static TextField getTfNameJ2() {
+		return tfNameJ2;
+	}
 	
 }
