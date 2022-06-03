@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -17,6 +18,8 @@ public class GameMenu {
 	private static ImageView imgMenu;
 	private static Button btnStart;
 	private static ComboBox<String> cbTheme;
+	private static TextField cbNameJ1;
+	private static TextField cbNameJ2;
 	private static final String IMAGE_PATH = "src/main/resources/system/mainMenu_bg.png";
 	private static final String POKEMON = "Pokémon";
 	private static final String ONE_PIECE = "One Piece";
