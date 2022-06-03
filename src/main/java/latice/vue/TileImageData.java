@@ -40,7 +40,6 @@ public class TileImageData extends ImageView implements Serializable {
 				    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
 				    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(false);
 				    	GameManager.getActivePlayer().getPlayerFX().getBtnValidate().setDisable(false);
-				    	GameManager.setCanUseSpecialTiles();
 			    	}
 			    }
 			});

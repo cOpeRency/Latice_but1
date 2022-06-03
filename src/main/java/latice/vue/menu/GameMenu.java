@@ -18,8 +18,8 @@ public class GameMenu {
 	private static ImageView imgMenu;
 	private static Button btnStart;
 	private static ComboBox<String> cbTheme;
-	private static TextField cbNameJ1;
-	private static TextField cbNameJ2;
+	private static TextField tfNameJ1;
+	private static TextField tfNameJ2;
 	private static final String IMAGE_PATH = "src/main/resources/system/mainMenu_bg.png";
 	private static final String POKEMON = "Pokémon";
 	private static final String ONE_PIECE = "One Piece";
@@ -50,8 +50,21 @@ public class GameMenu {
 		cbTheme.getItems().addAll(POKEMON,ONE_PIECE,ZELDA);
 		cbTheme.setValue(POKEMON);
 		
+		tfNameJ1 = new TextField();
+		tfNameJ1.setPromptText("Nom du joueur 1");
+		tfNameJ1.setMinSize(240, 40);
+		tfNameJ1.setLayoutX(100);
+		tfNameJ1.setLayoutY(630);
+		
+		tfNameJ2 = new TextField();
+		tfNameJ2.setPromptText("Nom du joueur 1");
+		tfNameJ2.setMinSize(240, 40);
+		tfNameJ2.setLayoutX(100);
+		tfNameJ2.setLayoutY(630);
+		
 		apMenu.getChildren().add(btnStart);
 		apMenu.getChildren().add(cbTheme);
+		apMenu.getChildren().add(tfNameJ1);
 		sceneMenu = new Scene(apMenu,1280,720);
 		return sceneMenu;
 	}

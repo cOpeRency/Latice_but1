@@ -53,6 +53,7 @@ public class GameBoard implements Serializable{
     			numberOfTile += 1;
     		}
 		}
+    	System.out.println(numberOfTile);
     	return numberOfTile;
     }
     

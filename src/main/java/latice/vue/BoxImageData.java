@@ -89,6 +89,7 @@ public class BoxImageData extends StackPane implements Serializable{
 				    new KeyFrame(Duration.seconds(0.4), e -> {
 				    	box.getTile().getParentBox().getBoxFX().getChildren().remove(box.getTile().getTileFX());
 			    		box.getTile().exitBox();
+				    	GameManager.setCanUseSpecialTiles();
 				    }),
 				    new KeyFrame(Duration.seconds(1.2), e ->  
 				    	GameVisual.getRoot().getChildren().remove(imgView)
