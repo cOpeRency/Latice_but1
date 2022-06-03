@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Random;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,7 +20,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
 import latice.model.players.Stack;
@@ -101,6 +107,28 @@ public class GameMain extends Application {
 
 		GameVisual.getRoot().getChildren().add(borderPane);
 		
+		
+		
+		try {
+			File fichier = new File("src/main/resources/themes/pokemon/intro.mp4");
+			Media media = new Media(fichier.toURI().toURL().toString());
+			MediaPlayer mediaPlayer = new MediaPlayer(media);
+	        mediaPlayer.setAutoPlay(true);
+			MediaView mediaViewer = new MediaView(mediaPlayer);
+			System.out.println(media.getDuration().toSeconds());
+			System.out.println(mediaPlayer.getTotalDuration().toSeconds());
+			GameVisual.getRoot().getChildren().add(mediaViewer);
+			mediaPlayer.setOnEndOfMedia(new Runnable() {
+				@Override
+				public void run() {
+			    	GameVisual.getRoot().getChildren().remove(mediaViewer);
+				}
+			});
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Scene scene = new Scene(GameVisual.getRoot(), 1280, 720);
 		System.out.println("start");
