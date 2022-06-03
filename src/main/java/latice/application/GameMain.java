@@ -25,6 +25,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import latice.audio.musicManager;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
 import latice.model.players.Stack;
@@ -47,6 +48,8 @@ public class GameMain extends Application {
 		private HBox playersRacks;
 		private RackFX rackP1vbox;
 		private RackFX rackP2vbox;
+		
+		private MediaPlayer audio;
 
 		
 
@@ -110,7 +113,7 @@ public class GameMain extends Application {
 		
 		
 		try {
-			File fichier = new File("src/main/resources/themes/pokemon/intro.mp4");
+			File fichier = new File("src/main/resources/themes/"+GameVisual.getTheme()+"/intro.mp4");
 			Media media = new Media(fichier.toURI().toURL().toString());
 			MediaPlayer mediaPlayer = new MediaPlayer(media);
 	        mediaPlayer.setAutoPlay(true);
@@ -130,6 +133,8 @@ public class GameMain extends Application {
 			e.printStackTrace();
 		}
 		
+		this.audio = musicManager.getBackgroundMusic();
+		this.audio.play();
 		Scene scene = new Scene(GameVisual.getRoot(), 1280, 720);
 		System.out.println("start");
 		primaryStage.setScene(scene);
