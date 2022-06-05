@@ -35,9 +35,16 @@ public class GameManager {
 		}
 	}
 	
-	public static boolean canPlayerPlay() {
-    	List<BoardTile> boardtiles = activePlayer.getAllBoardTilesLeft();
-		if (boardtiles.size()>10) {
+	public static boolean hasWon(Player player) {
+		if (player.getAllBoardTilesLeft().isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean canPlayerPlay(Player player) {
+    	List<BoardTile> boardtiles = player.getAllBoardTilesLeft();
+		if (boardtiles.size()>15) {
 			System.out.println("trop de tuiles");
 			return true;
 		} else {
@@ -51,7 +58,6 @@ public class GameManager {
 						}
 					}
 				}
-		    	// ici, le joueur est bloqué jusqu'à la fin de la partie
 		    	return false;
 			}
 			System.out.println("pas assez de tuiles sur le plateau");

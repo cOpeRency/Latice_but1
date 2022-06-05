@@ -34,6 +34,7 @@ import latice.model.system.GameMode;
 import latice.vue.GameVisual;
 import latice.vue.RackFX;
 import latice.vue.menu.GameMenu;
+import latice.vue.system.PrimaryStage;
 
 public class GameMain extends Application {
 		public static DataFormat TILE_DATA = new DataFormat("BoardTile");
@@ -57,6 +58,7 @@ public class GameMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		PrimaryStage.setStage(primaryStage);
 		primaryStage.setScene(GameMenu.getSceneMenu());
 		GameMenu.getBtnStart().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
@@ -216,39 +218,51 @@ public class GameMain extends Application {
 	}
 
 
-	private void startTurn(Player activePlayer, Player inactivePlayer) {
-		GameManager.startTurn(activePlayer, inactivePlayer);
-		activePlayer.getPlayerFX().updateBuyTileButtonDisability();
+	private void startTurn(Player newActivePlayer, Player inactivePlayer) {
+		GameManager.startTurn(newActivePlayer, inactivePlayer);
+		newActivePlayer.getPlayerFX().updateBuyTileButtonDisability();
 		inactivePlayer.getPlayerFX().getBuyTileButton().setDisable(true);
-		activePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
+		newActivePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
 		inactivePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
-		activePlayer.getRack().getRackFX().createCanPlayEffect(true);
+		newActivePlayer.getRack().getRackFX().createCanPlayEffect(true);
 		inactivePlayer.getRack().getRackFX().createCanPlayEffect(false);
 		
-		System.out.println(GameManager.canPlayerPlay());
+		if (!GameManager.canPlayerPlay(newActivePlayer)) {
+			if (!GameManager.canPlayerPlay(inactivePlayer)) {
+				System.out.println("Personne ne peut jouer !");
+				gameEnd(PrimaryStage.getStage());
+			} else {
+				System.out.println(newActivePlayer.getName()+" ne peut pas jouer !");
+			}
+		}
 		
 	}
 
 
 	private void pressValidateButton(Player playerWhoPressed, Player otherPlayer, RackFX hbRackPlayerWhoPressed, RackFX hbRackOtherPlayer) {
-    	if (playerWhoPressed.isAbleToPutATile() && GameVisual.getPlayingTiles().size()>0) {
+    	if (playerWhoPressed.isAbleToPutATile() && !GameVisual.getPlayingTiles().isEmpty()) {
     		playerWhoPressed.addPoints(2);
     		playerWhoPressed.getPlayerFX().setPointProperty();
     	}
-    	GameVisual.resetPlayingTileEffect();
-    	GameVisual.lockPlayingTiles();
-    	playerWhoPressed.getRack().fillRack(playerWhoPressed.getStack());
-    	hbRackPlayerWhoPressed.setRack(playerWhoPressed.getRack().getTiles());
-    	hbRackPlayerWhoPressed.hideTiles(playerWhoPressed.getRack().getTiles());
-    	hbRackOtherPlayer.showTiles(otherPlayer.getRack().getTiles());
-		playerWhoPressed.getPlayerFX().getStackSizeLabel().setText("Tiles left : "+playerWhoPressed.getStackSize().toString());
-    	startTurn(otherPlayer,playerWhoPressed);
-    	otherPlayer.getPlayerFX().getBtnValidate().setDisable(false);
-    	playerWhoPressed.getPlayerFX().getBtnValidate().setDisable(true);
-    	playerWhoPressed.getPlayerFX().getBtnExchange().setDisable(true);
-    	otherPlayer.getPlayerFX().getBtnExchange().setDisable(false);
+    	if (GameManager.hasWon(playerWhoPressed)) {
+    		gameEnd(PrimaryStage.getStage());
+    	} else {
+    		GameVisual.resetPlayingTileEffect();
+    		GameVisual.lockPlayingTiles();
+    		playerWhoPressed.getRack().fillRack(playerWhoPressed.getStack());
+    		hbRackPlayerWhoPressed.setRack(playerWhoPressed.getRack().getTiles());
+    		hbRackPlayerWhoPressed.hideTiles(playerWhoPressed.getRack().getTiles());
+    		hbRackOtherPlayer.showTiles(otherPlayer.getRack().getTiles());
+    		playerWhoPressed.getPlayerFX().getStackSizeLabel().setText("Tiles left : "+playerWhoPressed.getStackSize().toString());
+    		startTurn(otherPlayer,playerWhoPressed);
+    		otherPlayer.getPlayerFX().getBtnValidate().setDisable(false);
+    		playerWhoPressed.getPlayerFX().getBtnValidate().setDisable(true);
+    		playerWhoPressed.getPlayerFX().getBtnExchange().setDisable(true);
+    		otherPlayer.getPlayerFX().getBtnExchange().setDisable(false);	
+    	}
+    	
 	}
-
+	
 	private void determineGameEnd(Stage primaryStage) {
 		if (GameManager.determineGameEnd()) {
 			gameEnd(primaryStage);
@@ -265,9 +279,9 @@ public class GameMain extends Application {
 		this.player1.setMyTurn(false);
 		this.player2.setMyTurn(false);
 		
-		if (this.player1.getStack().stackLength()<this.player2.getStack().stackLength()) {
+		if (this.player1.getAllBoardTilesLeft().size()<this.player2.getAllBoardTilesLeft().size()) {
 			System.out.println(this.player1.getName()+" a gagné !");
-		} else if (this.player2.getStack().stackLength()<this.player1.getStack().stackLength()) {
+		} else if (this.player2.getAllBoardTilesLeft().size()<this.player1.getAllBoardTilesLeft().size()) {
 			System.out.println(this.player2.getName()+" a gagné !");
 		} else {
 			System.out.println("Egalité !");
