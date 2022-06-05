@@ -82,13 +82,7 @@ public class GameManager {
 		return canUseSpecialTiles;
 	}
 
-	public static void setCanUseSpecialTiles() {
-		if (gameboard.howManyTileHaveBeenPlayed()>=MINIMUM_OF_PUT_TILES_FOR_USE_SPECIAL_ONE) {
-			GameManager.canUseSpecialTiles = true;
-		} else {
-			GameManager.canUseSpecialTiles = false;
-		}
-	}
+	
 
 	/*public static void playSpecialTile(SpecialTile tile, Position position) {
 		if (canUseSpecialTiles) {
@@ -99,44 +93,8 @@ public class GameManager {
 	} */
 
 	
-	public static Player getActivePlayer() {
-		return activePlayer;
-	}
-
-	public static void setActivePlayer(Player activePlayer) {
-		GameManager.activePlayer = activePlayer;
-	}
-	
-	
-	
-	public static GameMode getGameMode() {
-		return gameMode;
-	}
-
-	public static void setGameMode(GameMode gameMode) {
-		GameManager.gameMode = gameMode;
-	}
-
-	public static GameBoard getGameboard() {
-		return gameboard;
-	}
-
-	public static void setGameboard(GameBoard gameboard) {
-		GameManager.gameboard = gameboard;
-	}
-	
-	
-
 	public static void addCycles(Integer value) {
 		GameManager.currentNbOfCycles += value;
-	}
-
-	public static Integer getNbCycleMax() {
-		return nbCycleMax;
-	}
-
-	public static Integer getCurrentNbOfCycles() {
-		return currentNbOfCycles;
 	}
 
 	public static void startTurn(Player activePlayer, Player inactivePlayer) {
@@ -144,11 +102,87 @@ public class GameManager {
 		GameManager.setActivePlayer(activePlayer);
 		inactivePlayer.setMyTurn(false);
 	}
-	
+
 	public static boolean determineGameEnd() {
 		if (Objects.equals(currentNbOfCycles, nbCycleMax)) {
 			return true;	
 		}
 		return false;
+	}
+
+	public static GameBoard getGameboard() {
+		return gameboard;
+	}
+
+	public static Integer getNbCycleMax() {
+		return nbCycleMax;
+	}
+
+	public static GameMode getGameMode() {
+		return gameMode;
+	}
+
+	/*public static void playSpecialTile(SpecialTile tile, Position position) {
+		if (canUseSpecialTiles) {
+			switch (tile.getType()) {
+			case
+			}
+		}
+	} */
+	
+	
+	public static Player getActivePlayer() {
+		return activePlayer;
+	}
+
+	/*public static void playSpecialTile(SpecialTile tile, Position position) {
+		if (canUseSpecialTiles) {
+			switch (tile.getType()) {
+			case
+			}
+		}
+	} */
+	
+	
+	public static void setActivePlayer(Player activePlayer) {
+		GameManager.activePlayer = activePlayer;
+	}
+
+	/*public static void playSpecialTile(SpecialTile tile, Position position) {
+		if (canUseSpecialTiles) {
+			switch (tile.getType()) {
+			case
+			}
+		}
+	} */
+	
+	
+	public static void setGameMode(GameMode gameMode) {
+		GameManager.gameMode = gameMode;
+	}
+
+	/*public static void playSpecialTile(SpecialTile tile, Position position) {
+		if (canUseSpecialTiles) {
+			switch (tile.getType()) {
+			case
+			}
+		}
+	} */
+	
+	
+	public static void setGameboard(GameBoard gameboard) {
+		GameManager.gameboard = gameboard;
+	}
+
+	public static Integer getCurrentNbOfCycles() {
+		return currentNbOfCycles;
+	}
+
+	public static void setCanUseSpecialTiles() {
+		if (gameboard.howManyTileHaveBeenPlayed()>=MINIMUM_OF_PUT_TILES_FOR_USE_SPECIAL_ONE) {
+			GameManager.canUseSpecialTiles = true;
+		} else {
+			GameManager.canUseSpecialTiles = false;
+		}
 	}
 }

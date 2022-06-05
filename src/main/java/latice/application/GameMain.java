@@ -34,6 +34,7 @@ import latice.model.system.GameMode;
 import latice.vue.GameVisual;
 import latice.vue.RackFX;
 import latice.vue.menu.GameMenu;
+import latice.vue.menu.SelectMenu;
 import latice.vue.system.PrimaryStage;
 
 public class GameMain extends Application {
@@ -60,15 +61,22 @@ public class GameMain extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		PrimaryStage.setStage(primaryStage);
 		primaryStage.setScene(GameMenu.getSceneMenu());
+		Scene nextScene = SelectMenu.getSceneMenu();
 		GameMenu.getBtnStart().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (!GameMenu.getTfNameJ1().getText().isEmpty() && !GameMenu.getTfNameJ2().getText().isEmpty() && !GameMenu.getTfNameJ1().getText().equals(GameMenu.getTfNameJ2().getText())) {		    		
-		    		GameVisual.setTheme(GameMenu.getComboBoxTheme());
+		    	primaryStage.setScene(nextScene);
+		    }
+		});
+		
+
+		SelectMenu.getBtnStart().setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		    	if (!SelectMenu.getTfNameJ1().getText().isEmpty() && !SelectMenu.getTfNameJ2().getText().isEmpty() && !SelectMenu.getTfNameJ1().getText().equals(SelectMenu.getTfNameJ2().getText())) {		    		
 		    		primaryStage.setScene(LoadingScreen.getScene());
 		    		initGame(primaryStage);
 		    	}
-
 		    }
 		});
 		primaryStage.setTitle("Fenetre");
@@ -156,8 +164,8 @@ public class GameMain extends Application {
 	
 	private void gameStart() {
 		this.stack = new Stack();
-		this.player1 = new Player(GameMenu.getTfNameJ1().getText());
-		this.player2 = new Player(GameMenu.getTfNameJ2().getText());
+		this.player1 = new Player(SelectMenu.getTfNameJ1().getText());
+		this.player2 = new Player(SelectMenu.getTfNameJ2().getText());
 		
 		this.player1.initPlayerFX();
 		this.player2.initPlayerFX();
