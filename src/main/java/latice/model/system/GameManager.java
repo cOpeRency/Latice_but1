@@ -10,14 +10,14 @@ import latice.model.game.GameBoard;
 import latice.model.players.Player;
 import latice.model.tiles.BoardTile;
 import latice.model.tiles.SpecialTile;
+import latice.model.tiles.Tile;
 
 public class GameManager {
 	private static Player activePlayer;
-	private static Integer nbCycleMax = 10;
+	private static Integer nbCycleMax = 50;
 	private static Integer currentNbOfCycles = 1;
 	private static GameBoard gameboard;
 	private static GameMode gameMode;
-	private static Integer nbOfPlayerWhoCantPlayUntilTheEnd = 0;
 	private static boolean canUseSpecialTiles = false;
 	
 	public static final Integer NO_POINT = 0;
@@ -36,24 +36,25 @@ public class GameManager {
 	}
 	
 	public static boolean canPlayerPlay() {
-    	List<BoardTile> boardtiles = activePlayer.getStack().getBoardTiles();
+    	List<BoardTile> boardtiles = activePlayer.getAllBoardTilesLeft();
 		if (boardtiles.size()>10) {
-			return false;
+			System.out.println("trop de tuiles");
+			return true;
 		} else {
-			if (gameboard.howManyTileHaveBeenPlayed()>60) {
+			if (gameboard.howManyTileHaveBeenPlayed()>40) {
 		    	List<Box> emptyBoxes = gameboard.getEmptyBoxes();
 		    	for (Box box : emptyBoxes) {
 					for (BoardTile tile : boardtiles) {
 						if (box.checkValidity(tile.getShape(), tile.getColor())) {
+							System.out.println("peut jouer "+tile.toString()+" a "+box.getPosition().toString());
 							return true;
 						}
 					}
 				}
 		    	// ici, le joueur est bloqué jusqu'à la fin de la partie
-		    	nbOfPlayerWhoCantPlayUntilTheEnd += 1;
 		    	return false;
 			}
-			
+			System.out.println("pas assez de tuiles sur le plateau");
 			return true;
 		}
 	}
