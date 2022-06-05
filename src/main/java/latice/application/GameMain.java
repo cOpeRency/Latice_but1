@@ -79,7 +79,7 @@ public class GameMain extends Application {
 		    	}
 		    }
 		});
-		primaryStage.setTitle("Fenetre");
+		primaryStage.setTitle("Latice");
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		
@@ -102,7 +102,6 @@ public class GameMain extends Application {
 		} else {
 			startGameplay(player2,player1,primaryStage);
 		}
-		
 		this.gameBoard.generateBox();
 		GridPane gp = GameVisual.generateGameBoard();
 		this.borderPane.setCenter(gp);
@@ -139,8 +138,6 @@ public class GameMain extends Application {
 			MediaPlayer mediaPlayer = new MediaPlayer(media);
 	        mediaPlayer.setAutoPlay(true);
 			MediaView mediaViewer = new MediaView(mediaPlayer);
-			System.out.println(media.getDuration().toSeconds());
-			System.out.println(mediaPlayer.getTotalDuration().toSeconds());
 			GameVisual.getRoot().getChildren().add(mediaViewer);
 			mediaPlayer.setOnEndOfMedia(new Runnable() {
 				@Override

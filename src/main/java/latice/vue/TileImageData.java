@@ -82,7 +82,7 @@ public class TileImageData extends ImageView implements Serializable {
 	public void hideTile() {
 		String urlFichier;
 		try {
-			File fichier = new File("src/main/resources/themes/pokemon/back.png");
+			File fichier = new File("src/main/resources/themes/"+GameVisual.getTheme()+"/back.png");
 			urlFichier = fichier.toURI().toURL().toString();
 			Image img = new Image(urlFichier, 62, 62, true, true);
 			setImage(img);
