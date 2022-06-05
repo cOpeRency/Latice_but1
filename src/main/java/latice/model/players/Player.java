@@ -1,9 +1,13 @@
 package latice.model.players;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import latice.model.system.GameManager;
+import latice.model.tiles.BoardTile;
+import latice.model.tiles.Tile;
 import latice.vue.PlayerFX;
 
 public class Player implements Serializable{
@@ -40,7 +44,7 @@ public class Player implements Serializable{
 	}
 		
 	public void setAblilityToPutATile(boolean ability) {
-		this.ableToPutATile = ability;
+		this.ableToPutATile = true;
 	}
 	
 	public void addPoints(Integer points) {
@@ -79,6 +83,18 @@ public class Player implements Serializable{
 	
 	public Rack getRack() {
 		return rack;
+	}
+	
+	public List<BoardTile> getAllBoardTilesLeft(){
+		List<BoardTile> boardTiles = new ArrayList<>();
+
+    	for (Tile tile : this.rack.getTiles()) {
+			if (tile.getClass().equals(BoardTile.class)) {
+				boardTiles.add((BoardTile)tile);
+			}
+		}
+    	boardTiles.addAll(stack.getBoardTiles());
+		return boardTiles;
 	}
 
 	@Override

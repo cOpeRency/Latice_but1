@@ -225,6 +225,8 @@ public class GameMain extends Application {
 		activePlayer.getRack().getRackFX().createCanPlayEffect(true);
 		inactivePlayer.getRack().getRackFX().createCanPlayEffect(false);
 		
+		System.out.println(GameManager.canPlayerPlay());
+		
 	}
 
 

@@ -34,7 +34,7 @@ public class Rack implements Serializable{
 	}
 
 	public void setLocked(boolean locked) {
-		this.locked = locked;
+		this.locked = false;
 	}
 
 	public List<Tile> getTiles() {
