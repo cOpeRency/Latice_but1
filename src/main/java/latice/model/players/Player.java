@@ -44,7 +44,7 @@ public class Player implements Serializable{
 	}
 		
 	public void setAblilityToPutATile(boolean ability) {
-		this.ableToPutATile = true;
+		this.ableToPutATile = ability;
 	}
 	
 	public void addPoints(Integer points) {

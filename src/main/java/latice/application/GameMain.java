@@ -75,6 +75,9 @@ public class GameMain extends Application {
 		    public void handle(MouseEvent event) {
 		    	if (!SelectMenu.getTfNameJ1().getText().isEmpty() && !SelectMenu.getTfNameJ2().getText().isEmpty() && !SelectMenu.getTfNameJ1().getText().equals(SelectMenu.getTfNameJ2().getText())) {		    		
 		    		primaryStage.setScene(LoadingScreen.getScene());
+		    		if(SelectMenu.getCbUseCycles().isSelected()) {
+		    			GameManager.setNbCycleMax(SelectMenu.getSpCycles().getValue());
+		    		}
 		    		initGame(primaryStage);
 		    	}
 		    }
@@ -108,7 +111,8 @@ public class GameMain extends Application {
 		BorderPane.setAlignment(gp, Pos.CENTER);
 		this.borderPane.setBottom(playersRacks);
 		
-		this.lblCycles = new Label("Cycle : "+GameManager.getCurrentNbOfCycles()+"/"+GameManager.getNbCycleMax());
+		this.lblCycles = new Label();
+    	setLabelCycleText();
 		this.lblCycles.setTextFill(javafx.scene.paint.Color.WHITE);
 		this.lblCycles.setFont(Font.font(null, FontWeight.BOLD, 15));
 		this.lblCycles.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 6, 0.4, 0, 0);");
@@ -158,6 +162,13 @@ public class GameMain extends Application {
 		primaryStage.setScene(scene);
 	}
 	
+	private void setLabelCycleText() {
+		if (SelectMenu.getCbUseCycles().isSelected()) {
+			this.lblCycles.setText("Cycle : "+GameManager.getCurrentNbOfCycles()+"/"+GameManager.getNbCycleMax());
+		} else {
+			this.lblCycles.setText("Cycle : "+GameManager.getCurrentNbOfCycles());
+		}
+	}
 	
 	private void gameStart() {
 		this.stack = new Stack();
@@ -273,8 +284,7 @@ public class GameMain extends Application {
 			gameEnd(primaryStage);
 		} else {
 	    	GameManager.addCycles(1);
-	    	this.lblCycles.setText("Cycle : "+GameManager.getCurrentNbOfCycles()+"/"+GameManager.getNbCycleMax());
-	    	System.out.println("Cycle n°"+GameManager.getCurrentNbOfCycles());
+	    	setLabelCycleText();
 		}
 		
 	}

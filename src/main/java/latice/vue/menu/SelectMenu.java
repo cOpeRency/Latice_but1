@@ -7,13 +7,16 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import latice.application.LoadingScreen;
@@ -32,6 +35,8 @@ public class SelectMenu {
 	private static Button btnDbzTheme;
 	private static TextField tfNameJ1;
 	private static TextField tfNameJ2;
+	private static Spinner<Integer> spCycles;
+	private static CheckBox cbUseCycles;
 	
 	private static final String IMAGE_PATH = "src/main/resources/system/selectMenu.png";
 
@@ -116,6 +121,40 @@ public class SelectMenu {
 		tfNameJ2.setLayoutX(940);
 		tfNameJ2.setLayoutY(630);
 		
+		spCycles = new Spinner(1,20,0,1);
+		spCycles.setEditable(false);
+		spCycles.setLayoutX(880);
+		spCycles.setLayoutY(480);
+		spCycles.setDisable(true);
+		
+		cbUseCycles = new CheckBox();
+		cbUseCycles.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+				spCycles.setDisable(!cbUseCycles.isSelected());
+		    }
+		});
+		
+		Label txtCbCycle = new Label("Utiliser des cycles ?");
+		txtCbCycle.setTextFill(javafx.scene.paint.Color.WHITE);
+		txtCbCycle.setFont(Font.font(null, FontWeight.BOLD, 15));
+		
+		HBox cbHb = new HBox();
+		cbHb.getChildren().add(cbUseCycles);
+		cbHb.getChildren().add(txtCbCycle);
+		cbHb.setLayoutX(550);
+		cbHb.setLayoutY(460);
+		
+		Label txtCycle = new Label("cycle(s)");
+		txtCycle.setTextFill(javafx.scene.paint.Color.WHITE);
+		txtCycle.setFont(Font.font(null, FontWeight.BOLD, 15));
+		
+		HBox hbCycles = new HBox();
+		hbCycles.getChildren().add(spCycles);
+		hbCycles.getChildren().add(txtCycle);
+		hbCycles.setLayoutX(550);
+		hbCycles.setLayoutY(480);
+		
 		apMenu.getChildren().add(btnStart);
 		apMenu.getChildren().add(btnPokemonTheme);
 		apMenu.getChildren().add(btnOnePieceTheme);
@@ -124,6 +163,8 @@ public class SelectMenu {
 		apMenu.getChildren().add(lblTheme);
 		apMenu.getChildren().add(tfNameJ1);
 		apMenu.getChildren().add(tfNameJ2);
+		apMenu.getChildren().add(hbCycles);
+		apMenu.getChildren().add(cbHb);
 		sceneMenu = new Scene(apMenu,1280,720);
 		return sceneMenu;
 	}
@@ -139,4 +180,14 @@ public class SelectMenu {
 	public static TextField getTfNameJ2() {
 		return tfNameJ2;
 	}
+
+	public static Spinner<Integer> getSpCycles() {
+		return spCycles;
+	}
+
+	public static CheckBox getCbUseCycles() {
+		return cbUseCycles;
+	}
+	
+	
 }

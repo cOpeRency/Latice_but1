@@ -14,7 +14,7 @@ import latice.model.tiles.Tile;
 
 public class GameManager {
 	private static Player activePlayer;
-	private static Integer nbCycleMax = 50;
+	private static Integer nbCycleMax = 10;
 	private static Integer currentNbOfCycles = 1;
 	private static GameBoard gameboard;
 	private static GameMode gameMode;
@@ -81,17 +81,6 @@ public class GameManager {
 	public static boolean canUseSpecialTiles() {
 		return canUseSpecialTiles;
 	}
-
-	
-
-	/*public static void playSpecialTile(SpecialTile tile, Position position) {
-		if (canUseSpecialTiles) {
-			switch (tile.getType()) {
-			case
-			}
-		}
-	} */
-
 	
 	public static void addCycles(Integer value) {
 		GameManager.currentNbOfCycles += value;
@@ -121,53 +110,18 @@ public class GameManager {
 	public static GameMode getGameMode() {
 		return gameMode;
 	}
-
-	/*public static void playSpecialTile(SpecialTile tile, Position position) {
-		if (canUseSpecialTiles) {
-			switch (tile.getType()) {
-			case
-			}
-		}
-	} */
-	
 	
 	public static Player getActivePlayer() {
 		return activePlayer;
 	}
-
-	/*public static void playSpecialTile(SpecialTile tile, Position position) {
-		if (canUseSpecialTiles) {
-			switch (tile.getType()) {
-			case
-			}
-		}
-	} */
-	
 	
 	public static void setActivePlayer(Player activePlayer) {
 		GameManager.activePlayer = activePlayer;
 	}
-
-	/*public static void playSpecialTile(SpecialTile tile, Position position) {
-		if (canUseSpecialTiles) {
-			switch (tile.getType()) {
-			case
-			}
-		}
-	} */
-	
 	
 	public static void setGameMode(GameMode gameMode) {
 		GameManager.gameMode = gameMode;
 	}
-
-	/*public static void playSpecialTile(SpecialTile tile, Position position) {
-		if (canUseSpecialTiles) {
-			switch (tile.getType()) {
-			case
-			}
-		}
-	} */
 	
 	
 	public static void setGameboard(GameBoard gameboard) {
@@ -185,4 +139,10 @@ public class GameManager {
 			GameManager.canUseSpecialTiles = false;
 		}
 	}
+
+	public static void setNbCycleMax(Integer nbCycleMax) {
+		GameManager.nbCycleMax = nbCycleMax;
+	}
+	
+	
 }
