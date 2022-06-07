@@ -63,6 +63,13 @@ public class Player implements Serializable{
 		return rack;
 	}
 	
+	public List<Tile> getAllTilesLeft(){
+		List<Tile> Tiles = new ArrayList<>();
+    	Tiles.addAll(stack.content());
+    	Tiles.addAll(rack.content());
+		return Tiles;
+	}
+	
 	public List<BoardTile> getAllBoardTilesLeft(){
 		List<BoardTile> boardTiles = new ArrayList<>();
 

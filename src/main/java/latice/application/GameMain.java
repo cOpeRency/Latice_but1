@@ -299,9 +299,9 @@ public class GameMain extends Application {
 		this.player1.setMyTurn(false);
 		this.player2.setMyTurn(false);
 		
-		if (this.player1.getAllBoardTilesLeft().size()<this.player2.getAllBoardTilesLeft().size()) {
+		if (this.player1.getAllTilesLeft().size()<this.player2.getAllTilesLeft().size()) {
 			System.out.println(this.player1.getName()+" a gagné !");
-		} else if (this.player2.getAllBoardTilesLeft().size()<this.player1.getAllBoardTilesLeft().size()) {
+		} else if (this.player2.getAllTilesLeft().size()<this.player1.getAllTilesLeft().size()) {
 			System.out.println(this.player2.getName()+" a gagné !");
 		} else {
 			System.out.println("Egalité !");
