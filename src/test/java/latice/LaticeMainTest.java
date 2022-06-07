@@ -148,12 +148,12 @@ class LaticeMainTest {
 	@Test
 	void testTileToString() {
 		
-		assertEquals(new BoardTile(Shape.SHAPE1,Color.COLOR1).toString(),Shape.SHAPE1.code()+" "+Color.COLOR1.code());
-		assertEquals(new BoardTile(Shape.SHAPE2,Color.COLOR1).toString(),Shape.SHAPE2.code()+" "+Color.COLOR1.code());
-		assertEquals(new BoardTile(Shape.SHAPE3,Color.COLOR1).toString(),Shape.SHAPE3.code()+" "+Color.COLOR1.code());
-		assertEquals(new BoardTile(Shape.SHAPE4,Color.COLOR2).toString(),Shape.SHAPE4.code()+" "+Color.COLOR2.code());
-		assertEquals(new BoardTile(Shape.SHAPE5,Color.COLOR4).toString(),Shape.SHAPE5.code()+" "+Color.COLOR4.code());
-		assertEquals(new BoardTile(Shape.SHAPE6,Color.COLOR3).toString(),Shape.SHAPE6.code()+" "+Color.COLOR3.code());
+		assertEquals(new BoardTile(Shape.SHAPE1,Color.GREEN).toString(),Shape.SHAPE1.code()+" "+Color.GREEN.code());
+		assertEquals(new BoardTile(Shape.SHAPE2,Color.GREEN).toString(),Shape.SHAPE2.code()+" "+Color.GREEN.code());
+		assertEquals(new BoardTile(Shape.SHAPE3,Color.GREEN).toString(),Shape.SHAPE3.code()+" "+Color.GREEN.code());
+		assertEquals(new BoardTile(Shape.SHAPE4,Color.MAGENTA).toString(),Shape.SHAPE4.code()+" "+Color.MAGENTA.code());
+		assertEquals(new BoardTile(Shape.SHAPE5,Color.RED).toString(),Shape.SHAPE5.code()+" "+Color.RED.code());
+		assertEquals(new BoardTile(Shape.SHAPE6,Color.NIGHTBLUE).toString(),Shape.SHAPE6.code()+" "+Color.NIGHTBLUE.code());
 		
 	}
 
@@ -163,11 +163,11 @@ class LaticeMainTest {
 		Position position = new Position(0, 4);
 		
 		assertNull(gameBoard.getBox(position).getTile());
-		gameBoard.getBox(position).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
+		gameBoard.getBox(position).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
 		
 		assertNotNull(gameBoard.getBox(position).getTile());
 		assertEquals(gameBoard.getBox(position).getTile().getShape(),Shape.SHAPE1);
-		assertEquals(gameBoard.getBox(position).getTile().getColor(),Color.COLOR1);
+		assertEquals(gameBoard.getBox(position).getTile().getColor(),Color.GREEN);
 
 		assertEquals(gameBoard.getBox(position).getTile().getParentBox(),gameBoard.getBox(position));
 		
@@ -176,7 +176,7 @@ class LaticeMainTest {
 	@Test
 	void testRemoveTileAtPosition() {
 		Position position = new Position(0, 4);
-		BoardTile tile = new BoardTile(Shape.SHAPE1,Color.COLOR1);
+		BoardTile tile = new BoardTile(Shape.SHAPE1,Color.GREEN);
 		
 		gameBoard.getBox(position).setTile(tile);
 		
@@ -192,7 +192,7 @@ class LaticeMainTest {
 		Position position = new Position(4, 4);
 		List<Box> boxes = new ArrayList();
 		
-		gameBoard.getBox(position).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
+		gameBoard.getBox(position).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
 		boxes = gameBoard.getBox(position).getAdjacentBoxes();
 		
 		assertTrue(boxes.contains(gameBoard.getBox(new Position(4,5))));
@@ -212,28 +212,28 @@ class LaticeMainTest {
 		Position position = new Position(4, 4);
 		List<Box> boxes = new ArrayList();
 		
-		gameBoard.getBox(position).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
+		gameBoard.getBox(position).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
 		boxes = gameBoard.getBox(position).getAdjacentBoxes();
 		
-		assertTrue(boxes.get(0).checkValidity(Shape.SHAPE1, Color.COLOR1));
-		assertTrue(boxes.get(1).checkValidity(Shape.SHAPE1, Color.COLOR2));
-		assertTrue(boxes.get(2).checkValidity(Shape.SHAPE1, Color.COLOR6));
-		assertTrue(boxes.get(0).checkValidity(Shape.SHAPE4, Color.COLOR1));
-		assertTrue(boxes.get(1).checkValidity(Shape.SHAPE3, Color.COLOR1));
-		assertTrue(boxes.get(3).checkValidity(Shape.SHAPE5, Color.COLOR1));
+		assertTrue(boxes.get(0).checkValidity(Shape.SHAPE1, Color.GREEN));
+		assertTrue(boxes.get(1).checkValidity(Shape.SHAPE1, Color.MAGENTA));
+		assertTrue(boxes.get(2).checkValidity(Shape.SHAPE1, Color.YELLOW));
+		assertTrue(boxes.get(0).checkValidity(Shape.SHAPE4, Color.GREEN));
+		assertTrue(boxes.get(1).checkValidity(Shape.SHAPE3, Color.GREEN));
+		assertTrue(boxes.get(3).checkValidity(Shape.SHAPE5, Color.GREEN));
 		
 
-		assertFalse(boxes.get(3).checkValidity(Shape.SHAPE5, Color.COLOR2));
-		assertFalse(boxes.get(1).checkValidity(Shape.SHAPE2, Color.COLOR2));
-		assertFalse(boxes.get(2).checkValidity(Shape.SHAPE3, Color.COLOR6));
-		assertFalse(boxes.get(0).checkValidity(Shape.SHAPE6, Color.COLOR4));
+		assertFalse(boxes.get(3).checkValidity(Shape.SHAPE5, Color.MAGENTA));
+		assertFalse(boxes.get(1).checkValidity(Shape.SHAPE2, Color.MAGENTA));
+		assertFalse(boxes.get(2).checkValidity(Shape.SHAPE3, Color.YELLOW));
+		assertFalse(boxes.get(0).checkValidity(Shape.SHAPE6, Color.RED));
 		
 	}
 	
 	@Test
 	void test_play_a_tile_will_put_it_at_moon_position() {
 		Position position = new Position(4, 4);
-		BoardTile tile = new BoardTile(Shape.SHAPE1,Color.COLOR1);
+		BoardTile tile = new BoardTile(Shape.SHAPE1,Color.GREEN);
 		
 		GameManager.playBoardTileAt(tile, position);
 		
@@ -243,10 +243,10 @@ class LaticeMainTest {
 	
 	@Test
 	void test_cannot_put_a_tile_after_playing_if_we_not_have_enough_points() {
-		BoardTile tile = new BoardTile(Shape.SHAPE2,Color.COLOR1);
+		BoardTile tile = new BoardTile(Shape.SHAPE2,Color.GREEN);
 		
-		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE1,Color.COLOR1), new Position(4, 4));
-		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE2,Color.COLOR1), new Position(4, 3));
+		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE1,Color.GREEN), new Position(4, 4));
+		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE2,Color.GREEN), new Position(4, 3));
 		
 		assertNotEquals(tile, GameManager.getGameboard().getBox(new Position(4, 3)).getTile());
 		
@@ -254,12 +254,12 @@ class LaticeMainTest {
 	
 	@Test
 	void test_play_a_tile_will_put_it_at_specified_position_after_checked_move_validity() {
-		BoardTile tile = new BoardTile(Shape.SHAPE2,Color.COLOR5);
+		BoardTile tile = new BoardTile(Shape.SHAPE2,Color.TURQUOISE);
 		
 		
-		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE1,Color.COLOR1), new Position(4, 4));
+		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE1,Color.GREEN), new Position(4, 4));
 		GameManager.getActivePlayer().addPoints(2);
-		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE2,Color.COLOR1), new Position(4, 3));
+		GameManager.playBoardTileAt(new BoardTile(Shape.SHAPE2,Color.GREEN), new Position(4, 3));
 		GameManager.getActivePlayer().addPoints(2);
 		GameManager.playBoardTileAt(tile, new Position(4, 4));
 		GameManager.playBoardTileAt(tile, new Position(4, 5));
@@ -306,35 +306,35 @@ class LaticeMainTest {
 	@Test
 	void testPutTileConditions() {
 		
-		assertFalse(gameBoard.getBox(new Position(0, 4)).checkValidity(Shape.SHAPE1, Color.COLOR1));
-		assertTrue(gameBoard.getBox(new Position(4, 4)).checkValidity(Shape.SHAPE1, Color.COLOR1));
+		assertFalse(gameBoard.getBox(new Position(0, 4)).checkValidity(Shape.SHAPE1, Color.GREEN));
+		assertTrue(gameBoard.getBox(new Position(4, 4)).checkValidity(Shape.SHAPE1, Color.GREEN));
 		
-		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
 		
-		assertFalse(gameBoard.getBox(new Position(0, 4)).checkValidity(Shape.SHAPE1, Color.COLOR1));
-		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE1, Color.COLOR1));
+		assertFalse(gameBoard.getBox(new Position(0, 4)).checkValidity(Shape.SHAPE1, Color.GREEN));
+		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE1, Color.GREEN));
 	}
 	
 	@Test
 	void testCannotPutTileOnAnAnotherOne() {
 		
-		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
 		
-		assertFalse(gameBoard.getBox(new Position(4, 3)).checkValidity(Shape.SHAPE1, Color.COLOR1));
+		assertFalse(gameBoard.getBox(new Position(4, 3)).checkValidity(Shape.SHAPE1, Color.GREEN));
 	}
 
 	
 	@Test
 	void test_make_a_double_when_playing_near_to_two_tiles() {
 		
-		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
-		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
+		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.GREEN));
 		
 
-		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE4, Color.COLOR1));
+		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE4, Color.GREEN));
 		
 		List<Box> adjacentBoxes = gameBoard.getBox(new Position(3,4)).getAdjacentBoxes();
 		MatchType matchType = gameBoard.getBox(new Position(3,4)).getTileMatchType(adjacentBoxes);
@@ -346,14 +346,14 @@ class LaticeMainTest {
 	@Test
 	void test_make_a_trefoil_when_playing_near_to_three_tiles() {
 		
-		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
-		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 3)).setTile(new BoardTile(Shape.SHAPE4,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 4)).setTile(new BoardTile(Shape.SHAPE5,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
+		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.GREEN));
+		gameBoard.getBox(new Position(2, 3)).setTile(new BoardTile(Shape.SHAPE4,Color.GREEN));
+		gameBoard.getBox(new Position(2, 4)).setTile(new BoardTile(Shape.SHAPE5,Color.GREEN));
 		
 
-		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE6, Color.COLOR1));
+		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE6, Color.GREEN));
 		
 		List<Box> adjacentBoxes = gameBoard.getBox(new Position(3,4)).getAdjacentBoxes();
 		MatchType matchType = gameBoard.getBox(new Position(3,4)).getTileMatchType(adjacentBoxes);
@@ -365,17 +365,17 @@ class LaticeMainTest {
 	@Test
 	void test_make_a_latice_when_playing_near_to_four_tiles() {
 		
-		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
-		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 3)).setTile(new BoardTile(Shape.SHAPE4,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 4)).setTile(new BoardTile(Shape.SHAPE5,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 5)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
-		gameBoard.getBox(new Position(3, 5)).setTile(new BoardTile(Shape.SHAPE3,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 5)).setTile(new BoardTile(Shape.SHAPE4,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
+		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.GREEN));
+		gameBoard.getBox(new Position(2, 3)).setTile(new BoardTile(Shape.SHAPE4,Color.GREEN));
+		gameBoard.getBox(new Position(2, 4)).setTile(new BoardTile(Shape.SHAPE5,Color.GREEN));
+		gameBoard.getBox(new Position(4, 5)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
+		gameBoard.getBox(new Position(3, 5)).setTile(new BoardTile(Shape.SHAPE3,Color.GREEN));
+		gameBoard.getBox(new Position(2, 5)).setTile(new BoardTile(Shape.SHAPE4,Color.GREEN));
 		
 
-		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE6, Color.COLOR1));
+		assertTrue(gameBoard.getBox(new Position(3, 4)).checkValidity(Shape.SHAPE6, Color.GREEN));
 		
 		List<Box> adjacentBoxes = gameBoard.getBox(new Position(3,4)).getAdjacentBoxes();
 		MatchType matchType = gameBoard.getBox(new Position(3,4)).getTileMatchType(adjacentBoxes);
@@ -387,7 +387,7 @@ class LaticeMainTest {
 	@Test
 	void test_gain_two_points_when_play_on_a_sun_box() {
 		
-		gameBoard.getBox(new Position(1, 1)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
+		gameBoard.getBox(new Position(1, 1)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
 		
 		assertEquals(gameBoard.getBox(new Position(1, 1)).getType(),BoxType.SUN);
 		assertEquals(GameManager.getActivePlayer().getPoints(),sunPoint);
@@ -397,13 +397,13 @@ class LaticeMainTest {
 	@Test
 	void test_gain_one_point_when_make_a_double() {
 		
-		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
-		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
+		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.GREEN));
 		
 		List<Box> adjacentBoxes = gameBoard.getBox(new Position(3,4)).getAdjacentBoxes();
 		MatchType matchType = gameBoard.getBox(new Position(3,4)).getTileMatchType(adjacentBoxes);
-		gameBoard.getBox(new Position(3, 4)).setTile(new BoardTile(Shape.SHAPE6,Color.COLOR1));
+		gameBoard.getBox(new Position(3, 4)).setTile(new BoardTile(Shape.SHAPE6,Color.GREEN));
 		
 		
 		assertEquals(matchType,MatchType.DOUBLE);
@@ -414,11 +414,11 @@ class LaticeMainTest {
 	@Test
 	void test_gain_three_points_when_play_on_a_sun_box_while_doing_a_double() {
 		
-		gameBoard.getBox(new Position(0, 1)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(1, 0)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
+		gameBoard.getBox(new Position(0, 1)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(1, 0)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
 		List<Box> adjacentBoxes = gameBoard.getBox(new Position(0,0)).getAdjacentBoxes();
 		MatchType matchType = gameBoard.getBox(new Position(0,0)).getTileMatchType(adjacentBoxes);
-		gameBoard.getBox(new Position(0, 0)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
+		gameBoard.getBox(new Position(0, 0)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
 		
 		
 		assertEquals(matchType,MatchType.DOUBLE);
@@ -430,15 +430,15 @@ class LaticeMainTest {
 	@Test
 	void test_gain_two_point_when_make_a_trefoil() {
 		
-		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
-		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 3)).setTile(new BoardTile(Shape.SHAPE4,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 4)).setTile(new BoardTile(Shape.SHAPE5,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
+		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.GREEN));
+		gameBoard.getBox(new Position(2, 3)).setTile(new BoardTile(Shape.SHAPE4,Color.GREEN));
+		gameBoard.getBox(new Position(2, 4)).setTile(new BoardTile(Shape.SHAPE5,Color.GREEN));
 		
 		List<Box> adjacentBoxes = gameBoard.getBox(new Position(3,4)).getAdjacentBoxes();
 		MatchType matchType = gameBoard.getBox(new Position(3,4)).getTileMatchType(adjacentBoxes);
-		gameBoard.getBox(new Position(3, 4)).setTile(new BoardTile(Shape.SHAPE6,Color.COLOR1));
+		gameBoard.getBox(new Position(3, 4)).setTile(new BoardTile(Shape.SHAPE6,Color.GREEN));
 		
 		
 		assertEquals(matchType,MatchType.TREFOIL);
@@ -449,18 +449,18 @@ class LaticeMainTest {
 	@Test
 	void test_gain_four_point_when_make_a_latice() {
 
-		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
-		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 3)).setTile(new BoardTile(Shape.SHAPE4,Color.COLOR1));
-		gameBoard.getBox(new Position(2, 4)).setTile(new BoardTile(Shape.SHAPE5,Color.COLOR1));
-		gameBoard.getBox(new Position(4, 5)).setTile(new BoardTile(Shape.SHAPE2,Color.COLOR1));
-		gameBoard.getBox(new Position(3, 5)).setTile(new BoardTile(Shape.SHAPE3,Color.COLOR1));
+		gameBoard.getBox(new Position(4, 4)).setTile(new BoardTile(Shape.SHAPE1,Color.GREEN));
+		gameBoard.getBox(new Position(4, 3)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
+		gameBoard.getBox(new Position(3, 3)).setTile(new BoardTile(Shape.SHAPE3,Color.GREEN));
+		gameBoard.getBox(new Position(2, 3)).setTile(new BoardTile(Shape.SHAPE4,Color.GREEN));
+		gameBoard.getBox(new Position(2, 4)).setTile(new BoardTile(Shape.SHAPE5,Color.GREEN));
+		gameBoard.getBox(new Position(4, 5)).setTile(new BoardTile(Shape.SHAPE2,Color.GREEN));
+		gameBoard.getBox(new Position(3, 5)).setTile(new BoardTile(Shape.SHAPE3,Color.GREEN));
 		
 		List<Box> adjacentBoxes = gameBoard.getBox(new Position(3,4)).getAdjacentBoxes();
 		MatchType matchType = gameBoard.getBox(new Position(3,4)).getTileMatchType(adjacentBoxes);
 
-		gameBoard.getBox(new Position(3, 4)).setTile(new BoardTile(Shape.SHAPE6,Color.COLOR1));
+		gameBoard.getBox(new Position(3, 4)).setTile(new BoardTile(Shape.SHAPE6,Color.GREEN));
 		
 		
 		assertEquals(matchType,MatchType.LATICE);
