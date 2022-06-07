@@ -41,7 +41,7 @@ class LaticeMainTest {
 	
 	@BeforeEach
 	public void initEach(){
-		GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
+		GameManager.setGameMode(GameMode.PUT_SINGLE_TILE);
 		this.stack = new Stack();
 		this.player1 = new Player("Albert");
 		this.player2 = new Player("Bernard");

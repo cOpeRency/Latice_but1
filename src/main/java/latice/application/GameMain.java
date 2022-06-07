@@ -191,7 +191,7 @@ public class GameMain extends Application {
 		System.out.println(firstPlayer.getName()+" commence ! Que la partie débute !");
     	System.out.println("Cycle n°"+GameManager.getCurrentNbOfCycles());
     	
-    	GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
+    	GameManager.setGameMode(GameMode.PUT_SINGLE_TILE);
     	
 		this.borderPane.setLeft(firstPlayer.getVisualData().getVbInfos());
 		this.borderPane.setRight(secondPlayer.getVisualData().getVbInfos());

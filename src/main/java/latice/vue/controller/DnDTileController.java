@@ -24,7 +24,7 @@ public abstract class DnDTileController {
 		tile.setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && !boardTile.isLocked() && tile.isLastTilePlayed() && !boardTile.getParentRack().isLocked() && boardTile.getParentRack().getOwner().isAbleToPutATile()) {
+		    	if (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE) && !boardTile.isLocked() && tile.isLastTilePlayed() && !boardTile.getParentRack().isLocked() && boardTile.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = tile.startDragAndDrop(TransferMode.MOVE);
 			    	tile.setStyle(TileImageData.SHADOW_EFFECT);
 			        
@@ -99,10 +99,10 @@ public abstract class DnDTileController {
 			    	if (boardTile.getParentRack()!=null) {
 			    		boardTile.exitRack();
 			    		boardTile.getParentRack().getVisualData().getChildren().remove(boardTile.getTileFX());
-			    		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)) {
+			    		if (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE)) {
 			    			tile.setStyle(TileImageData.NOT_FIXED_EFFECT);
 			    		} else {
-			    			GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
+			    			GameManager.setGameMode(GameMode.PUT_SINGLE_TILE);
 					    	GameManager.getActivePlayer().getVisualData().getExtraMoveButton().setDisable(true);
 					    	GameManager.getActivePlayer().getVisualData().getBtnExchange().setDisable(false);
 					    	GameManager.getActivePlayer().getVisualData().getBtnValidate().setDisable(false);
@@ -111,7 +111,7 @@ public abstract class DnDTileController {
 		    	} else  if (boardTile.getParentBox()!=null) {
 		    		boardTile.resetPosition();
 		    		boardTile.getParentBox().getImageData().getChildren().add(boardTile.getTileFX());
-		    		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)) {
+		    		if (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE)) {
 		    			GameManager.getActivePlayer().setAblilityToPutATile(false);
 		    			GameManager.getActivePlayer().getRack().getVisualData().createCanPlayEffect(false);
 		    			if (GameManager.getActivePlayer().getPoints()>=2) {
@@ -139,7 +139,7 @@ public abstract class DnDTileController {
 		tile.setOnDragDetected(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && GameManager.canUseSpecialTiles() && !specialTile.getParentRack().isLocked() && specialTile.getParentRack().getOwner().isAbleToPutATile()) {
+		    	if (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE) && GameManager.canUseSpecialTiles() && !specialTile.getParentRack().isLocked() && specialTile.getParentRack().getOwner().isAbleToPutATile()) {
 			    	Dragboard dragboard = tile.startDragAndDrop(TransferMode.MOVE);
 			    	tile.setStyle(TileImageData.SHADOW_EFFECT);
 			        

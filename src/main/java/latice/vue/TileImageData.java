@@ -36,7 +36,7 @@ public class TileImageData extends ImageView implements Serializable {
 			    public void handle(MouseEvent event) {
 			    	if (GameManager.getGameMode().equals(GameMode.THUNDER_TILE) && !((BoardTile) tileSource).getParentBox().getType().equals(BoxType.MOON)) {
 			    		((BoardTile) tileSource).getParentBox().getImageData().callThunder();
-		    			GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
+		    			GameManager.setGameMode(GameMode.PUT_SINGLE_TILE);
 				    	GameManager.getActivePlayer().getVisualData().getExtraMoveButton().setDisable(true);
 				    	GameManager.getActivePlayer().getVisualData().getBtnExchange().setDisable(false);
 				    	GameManager.getActivePlayer().getVisualData().getBtnValidate().setDisable(false);

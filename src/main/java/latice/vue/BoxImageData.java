@@ -106,10 +106,10 @@ public class BoxImageData extends StackPane implements Serializable{
 		setOnDragEntered(new EventHandler<DragEvent>() {
 		    @Override
 		    public void handle(DragEvent event) {
-		    	if (event.getDragboard().getString().equals("WIND") || event.getDragboard().getString().equals("THUNDER")|| (!GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && canDragedTileBePutHere(event.getDragboard()))) {
+		    	if (event.getDragboard().getString().equals("WIND") || event.getDragboard().getString().equals("THUNDER")|| (!GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE) && canDragedTileBePutHere(event.getDragboard()))) {
 			        setStyle(VALID_HOVER_EFFECT);
 			        toFront();
-		    	} else if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && checkValidity((BoardTile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
+		    	} else if (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE) && checkValidity((BoardTile)event.getDragboard().getContent(GameMain.TILE_DATA))) {
 		    		if (event.getDragboard().hasImage()) {
 				        setStyle(VALID_HOVER_EFFECT);
 				        toFront();
@@ -136,7 +136,7 @@ public class BoxImageData extends StackPane implements Serializable{
 		    	Dragboard dragboard = event.getDragboard();
 		    	if (("WIND".equals(event.getDragboard().getString()) || "THUNDER".equals(event.getDragboard().getString())) 
 		    			|| (GameManager.getGameMode().equals(GameMode.WIND_TILE) && canDragedTileBePutHere(dragboard))
-		    			|| (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA)) && dragboard.hasImage())) {
+		    			|| (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE) && checkValidity((BoardTile)dragboard.getContent(GameMain.TILE_DATA)) && dragboard.hasImage())) {
 	    			event.acceptTransferModes(TransferMode.MOVE);
 		    	}
 		        event.consume();
@@ -192,7 +192,7 @@ public class BoxImageData extends StackPane implements Serializable{
 
 	public void setTile(BoardTile tile) {
 		//If there is at least one tile on gameboard and tile is from a box, we reuse the extra move 
-		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && !GameVisual.getPlayingTiles().isEmpty() && tile.getParentBox()!=null) {
+		if (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE) && !GameVisual.getPlayingTiles().isEmpty() && tile.getParentBox()!=null) {
 			GameManager.getActivePlayer().addPoints(-2);
 			GameManager.getActivePlayer().getVisualData().setPointProperty();
 			GameManager.getActivePlayer().getVisualData().setExtraMoveButtonDisability(true);
@@ -200,7 +200,7 @@ public class BoxImageData extends StackPane implements Serializable{
 		this.box.setTile(tile);
 		this.box.getTile().setTileImage();
 		this.getChildren().add(this.box.getTile().getTileFX());
-		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)) {
+		if (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE)) {
 			GameVisual.addPlayingTile(tile);
 		}
 		GameManager.getActivePlayer().getVisualData().disableExchangeButton();

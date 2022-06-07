@@ -51,7 +51,7 @@ public class Box implements Serializable{
 	public void setTile(BoardTile tile) {
 		tile.setParentBox(this);
 		this.tile = tile;
-		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)){
+		if (GameManager.getGameMode().equals(GameMode.PUT_SINGLE_TILE)){
 			System.out.println(getTileMatchType(getAdjacentBoxes())+" for player "+GameManager.getActivePlayer().getName());
 			GameManager.getActivePlayer().addPoints(getTileMatchType( getAdjacentBoxes()).value()+getPointsGainnedByType() );
 		}
