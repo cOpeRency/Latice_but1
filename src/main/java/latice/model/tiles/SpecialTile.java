@@ -8,6 +8,8 @@ import latice.vue.TileImageData;
 public class SpecialTile extends Tile implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private TypeOfSpecialTile type;
+
+	public static final Integer COST = 6;
 	
 	public SpecialTile(TypeOfSpecialTile type) {
 		this.type = type;

@@ -54,7 +54,7 @@ public class PlayerVisualData implements Serializable{
 	}
 
 	public void updateBuyTileButtonDisability() {
-		if (playerSource.getPoints()>=1) {
+		if (playerSource.getPoints()>=SpecialTile.COST) {
 			btnBuyTile.setDisable(false);
 		} else {
 			btnBuyTile.setDisable(true);
@@ -63,7 +63,7 @@ public class PlayerVisualData implements Serializable{
 	}
 	
 	public void disableExchangeButton() {
-		if (playerSource.getPoints()<2)
+		if (playerSource.getPoints()<Player.EXTRA_MOVE_COST)
 			btnExchange.setDisable(true);
 	}
 
@@ -212,7 +212,7 @@ public class PlayerVisualData implements Serializable{
 		this.btnBuyTile.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
-		    	if (playerSource.getRack().rackLength()<5 && playerSource.getPoints()>=1) {
+		    	if (playerSource.getRack().rackLength()<5 && playerSource.getPoints()>=SpecialTile.COST) {
 		    		
 		    		Alert dialog = new Alert(AlertType.NONE);
 					dialog.setTitle("Choisissez");
@@ -229,7 +229,7 @@ public class PlayerVisualData implements Serializable{
 					if(choix.get() == btnTypeChoix1) {
 			    		playerSource.getRack().addTile(new SpecialTile(TypeOfSpecialTile.WIND));
 			    		playerSource.getRack().getVisualData().setRack(playerSource.getRack().content());
-			    		playerSource.addPoints(-1);
+			    		playerSource.addPoints(-SpecialTile.COST);
 			    		updateBuyTileButtonDisability();
 			    		updateExtraMoveButtonDisability();
 			    		setPointProperty();
@@ -237,7 +237,7 @@ public class PlayerVisualData implements Serializable{
 					} else if (choix.get() == btnTypeChoix2) {
 			    		playerSource.getRack().addTile(new SpecialTile(TypeOfSpecialTile.THUNDER));
 			    		playerSource.getRack().getVisualData().setRack(playerSource.getRack().content());
-			    		playerSource.addPoints(-1);
+			    		playerSource.addPoints(-SpecialTile.COST);
 			    		updateBuyTileButtonDisability();
 			    		updateExtraMoveButtonDisability();
 			    		setPointProperty();
