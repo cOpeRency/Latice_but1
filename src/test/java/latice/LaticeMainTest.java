@@ -115,10 +115,10 @@ class LaticeMainTest {
 	void test_rack_joueur_filled_when_stack_less_than_5() {
 		
 		assertEquals(5, this.player1.getRack().rackLength());
-		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
-		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
-		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
-		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		this.player1.getRack().removeTile(player1.getRack().content().get(0));
+		this.player1.getRack().removeTile(player1.getRack().content().get(0));
+		this.player1.getRack().removeTile(player1.getRack().content().get(0));
+		this.player1.getRack().removeTile(player1.getRack().content().get(0));
 		assertEquals(1, this.player1.getRack().rackLength());
 		for (int i = 0; i < 36; i++) {
 			this.player1.getStack().removeTile();
@@ -133,15 +133,15 @@ class LaticeMainTest {
 	@Test
 	void testCheckBoxType() {
 		
-		assertEquals(gameBoard.getBox(new Position(0, 0)).getBoxType(),BoxType.SUN);
-		assertEquals(gameBoard.getBox(new Position(0, 1)).getBoxType(),BoxType.NORMAL);
-		assertEquals(gameBoard.getBox(new Position(1, 1)).getBoxType(),BoxType.SUN);
-		assertEquals(gameBoard.getBox(new Position(2, 2)).getBoxType(),BoxType.SUN);
-		assertEquals(gameBoard.getBox(new Position(7, 7)).getBoxType(),BoxType.SUN);
-		assertEquals(gameBoard.getBox(new Position(8, 8)).getBoxType(),BoxType.SUN);
-		assertEquals(gameBoard.getBox(new Position(4, 3)).getBoxType(),BoxType.NORMAL);
-		assertEquals(gameBoard.getBox(new Position(5, 5)).getBoxType(),BoxType.NORMAL);
-		assertEquals(gameBoard.getBox(new Position(4, 4)).getBoxType(),BoxType.MOON);
+		assertEquals(gameBoard.getBox(new Position(0, 0)).getType(),BoxType.SUN);
+		assertEquals(gameBoard.getBox(new Position(0, 1)).getType(),BoxType.NORMAL);
+		assertEquals(gameBoard.getBox(new Position(1, 1)).getType(),BoxType.SUN);
+		assertEquals(gameBoard.getBox(new Position(2, 2)).getType(),BoxType.SUN);
+		assertEquals(gameBoard.getBox(new Position(7, 7)).getType(),BoxType.SUN);
+		assertEquals(gameBoard.getBox(new Position(8, 8)).getType(),BoxType.SUN);
+		assertEquals(gameBoard.getBox(new Position(4, 3)).getType(),BoxType.NORMAL);
+		assertEquals(gameBoard.getBox(new Position(5, 5)).getType(),BoxType.NORMAL);
+		assertEquals(gameBoard.getBox(new Position(4, 4)).getType(),BoxType.MOON);
 		
 	}
 	
@@ -275,8 +275,8 @@ class LaticeMainTest {
 	void testRackDebitéWhenPutTileToBox() {
 		Position position = new Position(0, 4);
 		
-		if (player1.getRack().getTiles().get(0).getClass().equals(BoardTile.class)) {
-			BoardTile tile = (BoardTile) player1.getRack().getTiles().get(0);
+		if (player1.getRack().content().get(0).getClass().equals(BoardTile.class)) {
+			BoardTile tile = (BoardTile) player1.getRack().content().get(0);
 			
 			assertEquals(tile.getParentRack(),player1.getRack());
 			
@@ -292,8 +292,8 @@ class LaticeMainTest {
 	void testTileIsLockedWhenPutIt() {
 		Position position = new Position(0, 4);
 
-		if (player1.getRack().getTiles().get(0).getClass().equals(BoardTile.class)) {
-			BoardTile tile = (BoardTile) player1.getRack().getTiles().get(0);
+		if (player1.getRack().content().get(0).getClass().equals(BoardTile.class)) {
+			BoardTile tile = (BoardTile) player1.getRack().content().get(0);
 			
 			gameBoard.getBox(position).setTile(tile);
 			tile.exitRack();
@@ -389,7 +389,7 @@ class LaticeMainTest {
 		
 		gameBoard.getBox(new Position(1, 1)).setTile(new BoardTile(Shape.SHAPE1,Color.COLOR1));
 		
-		assertEquals(gameBoard.getBox(new Position(1, 1)).getBoxType(),BoxType.SUN);
+		assertEquals(gameBoard.getBox(new Position(1, 1)).getType(),BoxType.SUN);
 		assertEquals(GameManager.getActivePlayer().getPoints(),sunPoint);
 		
 	}
@@ -422,7 +422,7 @@ class LaticeMainTest {
 		
 		
 		assertEquals(matchType,MatchType.DOUBLE);
-		assertEquals(gameBoard.getBox(new Position(0, 0)).getBoxType(),BoxType.SUN);
+		assertEquals(gameBoard.getBox(new Position(0, 0)).getType(),BoxType.SUN);
 		assertEquals(GameManager.getActivePlayer().getPoints(),sunPoint+doublePoint);
 		
 	}
@@ -473,10 +473,10 @@ class LaticeMainTest {
 	void test_add_all_tiles_lefts_when_stack_cannot_fill_rack_completly() {
 		
 		assertEquals(5, this.player1.getRack().rackLength());
-		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
-		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
-		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
-		this.player1.getRack().removeTile(player1.getRack().getTiles().get(0));
+		this.player1.getRack().removeTile(player1.getRack().content().get(0));
+		this.player1.getRack().removeTile(player1.getRack().content().get(0));
+		this.player1.getRack().removeTile(player1.getRack().content().get(0));
+		this.player1.getRack().removeTile(player1.getRack().content().get(0));
 		assertEquals(1, this.player1.getRack().rackLength());
 		for (int i = 0; i < 36; i++) {
 			this.player1.getStack().removeTile();
@@ -493,11 +493,11 @@ class LaticeMainTest {
 	void test_rack_is_different_after_exchanging() {
 		
 		List<Tile> oldRack = new ArrayList<Tile>();
-		oldRack.addAll(this.player1.getRack().getTiles());
+		oldRack.addAll(this.player1.getRack().content());
 		
 		this.player1.getRack().exchange(player1.getStack());
 		
-		assertNotEquals(oldRack,this.player1.getRack().getTiles());
+		assertNotEquals(oldRack,this.player1.getRack().content());
 		
 	}
 }

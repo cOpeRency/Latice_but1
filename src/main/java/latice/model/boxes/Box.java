@@ -34,20 +34,16 @@ public class Box implements Serializable{
 	public Position getPosition() {
 		return position;
 	}
-
-	public GameBoard getGameboard() {
-		return gameboard;
-	}
 	
-	public void setBoxImage() {
+	public void initImage() {
 		this.boxFX = new BoxImageData(this);
 	}
 	
-	public BoxType getBoxType() {
+	public BoxType getType() {
 		return boxType;
 	}
 
-	public BoxImageData getBoxFX() {
+	public BoxImageData getImageData() {
 		return boxFX;
 	}
 	
@@ -57,7 +53,7 @@ public class Box implements Serializable{
 		this.tile = tile;
 		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)){
 			System.out.println(getTileMatchType(getAdjacentBoxes())+" for player "+GameManager.getActivePlayer().getName());
-			GameManager.getActivePlayer().addPoints(getTileMatchType( getAdjacentBoxes()).value()+gainPointBySunBox() );
+			GameManager.getActivePlayer().addPoints(getTileMatchType( getAdjacentBoxes()).value()+getPointsGainnedByType() );
 		}
 		
 
@@ -71,7 +67,7 @@ public class Box implements Serializable{
 		this.tile = null;
 	}
 	
-	public Integer gainPointBySunBox() {
+	public Integer getPointsGainnedByType() {
 		if (this.boxType==BoxType.SUN) {
 			return GameManager.SUN_POINT;
 		}

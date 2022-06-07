@@ -34,12 +34,12 @@ public class TileImageData extends ImageView implements Serializable {
 			this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			    @Override
 			    public void handle(MouseEvent event) {
-			    	if (GameManager.getGameMode().equals(GameMode.THUNDER_TILE) && !((BoardTile) tileSource).getParentBox().getBoxType().equals(BoxType.MOON)) {
-			    		((BoardTile) tileSource).getParentBox().getBoxFX().callThunder();
+			    	if (GameManager.getGameMode().equals(GameMode.THUNDER_TILE) && !((BoardTile) tileSource).getParentBox().getType().equals(BoxType.MOON)) {
+			    		((BoardTile) tileSource).getParentBox().getImageData().callThunder();
 		    			GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
-				    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
-				    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(false);
-				    	GameManager.getActivePlayer().getPlayerFX().getBtnValidate().setDisable(false);
+				    	GameManager.getActivePlayer().getVisualData().getExtraMoveButton().setDisable(true);
+				    	GameManager.getActivePlayer().getVisualData().getBtnExchange().setDisable(false);
+				    	GameManager.getActivePlayer().getVisualData().getBtnValidate().setDisable(false);
 			    	}
 			    }
 			});
@@ -65,20 +65,6 @@ public class TileImageData extends ImageView implements Serializable {
 	}
 
 
-	public boolean isLastTilePlayed() {
-		return isLastTilePlayed;
-	}
-
-	public void setLastTilePlayed(boolean isLastTilePlayed) {
-		this.isLastTilePlayed = isLastTilePlayed;
-		if (isLastTilePlayed) {
-			setStyle(LAST_TILE_PLAYED_EFFECT);		    			
-		} else {
-			setStyle(NOT_FIXED_EFFECT);
-		}
-	}
-
-	
 	public void hideTile() {
 		String urlFichier;
 		try {
@@ -92,6 +78,23 @@ public class TileImageData extends ImageView implements Serializable {
 		}
 	}	
 	
+	public void deletePlayerPointsOnExit(BoardTile boardTile) {
+		Integer points = boardTile.getParentBox().getTileMatchType(boardTile.getParentBox().getAdjacentBoxes()).value()   +   boardTile.getParentBox().getPointsGainnedByType();
+		GameManager.getActivePlayer().addPoints(-points);
+		GameManager.getActivePlayer().getVisualData().setPointProperty();
+	}
+
+
+	public Tile getTileSource() {
+		return tileSource;
+	}
+
+
+	public boolean isLastTilePlayed() {
+		return isLastTilePlayed;
+	}
+
+
 	public void setTileImage() {
 		String urlFichier;
 		try {
@@ -106,16 +109,16 @@ public class TileImageData extends ImageView implements Serializable {
 	}	
 
 	
-	public Tile getTileSource() {
-		return tileSource;
+	public void setLastTilePlayed(boolean isLastTilePlayed) {
+		this.isLastTilePlayed = isLastTilePlayed;
+		if (isLastTilePlayed) {
+			setStyle(LAST_TILE_PLAYED_EFFECT);		    			
+		} else {
+			setStyle(NOT_FIXED_EFFECT);
+		}
 	}
 
-	public void deletePlayerPointsOnExit(BoardTile boardTile) {
-		Integer points = boardTile.getParentBox().getTileMatchType(boardTile.getParentBox().getAdjacentBoxes()).value()   +   boardTile.getParentBox().gainPointBySunBox();
-		GameManager.getActivePlayer().addPoints(-points);
-		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
-	}
-	
+
 	private void setTileEffects(BoardTile boardTile) {
 		this.setStyle(SHADOW_EFFECT);
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {

@@ -26,7 +26,7 @@ import latice.model.players.Player;
 import latice.model.tiles.SpecialTile;
 import latice.model.tiles.TypeOfSpecialTile;
 
-public class PlayerFX implements Serializable{
+public class PlayerVisualData implements Serializable{
 	private transient SimpleIntegerProperty p1PointsProperty;
 	private Player playerSource;
 	private transient Button extraMoveButton;
@@ -39,7 +39,7 @@ public class PlayerFX implements Serializable{
 	private transient VBox vbInfos;
 	private transient ImageView imgProfilePicture;
 	
-	public PlayerFX(Player player) {
+	public PlayerVisualData(Player player) {
 		this.playerSource = player;
 		this.p1PointsProperty = new SimpleIntegerProperty();
 		this.p1PointsProperty.addListener(new ChangeListener<Number>() {
@@ -51,6 +51,64 @@ public class PlayerFX implements Serializable{
 		});
 		
 		initPlayerInfo();
+	}
+
+	public void updateBuyTileButtonDisability() {
+		if (playerSource.getPoints()>=1) {
+			btnBuyTile.setDisable(false);
+		} else {
+			btnBuyTile.setDisable(true);
+		}
+		
+	}
+	
+	public void disableExchangeButton() {
+		if (playerSource.getPoints()<2)
+			btnExchange.setDisable(true);
+	}
+
+	public void enableExchangeButton() {
+		btnExchange.setDisable(false);
+	}
+
+	public SimpleIntegerProperty getSimpleIntegerProperty() {
+		return this.p1PointsProperty;
+	}
+
+	public Label getStackSizeLabel() {
+		return playerStackSize;
+	}
+
+	public Label getLblPoints() {
+		return lblPoints;
+	}
+
+	public Button getBtnExchange() {
+		return btnExchange;
+	}
+	
+	public Button getExtraMoveButton() {
+		return this.extraMoveButton;
+	}
+
+	public Button getBuyTileButton() {
+		return this.btnBuyTile;
+	}
+
+	public Button getBtnValidate() {
+		return btnValidate;
+	}
+
+	public VBox getVbInfos() {
+		return vbInfos;
+	}
+
+	public void setPointProperty() {
+		this.p1PointsProperty.set(this.playerSource.getPoints());
+	}
+
+	public void setExtraMoveButtonDisability(boolean activated) {
+		this.extraMoveButton.setDisable(activated);
 	}
 
 	private void initPlayerInfo() {
@@ -89,7 +147,7 @@ public class PlayerFX implements Serializable{
 		    @Override
 		    public void handle(MouseEvent event) {
 		    	playerSource.setAblilityToPutATile(true);
-	    		playerSource.getRack().getRackFX().createCanPlayEffect(true);
+	    		playerSource.getRack().getVisualData().createCanPlayEffect(true);
 		    	playerSource.addPoints(-2);
 		    	extraMoveButton.setDisable(true);
 		    	btnExchange.setDisable(true);
@@ -110,7 +168,7 @@ public class PlayerFX implements Serializable{
 					dialog.setTitle("Attention");
 					dialog.setHeaderText(null);
 					dialog.setContentText("Vous avez déjà joué tous vos coups sur ce tour.\nVoulez vous dépenser 2 points pour échanger votre rack ?");
-
+	
 					ButtonType btnTypeChoix1 = new ButtonType("Oui");
 					ButtonType btnTypeChoix2 = new ButtonType("Non");
 					dialog.getButtonTypes().addAll(btnTypeChoix1, btnTypeChoix2);
@@ -118,7 +176,7 @@ public class PlayerFX implements Serializable{
 					Optional<ButtonType> choix = dialog.showAndWait();
 					if(choix.get() == btnTypeChoix1) {
 			    		playerSource.getRack().exchange(playerSource.getStack());
-			    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
+			    		playerSource.getRack().getVisualData().setRack(playerSource.getRack().content());
 						playerSource.addPoints(-2);
 						setPointProperty();
 				    	disableExchangeButton();
@@ -131,9 +189,9 @@ public class PlayerFX implements Serializable{
 		    		
 		    	} else {
 		    		playerSource.getRack().exchange(playerSource.getStack());
-		    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
+		    		playerSource.getRack().getVisualData().setRack(playerSource.getRack().content());
 		    		playerSource.setAblilityToPutATile(false);
-		    		playerSource.getRack().getRackFX().createCanPlayEffect(false);
+		    		playerSource.getRack().getVisualData().createCanPlayEffect(false);
 			    	disableExchangeButton();
 			    	extraMoveButton.setDisable(!(playerSource.getPoints()>=2));
 			    	
@@ -143,8 +201,8 @@ public class PlayerFX implements Serializable{
 		    	GameVisual.lockPlayingTiles();
 		    	
 		    }
-
-
+	
+	
 		});
 		
 		this.btnBuyTile = new Button("");
@@ -160,7 +218,7 @@ public class PlayerFX implements Serializable{
 					dialog.setTitle("Choisissez");
 					dialog.setHeaderText(null);
 					dialog.setContentText("Pour l'achat de quelle tuile voulez-vous dépenser 6 points ?");
-
+	
 					ButtonType btnTypeChoix1 = new ButtonType("Vent");
 					ButtonType btnTypeChoix2 = new ButtonType("Foudre");
 					ButtonType btnTypeChoix3 = new ButtonType("Retour");
@@ -170,7 +228,7 @@ public class PlayerFX implements Serializable{
 					Optional<ButtonType> choix = dialog.showAndWait();
 					if(choix.get() == btnTypeChoix1) {
 			    		playerSource.getRack().addTile(new SpecialTile(TypeOfSpecialTile.WIND));
-			    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
+			    		playerSource.getRack().getVisualData().setRack(playerSource.getRack().content());
 			    		playerSource.addPoints(-1);
 			    		updateBuyTileButtonDisability();
 			    		updateExtraMoveButtonDisability();
@@ -178,7 +236,7 @@ public class PlayerFX implements Serializable{
 				    	
 					} else if (choix.get() == btnTypeChoix2) {
 			    		playerSource.getRack().addTile(new SpecialTile(TypeOfSpecialTile.THUNDER));
-			    		playerSource.getRack().getRackFX().setRack(playerSource.getRack().getTiles());
+			    		playerSource.getRack().getVisualData().setRack(playerSource.getRack().content());
 			    		playerSource.addPoints(-1);
 			    		updateBuyTileButtonDisability();
 			    		updateExtraMoveButtonDisability();
@@ -191,7 +249,7 @@ public class PlayerFX implements Serializable{
 		this.btnValidate = new Button("Valider");
 		this.btnValidate.setPrefSize(170, 70);
 		this.btnValidate.setFont(Font.font(null, FontWeight.NORMAL, 35));
-
+	
 		HBox hbButtons = new HBox();
 		hbButtons.getChildren().addAll(this.extraMoveButton,this.btnExchange,this.btnBuyTile);
 		hbButtons.setSpacing(10);
@@ -202,8 +260,7 @@ public class PlayerFX implements Serializable{
 		this.vbInfos.setAlignment(Pos.CENTER);
 		//this.vbInfos.setPadding(new Insets(0, 20, 0, 20));
 	}
-	
-	
+
 	private void updateExtraMoveButtonDisability() {
 		if (playerSource.getPoints()>=2) {
 			extraMoveButton.setDisable(false);
@@ -211,64 +268,6 @@ public class PlayerFX implements Serializable{
 			extraMoveButton.setDisable(true);
 		}
 		
-	}
-	
-	public void updateBuyTileButtonDisability() {
-		if (playerSource.getPoints()>=1) {
-			btnBuyTile.setDisable(false);
-		} else {
-			btnBuyTile.setDisable(true);
-		}
-		
-	}
-	
-	public Button getBuyTileButton() {
-		return this.btnBuyTile;
-	}
-
-	public Button getExtraMoveButton() {
-		return this.extraMoveButton;
-	}
-	
-	public void setExtraMoveButtonDisability(boolean activated) {
-		this.extraMoveButton.setDisable(activated);
-	}
-	
-	public void setPointProperty() {
-		this.p1PointsProperty.set(this.playerSource.getPoints());
-	}
-
-	public SimpleIntegerProperty getSimpleIntegerProperty() {
-		return this.p1PointsProperty;
-	}
-
-	public Label getStackSizeLabel() {
-		return playerStackSize;
-	}
-
-	public Label getLblPoints() {
-		return lblPoints;
-	}
-
-	public Button getBtnExchange() {
-		return btnExchange;
-	}
-	
-	public void disableExchangeButton() {
-		if (playerSource.getPoints()<2)
-			btnExchange.setDisable(true);
-	}
-	
-	public void enableExchangeButton() {
-		btnExchange.setDisable(false);
-	}
-	
-	public Button getBtnValidate() {
-		return btnValidate;
-	}
-
-	public VBox getVbInfos() {
-		return vbInfos;
 	}
 	
 	

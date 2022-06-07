@@ -6,15 +6,15 @@ import java.util.Collections;
 import java.util.List;
 
 import latice.model.tiles.Tile;
-import latice.vue.RackFX;
+import latice.vue.RackVisualData;
 
 public class Rack implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<Tile> tiles;
-	private RackFX rackFX;
+	private RackVisualData rackVisualData;
 	private boolean locked;
 	private Player owner;
-	private Integer maxRackSize = 5;
+	private Integer currentMaxRackSize = 5;
 	
 	private static final Integer RACK_CAPACITY = 5;
 	
@@ -25,22 +25,10 @@ public class Rack implements Serializable{
 		this.owner = owner;
 	}
 	
-	public Player getOwner() {
-		return this.owner;
-	}
-	
-	public boolean isLocked() {
-		return locked;
-	}
-
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
 
-	public List<Tile> getTiles() {
-		return tiles;
-	}
-	
 	public void addTile(Tile tile) {
 		tiles.add(tile);
 		tiles.get(tiles.size()-1).setParentRack(this);
@@ -48,10 +36,10 @@ public class Rack implements Serializable{
 	
 	public void fillRack(Stack stack) {
 		if (stack.stackLength()+tiles.size() < RACK_CAPACITY) {
-			this.maxRackSize = stack.stackLength()+tiles.size();
+			this.currentMaxRackSize = stack.stackLength()+tiles.size();
 		}
-		while (tiles.size() < this.maxRackSize) {
-			tiles.add(stack.getTile());
+		while (tiles.size() < this.currentMaxRackSize) {
+			tiles.add(stack.getFirstTile());
 			tiles.get(tiles.size()-1).setParentRack(this);
 			stack.removeTile();
 		}
@@ -66,10 +54,10 @@ public class Rack implements Serializable{
 		while (!tiles.isEmpty()) {
 			stack.addTile(tiles.remove(0));
 		}
-		Collections.shuffle(stack.getTiles());
+		Collections.shuffle(stack.content());
 		
 		while (tiles.size() < currentTileNumber) {
-			tiles.add(stack.getTile());
+			tiles.add(stack.getFirstTile());
 			tiles.get(tiles.size()-1).setParentRack(this);
 			stack.removeTile();
 		}
@@ -83,16 +71,28 @@ public class Rack implements Serializable{
 		System.out.println("| "+allTiles);
 	}
 	
-	public void createRackFX() {
-		this.rackFX = new RackFX(this);
-	}
-	
-	public RackFX getRackFX() {
-		return this.rackFX;
+	public void initVisualData() {
+		this.rackVisualData = new RackVisualData(this);
 	}
 	
 	public Integer rackLength() {
 		return tiles.size();
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public List<Tile> content() {
+		return tiles;
+	}
+
+	public Player getOwner() {
+		return this.owner;
+	}
+
+	public RackVisualData getVisualData() {
+		return this.rackVisualData;
 	}
 
 

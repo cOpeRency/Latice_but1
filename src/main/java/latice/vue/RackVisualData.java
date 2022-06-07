@@ -16,12 +16,12 @@ import latice.model.system.GameManager;
 import latice.model.tiles.BoardTile;
 import latice.model.tiles.Tile;
 
-public class RackFX extends HBox implements Serializable{
+public class RackVisualData extends HBox implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Rack rackSource;
 	
 	
-	public RackFX(Rack rack) {
+	public RackVisualData(Rack rack) {
 		this.rackSource = rack;
 		setPadding(new Insets(10,10,10,10));
 		setSpacing(20);
@@ -94,10 +94,10 @@ public class RackFX extends HBox implements Serializable{
 		    		
 		    		
 		    		if (GameManager.getActivePlayer().getPoints()>=2 && GameVisual.getPlayingTiles().size()>0) {
-		    			rackSource.getOwner().getPlayerFX().setExtraMoveButtonDisability(false);
+		    			rackSource.getOwner().getVisualData().setExtraMoveButtonDisability(false);
 		    		}
 		    		tile.exitBox();
-		    		tile.getParentBox().getBoxFX().getChildren().remove(tile.getTileFX());
+		    		tile.getParentBox().getImageData().getChildren().remove(tile.getTileFX());
 		    		tile.setParentBox(null);
 					rackSource.addTile(tile);
 					tile.setTileImage();

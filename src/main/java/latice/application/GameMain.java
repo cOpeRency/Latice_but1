@@ -32,7 +32,7 @@ import latice.model.players.Stack;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
 import latice.vue.GameVisual;
-import latice.vue.RackFX;
+import latice.vue.RackVisualData;
 import latice.vue.menu.GameMenu;
 import latice.vue.menu.SelectMenu;
 import latice.vue.system.PrimaryStage;
@@ -48,8 +48,8 @@ public class GameMain extends Application {
 		private Player player2;
 		
 		private HBox playersRacks;
-		private RackFX rackP1vbox;
-		private RackFX rackP2vbox;
+		private RackVisualData rackP1vbox;
+		private RackVisualData rackP2vbox;
 		
 		private MediaPlayer audio;
 		
@@ -162,6 +162,11 @@ public class GameMain extends Application {
 		primaryStage.setScene(scene);
 	}
 	
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
+
+
 	private void setLabelCycleText() {
 		if (SelectMenu.getCbUseCycles().isSelected()) {
 			this.lblCycles.setText("Cycle : "+GameManager.getCurrentNbOfCycles()+"/"+GameManager.getNbCycleMax());
@@ -175,8 +180,8 @@ public class GameMain extends Application {
 		this.player1 = new Player(SelectMenu.getTfNameJ1().getText());
 		this.player2 = new Player(SelectMenu.getTfNameJ2().getText());
 		
-		this.player1.initPlayerFX();
-		this.player2.initPlayerFX();
+		this.player1.initPlayerVisualData();
+		this.player2.initPlayerVisualData();
 		stack.initialize(player1, player2);
 		player1.createRack();
 		player2.createRack();
@@ -188,25 +193,25 @@ public class GameMain extends Application {
     	
     	GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
     	
-		this.borderPane.setLeft(firstPlayer.getPlayerFX().getVbInfos());
-		this.borderPane.setRight(secondPlayer.getPlayerFX().getVbInfos());
+		this.borderPane.setLeft(firstPlayer.getVisualData().getVbInfos());
+		this.borderPane.setRight(secondPlayer.getVisualData().getVbInfos());
 		((VBox) this.borderPane.getLeft()).setPadding(new Insets(0, 0, 0, 40));
 		((VBox) this.borderPane.getRight()).setPadding(new Insets(0, 40, 0, 0));
 		
 		initializePlayersRack(firstPlayer,secondPlayer);
 		startTurn(firstPlayer,secondPlayer);
-		rackP2vbox.hideTiles(secondPlayer.getRack().getTiles());
-		secondPlayer.getPlayerFX().getBtnValidate().setDisable(true);
-		secondPlayer.getPlayerFX().getBtnExchange().setDisable(true);
+		rackP2vbox.hideTiles(secondPlayer.getRack().content());
+		secondPlayer.getVisualData().getBtnValidate().setDisable(true);
+		secondPlayer.getVisualData().getBtnExchange().setDisable(true);
 
-		firstPlayer.getPlayerFX().getBtnValidate().setOnMouseClicked(new EventHandler<MouseEvent>() {
+		firstPlayer.getVisualData().getBtnValidate().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
 		    	pressValidateButton(firstPlayer, secondPlayer, rackP1vbox, rackP2vbox);
 		    }
 		});
 		
-		secondPlayer.getPlayerFX().getBtnValidate().setOnMouseClicked(new EventHandler<MouseEvent>() {
+		secondPlayer.getVisualData().getBtnValidate().setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent event) {
 		    	pressValidateButton(secondPlayer, firstPlayer, rackP2vbox, rackP1vbox);
@@ -218,13 +223,13 @@ public class GameMain extends Application {
 	
 	
 	private void initializePlayersRack(Player firstPlayer, Player secondPlayer) {
-		firstPlayer.getRack().createRackFX();
-		this.rackP1vbox = firstPlayer.getRack().getRackFX();
-		this.rackP1vbox.setRack(firstPlayer.getRack().getTiles());
+		firstPlayer.getRack().initVisualData();
+		this.rackP1vbox = firstPlayer.getRack().getVisualData();
+		this.rackP1vbox.setRack(firstPlayer.getRack().content());
 		
-		secondPlayer.getRack().createRackFX();
-		this.rackP2vbox = secondPlayer.getRack().getRackFX();
-		this.rackP2vbox.setRack(secondPlayer.getRack().getTiles());
+		secondPlayer.getRack().initVisualData();
+		this.rackP2vbox = secondPlayer.getRack().getVisualData();
+		this.rackP2vbox.setRack(secondPlayer.getRack().content());
 	
 		this.playersRacks = new HBox();
 		this.playersRacks.getChildren().addAll(this.rackP1vbox,this.rackP2vbox);
@@ -236,12 +241,12 @@ public class GameMain extends Application {
 
 	private void startTurn(Player newActivePlayer, Player inactivePlayer) {
 		GameManager.startTurn(newActivePlayer, inactivePlayer);
-		newActivePlayer.getPlayerFX().updateBuyTileButtonDisability();
-		inactivePlayer.getPlayerFX().getBuyTileButton().setDisable(true);
-		newActivePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
-		inactivePlayer.getPlayerFX().setExtraMoveButtonDisability(true);
-		newActivePlayer.getRack().getRackFX().createCanPlayEffect(true);
-		inactivePlayer.getRack().getRackFX().createCanPlayEffect(false);
+		newActivePlayer.getVisualData().updateBuyTileButtonDisability();
+		inactivePlayer.getVisualData().getBuyTileButton().setDisable(true);
+		newActivePlayer.getVisualData().setExtraMoveButtonDisability(true);
+		inactivePlayer.getVisualData().setExtraMoveButtonDisability(true);
+		newActivePlayer.getRack().getVisualData().createCanPlayEffect(true);
+		inactivePlayer.getRack().getVisualData().createCanPlayEffect(false);
 		
 		if (!GameManager.canPlayerPlay(newActivePlayer)) {
 			if (!GameManager.canPlayerPlay(inactivePlayer)) {
@@ -255,10 +260,10 @@ public class GameMain extends Application {
 	}
 
 
-	private void pressValidateButton(Player playerWhoPressed, Player otherPlayer, RackFX hbRackPlayerWhoPressed, RackFX hbRackOtherPlayer) {
+	private void pressValidateButton(Player playerWhoPressed, Player otherPlayer, RackVisualData hbRackPlayerWhoPressed, RackVisualData hbRackOtherPlayer) {
     	if (playerWhoPressed.isAbleToPutATile() && !GameVisual.getPlayingTiles().isEmpty()) {
     		playerWhoPressed.addPoints(2);
-    		playerWhoPressed.getPlayerFX().setPointProperty();
+    		playerWhoPressed.getVisualData().setPointProperty();
     	}
     	if (GameManager.hasWon(playerWhoPressed)) {
     		gameEnd(PrimaryStage.getStage());
@@ -266,15 +271,15 @@ public class GameMain extends Application {
     		GameVisual.resetPlayingTileEffect();
     		GameVisual.lockPlayingTiles();
     		playerWhoPressed.getRack().fillRack(playerWhoPressed.getStack());
-    		hbRackPlayerWhoPressed.setRack(playerWhoPressed.getRack().getTiles());
-    		hbRackPlayerWhoPressed.hideTiles(playerWhoPressed.getRack().getTiles());
-    		hbRackOtherPlayer.showTiles(otherPlayer.getRack().getTiles());
-    		playerWhoPressed.getPlayerFX().getStackSizeLabel().setText("Tiles left : "+playerWhoPressed.getStackSize().toString());
+    		hbRackPlayerWhoPressed.setRack(playerWhoPressed.getRack().content());
+    		hbRackPlayerWhoPressed.hideTiles(playerWhoPressed.getRack().content());
+    		hbRackOtherPlayer.showTiles(otherPlayer.getRack().content());
+    		playerWhoPressed.getVisualData().getStackSizeLabel().setText("Tiles left : "+playerWhoPressed.getStack().stackLength().toString());
     		startTurn(otherPlayer,playerWhoPressed);
-    		otherPlayer.getPlayerFX().getBtnValidate().setDisable(false);
-    		playerWhoPressed.getPlayerFX().getBtnValidate().setDisable(true);
-    		playerWhoPressed.getPlayerFX().getBtnExchange().setDisable(true);
-    		otherPlayer.getPlayerFX().getBtnExchange().setDisable(false);	
+    		otherPlayer.getVisualData().getBtnValidate().setDisable(false);
+    		playerWhoPressed.getVisualData().getBtnValidate().setDisable(true);
+    		playerWhoPressed.getVisualData().getBtnExchange().setDisable(true);
+    		otherPlayer.getVisualData().getBtnExchange().setDisable(false);	
     	}
     	
 	}
@@ -303,11 +308,6 @@ public class GameMain extends Application {
 		}
 		
 		primaryStage.close();
-	}
-
-
-	public static void main(String[] args) {
-		Application.launch(args);
 	}
 	
 }

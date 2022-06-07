@@ -13,11 +13,11 @@ import latice.model.system.GameManager;
 
 public class GameBoard implements Serializable{
 	
-	private Map<Position, Box> gameboardTiles;
+	private Map<Position, Box> boxes;
 	private List<Position> sunBoxesPosition;
 	
 	public GameBoard() {
-		this.gameboardTiles = new HashMap<>();
+		this.boxes = new HashMap<>();
 		this.sunBoxesPosition = new ArrayList<>();
 		this.sunBoxesPosition.add(new Position(0,0));
 		this.sunBoxesPosition.add(new Position(1,1));
@@ -37,18 +37,18 @@ public class GameBoard implements Serializable{
 		this.sunBoxesPosition.add(new Position(8,4));
     }
 	
-    public Map<Position, Box> getGameboardTiles() {
-		return gameboardTiles;
+    public Map<Position, Box> getBoxes() {
+		return boxes;
 	}
 
 
 	public Box getBox(Position position) {
-		return gameboardTiles.get(position);
+		return boxes.get(position);
 	}
     
     public Integer howManyTileHaveBeenPlayed() {
     	Integer numberOfTile = 0;
-    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
+    	for (Map.Entry<Position, Box> entry : boxes.entrySet()) {
     		if (entry.getValue().getTile()!=null) {
     			numberOfTile += 1;
     		}
@@ -59,16 +59,12 @@ public class GameBoard implements Serializable{
     
     public List<Box> getEmptyBoxes() {
     	List<Box> emptyBoxes = new ArrayList<>();
-    	for (Map.Entry<Position, Box> entry : gameboardTiles.entrySet()) {
+    	for (Map.Entry<Position, Box> entry : boxes.entrySet()) {
     		if (entry.getValue().getTile()==null) {
     			emptyBoxes.add(entry.getValue());
     		}
 		}
     	return emptyBoxes;
-    }
-
-	public Map<Position, Box> tiles() {
-        return this.gameboardTiles;
     }
     
     public void generateBox() {
@@ -76,11 +72,11 @@ public class GameBoard implements Serializable{
     		for (int j = 0; j < GameManager.BOARD_SIZE; j++) {
 	    		Position position = new Position(i, j);
 	    		if (this.sunBoxesPosition.contains(position)) {
-	    			this.gameboardTiles.put(position, new Box(BoxType.SUN,this,position));
+	    			this.boxes.put(position, new Box(BoxType.SUN,this,position));
 	    		} else if (position.equals(Box.MOON_POSITION)) {
-	    			this.gameboardTiles.put(position, new Box(BoxType.MOON,this,position));
+	    			this.boxes.put(position, new Box(BoxType.MOON,this,position));
 	    		} else {
-	    			this.gameboardTiles.put(position, new Box(BoxType.NORMAL,this,position));
+	    			this.boxes.put(position, new Box(BoxType.NORMAL,this,position));
 	    		}
     		}
     	}

@@ -8,7 +8,7 @@ import java.util.Objects;
 import latice.model.system.GameManager;
 import latice.model.tiles.BoardTile;
 import latice.model.tiles.Tile;
-import latice.vue.PlayerFX;
+import latice.vue.PlayerVisualData;
 
 public class Player implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class Player implements Serializable{
 	private Integer points;
 	private Stack stack;
 	private boolean ableToPutATile;
-	private PlayerFX playerFX;
+	private PlayerVisualData visualData;
 	
 	public static final Integer EXTRA_MOVE_COST = 2;
 	
@@ -31,22 +31,14 @@ public class Player implements Serializable{
 
 	}
 	
-	public PlayerFX getPlayerFX() {
-		return this.playerFX;
+	public void initPlayerVisualData() {
+		this.visualData = new PlayerVisualData(this);
 	}
 	
-	public void initPlayerFX() {
-		this.playerFX = new PlayerFX(this);
+	public void createRack() {
+		this.rack = new Rack(stack,this);
 	}
-	
-	public boolean isAbleToPutATile() {
-		return this.ableToPutATile;
-	}
-		
-	public void setAblilityToPutATile(boolean ability) {
-		this.ableToPutATile = ability;
-	}
-	
+
 	public void addPoints(Integer points) {
 		this.points = this.points + points;
 	}
@@ -59,26 +51,12 @@ public class Player implements Serializable{
 		return this.name;
 	}
 	
+	public boolean isAbleToPutATile() {
+		return this.ableToPutATile;
+	}
+
 	public boolean isMyTurn() {
 		return myTurn;
-	}
-	
-	public void setMyTurn(boolean myTurn) {
-		this.myTurn = myTurn;
-		this.ableToPutATile = myTurn;
-		this.rack.setLocked(!myTurn);
-	}
-	
-	public Stack getStack() {
-		return stack;
-	}
-	
-	public Integer getStackSize() {
-		return stack.stackLength();
-	}
-	
-	public void createRack() {
-		this.rack = new Rack(stack,this);
 	}
 	
 	public Rack getRack() {
@@ -88,13 +66,31 @@ public class Player implements Serializable{
 	public List<BoardTile> getAllBoardTilesLeft(){
 		List<BoardTile> boardTiles = new ArrayList<>();
 
-    	for (Tile tile : this.rack.getTiles()) {
+    	for (Tile tile : this.rack.content()) {
 			if (tile.getClass().equals(BoardTile.class)) {
 				boardTiles.add((BoardTile)tile);
 			}
 		}
     	boardTiles.addAll(stack.getBoardTiles());
 		return boardTiles;
+	}
+
+	public PlayerVisualData getVisualData() {
+		return this.visualData;
+	}
+
+	public Stack getStack() {
+		return stack;
+	}
+
+	public void setMyTurn(boolean myTurn) {
+		this.myTurn = myTurn;
+		this.ableToPutATile = myTurn;
+		this.rack.setLocked(!myTurn);
+	}
+
+	public void setAblilityToPutATile(boolean ability) {
+		this.ableToPutATile = ability;
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class BoxImageData extends StackPane implements Serializable{
 	
 	public BoxImageData(Box box) {
 		this.box = box;
-		initBoxImage(this.box.getBoxType());
+		initBoxImage(this.box.getType());
 		initDragSystem();
 	}
 	
@@ -87,7 +87,7 @@ public class BoxImageData extends StackPane implements Serializable{
 				    	GameVisual.getRoot().getChildren().add(imgView)
 				    	),
 				    new KeyFrame(Duration.seconds(0.4), e -> {
-				    	box.getTile().getParentBox().getBoxFX().getChildren().remove(box.getTile().getTileFX());
+				    	box.getTile().getParentBox().getImageData().getChildren().remove(box.getTile().getTileFX());
 			    		box.getTile().exitBox();
 				    	GameManager.setCanUseSpecialTiles();
 				    }),
@@ -156,17 +156,17 @@ public class BoxImageData extends StackPane implements Serializable{
 		    		} else if (GameManager.getGameMode().equals(GameMode.WIND_TILE)) {
 			    		setTile((BoardTile)dragboard.getContent(GameMain.TILE_DATA));
 			    		GameManager.getActivePlayer().setAblilityToPutATile(true);
-			    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(true);
+			    		GameManager.getActivePlayer().getRack().getVisualData().createCanPlayEffect(true);
 		    		} else {
 			    		setTile((BoardTile)dragboard.getContent(GameMain.TILE_DATA));
 			    		if (!GameManager.canUseSpecialTiles()) {
 			    			GameManager.setCanUseSpecialTiles();
 			    		}
-			    		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+			    		GameManager.getActivePlayer().getVisualData().setPointProperty();
 			    		GameManager.getActivePlayer().setAblilityToPutATile(false);
-			    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(false);
+			    		GameManager.getActivePlayer().getRack().getVisualData().createCanPlayEffect(false);
 			    		if (!GameManager.getActivePlayer().isAbleToPutATile() && GameManager.getActivePlayer().getPoints()>=2) {
-			    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+			    			GameManager.getActivePlayer().getVisualData().setExtraMoveButtonDisability(false);
 			    		}
 		    		}
 		    	}
@@ -186,12 +186,16 @@ public class BoxImageData extends StackPane implements Serializable{
 		return false;
 	}
 	
+	public boolean checkValidity(BoardTile tile) {
+		return this.box.checkValidity(tile.getShape(),tile.getColor());
+	}
+
 	public void setTile(BoardTile tile) {
 		//If there is at least one tile on gameboard and tile is from a box, we reuse the extra move 
 		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE) && !GameVisual.getPlayingTiles().isEmpty() && tile.getParentBox()!=null) {
 			GameManager.getActivePlayer().addPoints(-2);
-			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
-			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+			GameManager.getActivePlayer().getVisualData().setPointProperty();
+			GameManager.getActivePlayer().getVisualData().setExtraMoveButtonDisability(true);
 		}
 		this.box.setTile(tile);
 		this.box.getTile().setTileImage();
@@ -199,11 +203,7 @@ public class BoxImageData extends StackPane implements Serializable{
 		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)) {
 			GameVisual.addPlayingTile(tile);
 		}
-		GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
-	}
-	
-	public boolean checkValidity(BoardTile tile) {
-		return this.box.checkValidity(tile.getShape(),tile.getColor());
+		GameManager.getActivePlayer().getVisualData().disableExchangeButton();
 	}
 	
 }

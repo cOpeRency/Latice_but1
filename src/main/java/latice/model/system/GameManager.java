@@ -27,44 +27,19 @@ public class GameManager {
 	public static final Integer LATICE_POINT = 4;
 	
 	public static final Integer BOARD_SIZE = 9;
-	public static final Integer MINIMUM_OF_PUT_TILES_FOR_USE_SPECIAL_ONE = 2;
+	public static final Integer MINIMUM_OF_PUT_TILES_TO_USE_SPECIAL_ONE = 2;
 	
+	public static void startTurn(Player activePlayer, Player inactivePlayer) {
+		activePlayer.setMyTurn(true);
+		GameManager.setActivePlayer(activePlayer);
+		inactivePlayer.setMyTurn(false);
+	}
+
 	public static void playBoardTileAt(BoardTile tile,Position position) {
 		if (gameboard.getBox(position).checkValidity(tile.getShape(), tile.getColor())) {
 			putBoardTile(tile, position);
 		}
 	}
-	
-	public static boolean hasWon(Player player) {
-		if (player.getAllBoardTilesLeft().isEmpty()) {
-			return true;
-		}
-		return false;
-	}
-	
-	public static boolean canPlayerPlay(Player player) {
-    	List<BoardTile> boardtiles = player.getAllBoardTilesLeft();
-		if (boardtiles.size()>15) {
-			System.out.println("trop de tuiles");
-			return true;
-		} else {
-			if (gameboard.howManyTileHaveBeenPlayed()>40) {
-		    	List<Box> emptyBoxes = gameboard.getEmptyBoxes();
-		    	for (Box box : emptyBoxes) {
-					for (BoardTile tile : boardtiles) {
-						if (box.checkValidity(tile.getShape(), tile.getColor())) {
-							System.out.println("peut jouer "+tile.toString()+" a "+box.getPosition().toString());
-							return true;
-						}
-					}
-				}
-		    	return false;
-			}
-			System.out.println("pas assez de tuiles sur le plateau");
-			return true;
-		}
-	}
-	
 	
 	public static void putBoardTile(BoardTile tile, Position position) {
 		if (activePlayer.isAbleToPutATile()) {
@@ -74,6 +49,26 @@ public class GameManager {
 			activePlayer.addPoints(-Player.EXTRA_MOVE_COST);
 			gameboard.getBox(position).setTile(tile);
 			activePlayer.setAblilityToPutATile(false);
+		}
+	}
+
+	public static boolean canPlayerPlay(Player player) {
+    	List<BoardTile> boardtiles = player.getAllBoardTilesLeft();
+		if (boardtiles.size()>15) {
+			return true;
+		} else {
+			if (gameboard.howManyTileHaveBeenPlayed()>40) {
+		    	List<Box> emptyBoxes = gameboard.getEmptyBoxes();
+		    	for (Box box : emptyBoxes) {
+					for (BoardTile tile : boardtiles) {
+						if (box.checkValidity(tile.getShape(), tile.getColor())) {
+							return true;
+						}
+					}
+				}
+		    	return false;
+			}
+			return true;
 		}
 	}
 	
@@ -86,15 +81,16 @@ public class GameManager {
 		GameManager.currentNbOfCycles += value;
 	}
 
-	public static void startTurn(Player activePlayer, Player inactivePlayer) {
-		activePlayer.setMyTurn(true);
-		GameManager.setActivePlayer(activePlayer);
-		inactivePlayer.setMyTurn(false);
-	}
-
 	public static boolean determineGameEnd() {
 		if (Objects.equals(currentNbOfCycles, nbCycleMax)) {
 			return true;	
+		}
+		return false;
+	}
+
+	public static boolean hasWon(Player player) {
+		if (player.getAllBoardTilesLeft().isEmpty()) {
+			return true;
 		}
 		return false;
 	}
@@ -115,6 +111,10 @@ public class GameManager {
 		return activePlayer;
 	}
 	
+	public static Integer getCurrentNbOfCycles() {
+		return currentNbOfCycles;
+	}
+
 	public static void setActivePlayer(Player activePlayer) {
 		GameManager.activePlayer = activePlayer;
 	}
@@ -128,12 +128,8 @@ public class GameManager {
 		GameManager.gameboard = gameboard;
 	}
 
-	public static Integer getCurrentNbOfCycles() {
-		return currentNbOfCycles;
-	}
-
 	public static void setCanUseSpecialTiles() {
-		if (gameboard.howManyTileHaveBeenPlayed()>=MINIMUM_OF_PUT_TILES_FOR_USE_SPECIAL_ONE) {
+		if (gameboard.howManyTileHaveBeenPlayed()>=MINIMUM_OF_PUT_TILES_TO_USE_SPECIAL_ONE) {
 			GameManager.canUseSpecialTiles = true;
 		} else {
 			GameManager.canUseSpecialTiles = false;

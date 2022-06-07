@@ -23,42 +23,6 @@ public class Stack implements Serializable{
 		this.tiles = new ArrayList<>();
 	}
 	
-	public Integer stackLength() {
-		return tiles.size();
-	}
-	
-	public void addTile(Tile tile) {
-		this.tiles.add(tile);
-	}
-	
-	public void removeTile() {
-		tiles.remove(0);
-	}
-	
-	public Tile getTile() {
-		return tiles.get(0);
-	}
-	
-	public List<Tile> getTiles() {
-		return tiles;
-	}
-	
-	public List<BoardTile> getBoardTiles() {
-		List<BoardTile> boardtiles = new ArrayList<>();
-		for (Tile tile : tiles) {
-			if (tile.getClass().equals(BoardTile.class)) {
-				boardtiles.add((BoardTile)tile);
-			}
-		}
-		return boardtiles;
-	}
-	
-	public void showTiles() {
-		for (Tile tile : tiles) {
-			System.out.println(tile.toString());
-		}
-	}
-	
 	public void initialize(Player j1, Player j2) {
 		
 		for (Color color : Color.values()) {
@@ -84,6 +48,42 @@ public class Stack implements Serializable{
 			j2.getStack().addTile(tiles.get(0));
 			this.removeTile();
 		}
+	}
+
+	public void addTile(Tile tile) {
+		this.tiles.add(tile);
+	}
+	
+	public void removeTile() {
+		tiles.remove(0);
+	}
+	
+	public void showTiles() {
+		for (Tile tile : tiles) {
+			System.out.println(tile.toString());
+		}
+	}
+	
+	public Integer stackLength() {
+		return tiles.size();
+	}
+
+	public Tile getFirstTile() {
+		return tiles.get(0);
+	}
+
+	public List<Tile> content() {
+		return tiles;
+	}
+
+	public List<BoardTile> getBoardTiles() {
+		List<BoardTile> boardtiles = new ArrayList<>();
+		for (Tile tile : tiles) {
+			if (tile.getClass().equals(BoardTile.class)) {
+				boardtiles.add((BoardTile)tile);
+			}
+		}
+		return boardtiles;
 	}
 	
 	

@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import latice.application.GameMain;
 import latice.model.boxes.Position;
+import latice.model.players.Player;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
 import latice.model.tiles.BoardTile;
@@ -34,11 +35,7 @@ public abstract class DnDTileController {
 			        if (boardTile.getParentBox()!=null) {
 			        	content.putString("BoxToRack");
 			        }
-			        
 			        content.put(GameMain.TILE_DATA, boardTile);
-			        
-			        
-			        
 			        
 			        if (boardTile.getParentBox()!=null) {
 			        	tile.deletePlayerPointsOnExit(boardTile);
@@ -46,27 +43,27 @@ public abstract class DnDTileController {
 			        	//When we bought an extra move and then we move a tile from the gameboard before using it, we reset the extra move
 			        	// Or when we take an extra tile which is already played, we reset the extra move too
 			        	if (GameVisual.getPlayingTiles().size()>1) {
-			        		GameManager.getActivePlayer().addPoints(2);
-			        		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+			        		GameManager.getActivePlayer().addPoints(Player.EXTRA_MOVE_COST);
+			        		GameManager.getActivePlayer().getVisualData().setPointProperty();
 			        	}
 			        	
 			        	if (GameManager.getActivePlayer().isAbleToPutATile()) {
-			        		GameManager.getActivePlayer().addPoints(2);
-			        		GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+			        		GameManager.getActivePlayer().addPoints(Player.EXTRA_MOVE_COST);
+			        		GameManager.getActivePlayer().getVisualData().setPointProperty();
 			        	}
 			        	
 			        	boardTile.exitBox();
-			        	boardTile.getParentBox().getBoxFX().getChildren().remove(boardTile.getTileFX());
+			        	boardTile.getParentBox().getImageData().getChildren().remove(boardTile.getTileFX());
 			        	GameVisual.removePlayingTile();
 			    		
-			    		GameManager.getActivePlayer().getPlayerFX().enableExchangeButton();
+			    		GameManager.getActivePlayer().getVisualData().enableExchangeButton();
 			    		
 			    		if (GameVisual.getPlayingTiles().isEmpty()) {
-			    			GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+			    			GameManager.getActivePlayer().getVisualData().setExtraMoveButtonDisability(true);
 			    		}
 			    		
 			    		GameManager.getActivePlayer().setAblilityToPutATile(true);
-			    		GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(true);
+			    		GameManager.getActivePlayer().getRack().getVisualData().createCanPlayEffect(true);
 			    	}
 			        dragboard.setContent(content);
 			        event.consume();
@@ -86,7 +83,7 @@ public abstract class DnDTileController {
 			        dragboard.setContent(content);
 			        
 		        	boardTile.exitBox();
-		        	boardTile.getParentBox().getBoxFX().getChildren().remove(boardTile.getTileFX());
+		        	boardTile.getParentBox().getImageData().getChildren().remove(boardTile.getTileFX());
 		        	
 			        event.consume();
 		    	}
@@ -101,35 +98,35 @@ public abstract class DnDTileController {
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
 			    	if (boardTile.getParentRack()!=null) {
 			    		boardTile.exitRack();
-			    		boardTile.getParentRack().getRackFX().getChildren().remove(boardTile.getTileFX());
+			    		boardTile.getParentRack().getVisualData().getChildren().remove(boardTile.getTileFX());
 			    		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)) {
 			    			tile.setStyle(TileImageData.NOT_FIXED_EFFECT);
 			    		} else {
 			    			GameManager.setGameMode(GameMode.SINGLE_PUT_TILE);
-					    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
-					    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(false);
-					    	GameManager.getActivePlayer().getPlayerFX().getBtnValidate().setDisable(false);
+					    	GameManager.getActivePlayer().getVisualData().getExtraMoveButton().setDisable(true);
+					    	GameManager.getActivePlayer().getVisualData().getBtnExchange().setDisable(false);
+					    	GameManager.getActivePlayer().getVisualData().getBtnValidate().setDisable(false);
 			    		}
 			    	}
 		    	} else  if (boardTile.getParentBox()!=null) {
 		    		boardTile.resetPosition();
-		    		boardTile.getParentBox().getBoxFX().getChildren().add(boardTile.getTileFX());
+		    		boardTile.getParentBox().getImageData().getChildren().add(boardTile.getTileFX());
 		    		if (GameManager.getGameMode().equals(GameMode.SINGLE_PUT_TILE)) {
 		    			GameManager.getActivePlayer().setAblilityToPutATile(false);
-		    			GameManager.getActivePlayer().getRack().getRackFX().createCanPlayEffect(false);
+		    			GameManager.getActivePlayer().getRack().getVisualData().createCanPlayEffect(false);
 		    			if (GameManager.getActivePlayer().getPoints()>=2) {
-		    				GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(false);
+		    				GameManager.getActivePlayer().getVisualData().setExtraMoveButtonDisability(false);
 		    			}
-		    			GameManager.getActivePlayer().getPlayerFX().setPointProperty();
+		    			GameManager.getActivePlayer().getVisualData().setPointProperty();
 		    			
 		    			GameVisual.addPlayingTile(boardTile);
-		    			GameManager.getActivePlayer().getPlayerFX().disableExchangeButton();
+		    			GameManager.getActivePlayer().getVisualData().disableExchangeButton();
 		    			
 		    			// If there is more than 1 playing tile on the gamebord, it mean that the extra move is reused, so we lose 2 points
 		    			if (GameVisual.getPlayingTiles().size()>1) {
 		    				GameManager.getActivePlayer().addPoints(-2);
-		    				GameManager.getActivePlayer().getPlayerFX().setPointProperty();
-		    				GameManager.getActivePlayer().getPlayerFX().setExtraMoveButtonDisability(true);
+		    				GameManager.getActivePlayer().getVisualData().setPointProperty();
+		    				GameManager.getActivePlayer().getVisualData().setExtraMoveButtonDisability(true);
 		    			}
 		    		}
 		    	}
@@ -163,16 +160,16 @@ public abstract class DnDTileController {
 		    public void handle(DragEvent event) {
 		    	if (event.getTransferMode() == TransferMode.MOVE) {
 		    		specialTile.exitRack();
-		    		specialTile.getParentRack().getRackFX().getChildren().remove(specialTile.getTileFX());
+		    		specialTile.getParentRack().getVisualData().getChildren().remove(specialTile.getTileFX());
 		    		if (specialTile.getType().equals(TypeOfSpecialTile.WIND)) {
 		    			GameManager.setGameMode(GameMode.WIND_TILE);
 		    		} else {
 		    			GameManager.setGameMode(GameMode.THUNDER_TILE);
 		    		}
 			    	
-			    	GameManager.getActivePlayer().getPlayerFX().getExtraMoveButton().setDisable(true);
-			    	GameManager.getActivePlayer().getPlayerFX().getBtnExchange().setDisable(true);
-			    	GameManager.getActivePlayer().getPlayerFX().getBtnValidate().setDisable(true);
+			    	GameManager.getActivePlayer().getVisualData().getExtraMoveButton().setDisable(true);
+			    	GameManager.getActivePlayer().getVisualData().getBtnExchange().setDisable(true);
+			    	GameManager.getActivePlayer().getVisualData().getBtnValidate().setDisable(true);
 		    	}
 		        event.consume();
 		    }

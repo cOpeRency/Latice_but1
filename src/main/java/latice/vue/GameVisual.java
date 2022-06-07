@@ -50,9 +50,9 @@ public class GameVisual {
     public static GridPane generateGameBoard() {
     	GridPane board = new GridPane();
 
-    	for (Map.Entry<Position, Box> entry : gameboard.getGameboardTiles().entrySet()) {
-    		entry.getValue().setBoxImage();
-    		board.add(entry.getValue().getBoxFX(), entry.getKey().column(), entry.getKey().row());
+    	for (Map.Entry<Position, Box> entry : gameboard.getBoxes().entrySet()) {
+    		entry.getValue().initImage();
+    		board.add(entry.getValue().getImageData(), entry.getKey().column(), entry.getKey().row());
 		}
 		    	
     	
