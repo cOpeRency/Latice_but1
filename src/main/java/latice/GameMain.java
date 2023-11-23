@@ -1,7 +1,6 @@
-package latice.application;
+package latice;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.util.Random;
 
 import javafx.application.Application;
@@ -14,17 +13,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import latice.application.LoadingScreen;
 import latice.audio.musicManager;
 import latice.model.game.GameBoard;
 import latice.model.players.Player;
@@ -36,6 +32,9 @@ import latice.vue.RackVisualData;
 import latice.vue.menu.GameMenu;
 import latice.vue.menu.SelectMenu;
 import latice.vue.system.PrimaryStage;
+
+import static jdk.jfr.internal.SecuritySupport.getResourceAsStream;
+
 
 public class GameMain extends Application {
 		public static DataFormat TILE_DATA = new DataFormat("BoardTile");
@@ -118,43 +117,38 @@ public class GameMain extends Application {
 		this.lblCycles.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 6, 0.4, 0, 0);");
 		this.borderPane.setTop(lblCycles);
 		BorderPane.setAlignment(lblCycles, Pos.CENTER);
-		
+
 		AnchorPane root = new AnchorPane();
-		String urlFichier;
 		GameVisual.setRoot(root);
 		try {
-			File fichier = new File("src/main/resources/themes/"+GameVisual.getTheme()+"/bg_game.png");
-			urlFichier = fichier.toURI().toURL().toString();
-			ImageView background = new ImageView(new Image(urlFichier, 1300, 731, true, true));
+			ImageView background = new ImageView(new Image(getResourceAsStream("/themes/"+GameVisual.getTheme()+"/bg_game.png"), 1300, 731, true, true));
 			GameVisual.getRoot().getChildren().add(background);
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-		GameVisual.getRoot().getChildren().add(borderPane);
-		
-		
-		
+        GameVisual.getRoot().getChildren().add(borderPane);
+
+
+		String videoPath = "/themes/" + GameVisual.getTheme() + "/intro.mp4";
+		Media media = null;
 		try {
-			File fichier = new File("src/main/resources/themes/"+GameVisual.getTheme()+"/intro.mp4");
-			Media media = new Media(fichier.toURI().toURL().toString());
-			MediaPlayer mediaPlayer = new MediaPlayer(media);
-	        mediaPlayer.setAutoPlay(true);
-			MediaView mediaViewer = new MediaView(mediaPlayer);
-			GameVisual.getRoot().getChildren().add(mediaViewer);
-			mediaPlayer.setOnEndOfMedia(new Runnable() {
-				@Override
-				public void run() {
-			    	GameVisual.getRoot().getChildren().remove(mediaViewer);
-				}
-			});
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//TODO: fix this
+			media = new Media(getResourceAsStream(videoPath).toString());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setAutoPlay(true);
+		MediaView mediaViewer = new MediaView(mediaPlayer);
+		GameVisual.getRoot().getChildren().add(mediaViewer);
+		mediaPlayer.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				GameVisual.getRoot().getChildren().remove(mediaViewer);
+			}
+		});
+
 		this.audio = musicManager.getBackgroundMusic();
 		this.audio.play();
 		Scene scene = new Scene(GameVisual.getRoot(), 1280, 720);

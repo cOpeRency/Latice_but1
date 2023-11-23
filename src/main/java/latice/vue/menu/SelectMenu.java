@@ -1,6 +1,7 @@
 package latice.vue.menu;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javafx.event.EventHandler;
@@ -23,6 +24,8 @@ import latice.application.LoadingScreen;
 import latice.vue.GameTheme;
 import latice.vue.GameVisual;
 
+import static jdk.jfr.internal.SecuritySupport.getResourceAsStream;
+
 public class SelectMenu {
 	private static Scene sceneMenu;
 	private static AnchorPane apMenu;
@@ -38,22 +41,19 @@ public class SelectMenu {
 	private static Spinner<Integer> spCycles;
 	private static CheckBox cbUseCycles;
 	
-	private static final String IMAGE_PATH = "src/main/resources/system/selectMenu.png";
+	private static final String IMAGE_PATH = "/system/selectMenu.png";
 
 	public static Scene getSceneMenu() {
 		apMenu = new AnchorPane();
-		String urlFichier;
 		try {
-			File fichier = new File(IMAGE_PATH);
-			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier,1300,731,true,true);
+			Image img = new Image(getResourceAsStream(IMAGE_PATH),1300,731,true,true);
 			imgMenu = new ImageView(img);
 			apMenu.getChildren().add(imgMenu);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		
-		btnStart = new Button("Start");
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        btnStart = new Button("Start");
 		btnStart.setMinSize(320, 50);
 		btnStart.setLayoutX(480);
 		btnStart.setLayoutY(650);

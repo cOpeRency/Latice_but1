@@ -1,6 +1,7 @@
 package latice.vue;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 
@@ -17,12 +18,14 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import latice.application.GameMain;
+import latice.GameMain;
 import latice.model.boxes.Box;
 import latice.model.boxes.BoxType;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
 import latice.model.tiles.BoardTile;
+
+import static jdk.jfr.internal.SecuritySupport.getResourceAsStream;
 
 public class BoxImageData extends StackPane implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -40,32 +43,24 @@ public class BoxImageData extends StackPane implements Serializable{
 	
 	public void initBoxImage(BoxType boxType) {
 		if (boxType == BoxType.SUN) {
-			this.imgURL = "src/main/resources/themes/"+GameVisual.getTheme()+"/bg_sun.png";
+			this.imgURL = "/themes/"+GameVisual.getTheme()+"/bg_sun.png";
 		} else if (boxType == BoxType.MOON) {
-			this.imgURL = "src/main/resources/themes/"+GameVisual.getTheme()+"/bg_moon.png";
+			this.imgURL = "/themes/"+GameVisual.getTheme()+"/bg_moon.png";
 		} else {
-			this.imgURL = "src/main/resources/themes/"+GameVisual.getTheme()+"/bg_sea.png";
+			this.imgURL = "/themes/"+GameVisual.getTheme()+"/bg_sea.png";
 		}
-		String urlFichier;
 		try {
-			File fichier = new File(imgURL);
-			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier, 62, 62, true, true);
+			Image img = new Image(getResourceAsStream(imgURL), 62, 62, true, true);
 			ImageView imgView = new ImageView(img);
 			this.getChildren().add(imgView);
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-	}
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 	
 	public void callThunder(){
-
-		String urlFichier;
 		try {
-			File fichier = new File("src/main/resources/effects/thunderEffect.gif");
-			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier,1600,900,true,true);
+			Image img = new Image(getResourceAsStream("/effects/thunderEffect.gif"),1600,900,true,true);
 			ImageView imgView = new ImageView(img);
 			ColorAdjust colorAdjust = new ColorAdjust();
 			
@@ -96,11 +91,10 @@ public class BoxImageData extends StackPane implements Serializable{
 				    	)
 				);
 				timeline.play();
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-	}
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 	
 	public void initDragSystem() {
 		setOnDragEntered(new EventHandler<DragEvent>() {

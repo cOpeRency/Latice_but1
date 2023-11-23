@@ -1,6 +1,7 @@
 package latice.vue.menu;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javafx.scene.Scene;
@@ -12,27 +13,26 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import latice.vue.GameTheme;
 
+import static jdk.jfr.internal.SecuritySupport.getResourceAsStream;
+
 public class GameMenu {
 	private static Scene sceneMenu;
 	private static AnchorPane apMenu;
 	private static ImageView imgMenu;
 	private static Button btnStart;
-	private static final String IMAGE_PATH = "src/main/resources/system/mainMenu_bg.png";
+	private static final String IMAGE_PATH = "/system/mainMenu_bg.png";
 	
 	public static Scene getSceneMenu() {
 		apMenu = new AnchorPane();
-		String urlFichier;
 		try {
-			File fichier = new File(IMAGE_PATH);
-			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier,1300,731,true,true);
+			Image img = new Image(getResourceAsStream(IMAGE_PATH),1300,731,true,true);
 			imgMenu = new ImageView(img);
 			apMenu.getChildren().add(imgMenu);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		
-		btnStart = new Button("Start");
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        btnStart = new Button("Start");
 		btnStart.setMinSize(320, 50);
 		btnStart.setLayoutX(480);
 		btnStart.setLayoutY(500);

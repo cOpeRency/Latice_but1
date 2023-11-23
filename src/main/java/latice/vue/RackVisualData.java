@@ -1,8 +1,8 @@
 package latice.vue;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,7 +10,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
-import latice.application.GameMain;
+import latice.GameMain;
 import latice.model.players.Rack;
 import latice.model.system.GameManager;
 import latice.model.tiles.BoardTile;
@@ -65,7 +65,7 @@ public class RackVisualData extends HBox implements Serializable{
 		    public void handle(DragEvent event) {
 		    	Dragboard dragboard = event.getDragboard();
 		    	if (dragboard.hasString() && !rackSource.isLocked()) {
-		    		if (dragboard.getString()=="BoxToRack") {
+		    		if (Objects.equals(dragboard.getString(), "BoxToRack")) {
 		    			event.acceptTransferModes(TransferMode.MOVE);
 		    		}
 		    	}

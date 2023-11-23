@@ -1,6 +1,7 @@
 package latice.vue;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.Optional;
@@ -25,6 +26,8 @@ import javafx.scene.text.FontWeight;
 import latice.model.players.Player;
 import latice.model.tiles.SpecialTile;
 import latice.model.tiles.TypeOfSpecialTile;
+
+import static jdk.jfr.internal.SecuritySupport.getResourceAsStream;
 
 public class PlayerVisualData implements Serializable{
 	private transient SimpleIntegerProperty p1PointsProperty;
@@ -119,14 +122,12 @@ public class PlayerVisualData implements Serializable{
 		
 		this.imgProfilePicture = new ImageView();
 		try {
-			File fichier = new File("src/main/resources/profilePictures/face.png");
-			this.imgProfilePicture.setImage(new Image(fichier.toURI().toURL().toString(), 150, 150, true, true));
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		
-		this.lblPoints = new Label();
+			this.imgProfilePicture.setImage(new Image(getResourceAsStream("/profilePictures/face.png"), 150, 150, true, true));
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.lblPoints = new Label();
 		this.lblPoints.textProperty().bind(getSimpleIntegerProperty().asString());
 		this.lblPoints.setTextFill(javafx.scene.paint.Color.WHITE);
 		this.lblPoints.setFont(Font.font(null, FontWeight.NORMAL, 35));

@@ -11,7 +11,7 @@ public class musicManager {
 	private static Double loopStart = 0.0;
 
 	public static MediaPlayer getBackgroundMusic(){
-		 String musicFile = "src/main/resources/musics/"+GameVisual.getTheme()+"/music1.mp3";
+		 String musicFile = "/musics/"+GameVisual.getTheme()+"/music1.mp3";
          Media sound = new Media(new File(musicFile).toURI().toString());
          MediaPlayer mediaPlayer = new MediaPlayer(sound);
          

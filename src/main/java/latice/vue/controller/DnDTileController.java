@@ -6,7 +6,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import latice.application.GameMain;
+import latice.GameMain;
 import latice.model.boxes.Position;
 import latice.model.players.Player;
 import latice.model.system.GameManager;

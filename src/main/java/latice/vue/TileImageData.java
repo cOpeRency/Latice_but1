@@ -1,6 +1,7 @@
 package latice.vue;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 
@@ -8,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import jdk.jfr.internal.SecuritySupport;
 import latice.model.boxes.BoxType;
 import latice.model.system.GameManager;
 import latice.model.system.GameMode;
@@ -68,15 +70,12 @@ public class TileImageData extends ImageView implements Serializable {
 	public void hideTile() {
 		String urlFichier;
 		try {
-			File fichier = new File("src/main/resources/themes/"+GameVisual.getTheme()+"/back.png");
-			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier, 62, 62, true, true);
+			Image img = new Image(SecuritySupport.getResourceAsStream("/themes/"+GameVisual.getTheme()+"/back.png"), 62, 62, true, true);
 			setImage(img);
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-	}	
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 	
 	public void deletePlayerPointsOnExit(BoardTile boardTile) {
 		Integer points = boardTile.getParentBox().getTileMatchType(boardTile.getParentBox().getAdjacentBoxes()).value()   +   boardTile.getParentBox().getPointsGainnedByType();
@@ -96,17 +95,13 @@ public class TileImageData extends ImageView implements Serializable {
 
 
 	public void setTileImage() {
-		String urlFichier;
 		try {
-			File fichier = new File("src/main/resources/themes/"+GameVisual.getTheme()+"/"+this.tileSource.getImagePath());
-			urlFichier = fichier.toURI().toURL().toString();
-			Image img = new Image(urlFichier, 62, 62, true, true);
+			Image img = new Image(SecuritySupport.getResourceAsStream("/themes/"+GameVisual.getTheme()+"/"+this.tileSource.getImagePath()), 62, 62, true, true);
 			setImage(img);
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-	}	
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	
 	public void setLastTilePlayed(boolean isLastTilePlayed) {
