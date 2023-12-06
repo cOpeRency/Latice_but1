@@ -19,3 +19,5 @@
 - En pair programming, la communication se fait directement, ce qui permet d'être sur la même longueur d'onde durant tout le développement.
 
 ## Aperçu du jeu
+
+![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/start.png)
