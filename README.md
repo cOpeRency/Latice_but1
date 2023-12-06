@@ -37,3 +37,4 @@
 
 ### Introductions 3D 
 ![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/intro_op.png)
+![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/intro_pokemon.png)
