@@ -20,4 +20,20 @@
 
 ## Aperçu du jeu
 
+### Menu principal
 ![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/start.png)
+
+### Sélection du thème
+![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/select.png)
+
+### Thème Zelda
+![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/zelda.png)
+
+### Thème Pokémon
+![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/pokemon.png)
+
+### Thème One Piece
+![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/op.png)
+
+### Introductions 3D 
+![image](https://github.com/cOpeRency/Latice_but1/blob/master/readme_images/intro_op.png)
