@@ -1,5 +1,13 @@
 # Latice_but1
 
+## Contexte
+
+Notre client (fictif), l'entreprise GamIUTer, souhaite disposer d'une version numérique simplifiée du jeu LATICE qu'elle vient de découvrir. Notre mission consiste donc à développer cette version simplifiée du jeu de plateau [LATICE](https://www.ultraboardgames.com/latice/game-rules.php). Nous avons choisi de développer l'application en utilisant Java, avec JavaFX pour concevoir l'Interface Homme-Machine (IHM), garantissant ainsi une expérience utilisateur agréable.
+
+Pour nous, ce projet représente un défi stimulant. Notre objectif principal est de répondre au mieux aux besoins du client tout en intégrant des éléments de créativité pour concevoir un jeu unique.
+
+Bien que le jeu ne soit pas encore finalisé, nous prévoyons d'ajouter ultérieurement un système de score et la possibilité de jouer contre des ordinateurs, offrant ainsi une expérience de jeu plus complète. Nous explorons également la possibilité de créer une version exécutable via un fichier .exe pour Windows, ce qui constitue un petit défi nécessitant une adaptation de notre gestion des médias au sein de l'application.
+
 ## Compétences développées
 
 ### Réalisation d'un développement d’application
