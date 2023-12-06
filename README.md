@@ -11,6 +11,7 @@
 
 - Mise en place des principes SOLID pour rendre notre code plus maintenable et plus cohérent.
 - Le but était de proposer une variante agréable du jeu Latice, sur PC, avec plusieurs thèmes et plateaux de jeu.
+- Afin de faciliter la maintenabilité de notre application, nous avons versionné notre projet avec git, et réalisé des commits réguliers.
 
 ### Intégration dans une équipe informatique
 
